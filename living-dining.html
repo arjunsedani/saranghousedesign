@@ -3,2040 +3,1462 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Living &amp; Dining Hall / Interior Study 04</title>
+<title>Living &amp; Dining Area / Interior Coordination Study 12</title>
 <style>
-:root{
-  --ink:#1a2b24;
-  --bg:#eaeeea;
-  --panel:#fafbf9;
-  --line:#cbd5cd;
-  --line-light:#e2e8e3;
-  --accent:#27523c;
-  --accent-hover:#1c3c2c;
-  --accent-light:#e8f0eb;
-  --gold:#b88849;
-  --gold-light:#fff8ed;
-  --terracotta:#b8654a;
-  --text-muted:#556b60;
-  --shadow:0 6px 20px rgba(0,0,0,0.07);
-  font-family:Georgia,serif;
-  color:var(--ink);
-  background:var(--bg);
-}
-*{box-sizing:border-box}
-body{margin:0;overflow-x:hidden}
-header.page-header{
-  padding:16px 24px;
-  background:var(--panel);
-  border-bottom:1px solid var(--line);
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:16px;
-  flex-wrap:wrap;
-}
-.header-titles h1{
-  font-size:24px;
-  font-weight:normal;
-  margin:0;
-  letter-spacing:-0.2px;
-}
-.header-titles p{
-  font:12px/1.5 Verdana,sans-serif;
-  margin:4px 0 0;
-  color:var(--text-muted);
-}
-.header-actions{
-  display:flex;
-  align-items:center;
-  gap:10px;
-  flex-wrap:wrap;
-}
-.stamp{
-  font:10px/1.6 Verdana,sans-serif;
-  padding:6px 12px;
-  background:#f0f6f2;
-  border:1px solid #b2c5b6;
-  color:var(--accent);
-  border-radius:3px;
-  text-transform:uppercase;
-  letter-spacing:0.5px;
-  font-weight:bold;
-}
-nav.rooms-nav{
-  display:flex;
-  gap:6px;
-  flex-wrap:wrap;
-}
-nav.rooms-nav a{
-  font:11px Verdana,sans-serif;
-  padding:7px 11px;
-  border:1px solid var(--line);
-  background:#fff;
-  color:var(--ink);
-  text-decoration:none;
-  border-radius:3px;
-  transition:all .15s ease;
-}
-nav.rooms-nav a:hover{
-  border-color:var(--accent);
-  color:var(--accent);
-}
-nav.rooms-nav a.active,nav.rooms-nav a[aria-current="page"]{
-  background:var(--accent);
-  border-color:var(--accent);
-  color:#fff;
-}
-main.app-layout{
-  display:grid;
-  grid-template-columns:minmax(0,1fr) 320px;
-  min-height:calc(100vh - 80px);
-}
-.viewport-pane{
-  position:relative;
-  background:#dbe4de;
-  display:flex;
-  flex-direction:column;
-  min-width:0;
-}
-.toolbar{
-  padding:8px 12px;
-  background:#f6f9f6;
-  border-bottom:1px solid var(--line);
-  display:flex;
-  align-items:center;
-  gap:5px;
-  flex-wrap:wrap;
-}
-.toolbar-group{
-  display:inline-flex;
-  gap:4px;
-  align-items:center;
-}
-.toolbar-divider{
-  width:1px;
-  height:20px;
-  background:var(--line);
-  margin:0 4px;
-}
-button,select{
-  font:11px Verdana,sans-serif;
-  border:1px solid #becdc2;
-  background:#fff;
-  color:var(--ink);
-  padding:6px 9px;
-  border-radius:3px;
-  cursor:pointer;
-  min-height:30px;
-  display:inline-flex;
-  align-items:center;
-  gap:5px;
-  transition:all .15s ease;
-}
-button:hover{
-  border-color:var(--accent);
-  background:#fcfdfc;
-}
-button.active,button[aria-pressed="true"]{
-  background:var(--accent);
-  border-color:var(--accent);
-  color:#fff;
-}
-button:focus-visible,select:focus-visible,input:focus-visible{
-  outline:2px solid var(--gold);
-  outline-offset:2px;
-}
-#viewport-container{
-  position:relative;
-  flex:1;
-  min-height:560px;
-  overflow:hidden;
-}
-canvas#webgl-canvas{
-  display:block;
-  width:100%;
-  height:100%;
-  touch-action:none;
-}
-.view-badge{
-  position:absolute;
-  top:16px;
-  left:16px;
-  background:rgba(255,255,255,0.94);
-  backdrop-filter:blur(8px);
-  padding:9px 15px;
-  border:1px solid var(--line);
-  border-radius:4px;
-  font:11px/1.5 Verdana,sans-serif;
-  pointer-events:none;
-  box-shadow:var(--shadow);
-  z-index:5;
-}
-.view-badge strong{
-  display:block;
-  color:var(--accent);
-  font-size:12px;
-}
-.loader-overlay{
-  position:absolute;
-  inset:0;
-  background:#dfe7e1;
-  display:grid;
-  place-items:center;
-  z-index:10;
-  font:13px Verdana,sans-serif;
-  color:var(--accent);
-  transition:opacity .3s ease;
-}
-.loader-overlay[hidden]{display:none}
-.stage-status{
-  padding:7px 14px;
-  background:#f6f9f6;
-  border-top:1px solid var(--line);
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  font:10px/1.5 Verdana,sans-serif;
-  color:var(--text-muted);
-}
-aside.sidebar{
-  background:var(--panel);
-  border-left:1px solid var(--line);
-  padding:20px 18px;
-  overflow-y:auto;
-  max-height:calc(100vh - 80px);
-  font:11px/1.65 Verdana,sans-serif;
-}
-aside h2{
-  font:20px Georgia,serif;
-  margin:0 0 10px;
-  font-weight:normal;
-  color:var(--ink);
-}
-aside h3{
-  font:13px Georgia,serif;
-  margin:18px 0 8px;
-  padding-bottom:4px;
-  border-bottom:1px solid var(--line-light);
-  color:var(--accent);
-}
-.specs-list{
-  margin:0 0 16px;
-}
-.specs-list div{
-  display:flex;
-  justify-content:space-between;
-  padding:5px 0;
-  border-bottom:1px solid var(--line-light);
-  gap:10px;
-}
-.specs-list dt{color:var(--text-muted)}
-.specs-list dd{margin:0;font-weight:bold;text-align:right}
-label.control-toggle{
-  display:flex;
-  align-items:center;
-  gap:8px;
-  padding:5px 0;
-  cursor:pointer;
-  user-select:none;
-}
-label.control-toggle input{
-  accent-color:var(--accent);
-  cursor:pointer;
-}
-.inspector-card{
-  background:#fff;
-  border:1px solid var(--line);
-  border-radius:4px;
-  padding:12px;
-  margin-top:10px;
-  box-shadow:var(--shadow);
-}
-.inspector-card h4{
-  margin:0 0 6px;
-  font-size:12px;
-  color:var(--accent);
-}
-.inspector-card p{
-  margin:4px 0;
-  font-size:11px;
-}
-.note-box{
-  border-left:3px solid var(--gold);
-  background:var(--gold-light);
-  padding:8px 10px;
-  margin:10px 0;
-  font-size:10px;
-  line-height:1.6;
-  color:#694b23;
-  border-radius:0 3px 3px 0;
-}
-.section-doc{
-  background:#fff;
-  border-top:1px solid var(--line);
-  padding:34px 5%;
-  font:12px/1.75 Verdana,sans-serif;
-}
-.section-doc h2{
-  font:26px Georgia,serif;
-  margin:0 0 12px;
-  font-weight:normal;
-  color:var(--ink);
-}
-.section-doc h3{
-  font:17px Georgia,serif;
-  margin:28px 0 10px;
-  font-weight:normal;
-  color:var(--accent);
-}
-.section-doc p{
-  max-width:1050px;
-  margin:0 0 14px;
-}
-.table-wrap{
-  overflow-x:auto;
-  margin:16px 0 24px;
-  border:1px solid var(--line);
-  border-radius:3px;
-}
-table{
-  width:100%;
-  border-collapse:collapse;
-  font:11px/1.6 Verdana,sans-serif;
-  min-width:700px;
-}
-th,td{
-  text-align:left;
-  padding:10px 12px;
-  border-bottom:1px solid var(--line-light);
-  vertical-align:top;
-}
-th{
-  background:#f3f6f3;
-  font-weight:normal;
-  color:var(--accent);
-  border-bottom:1px solid var(--line);
-}
-tr:hover td{background:#fafcfb}
-.reference-gallery{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-  gap:18px;
-  margin:20px 0;
-  max-width:1180px;
-}
-.reference-card{
-  background:#f9fbf9;
-  border:1px solid var(--line);
-  border-radius:4px;
-  overflow:hidden;
-}
-.reference-card img{
-  display:block;
-  width:100%;
-  height:260px;
-  object-fit:cover;
-  background:#eef1ee;
-}
-.reference-card figcaption{
-  padding:10px 14px;
-  font:11px/1.5 Verdana,sans-serif;
-  color:var(--text-muted);
-}
-.reference-card figcaption strong{
-  display:block;
-  color:var(--ink);
-  font-size:12px;
-  margin-bottom:3px;
-}
-footer.doc-footer{
-  padding:20px 5%;
-  background:#f1f5f2;
-  border-top:1px solid var(--line);
-  font:11px/1.6 Verdana,sans-serif;
-  color:var(--text-muted);
-  display:flex;
-  justify-content:space-between;
-  flex-wrap:wrap;
-  gap:12px;
-}
-footer.doc-footer a{color:var(--accent)}
-@media(max-width:880px){
-  main.app-layout{grid-template-columns:1fr}
-  aside.sidebar{
-    border-left:none;
-    border-top:1px solid var(--line);
-    max-height:none;
-  }
-  #viewport-container{height:60vh;min-height:440px}
-}
-@media print{
-  header.page-header,.toolbar,aside.sidebar,.reference-gallery button{display:none}
-  main.app-layout{display:block}
-  #viewport-container{height:160mm;min-height:0}
-  .section-doc{padding:0;border:none}
-  .table-wrap{overflow:visible}
-}
+:root{font-family:Georgia,serif;color:#283c37;background:#edf0ec;--line:#cbd5cd;--ink:#274b3e;--accent:#537a65;letter-spacing:0}*{box-sizing:border-box}body{margin:0}button,input,select{font:12px Verdana,sans-serif}button{border:1px solid #becdc2;background:#fcfdfb;color:var(--ink);border-radius:3px;padding:8px 10px;cursor:pointer;min-height:34px;display:inline-flex;gap:7px;align-items:center;justify-content:center}button.active,button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}button:hover{border-color:var(--ink)}button:focus-visible,input:focus-visible,a:focus-visible{outline:3px solid #bb8a4c;outline-offset:3px}button:disabled{opacity:.5;cursor:default}button svg{width:16px;height:16px;flex-shrink:0}header{background:#fafcf8;border-bottom:1px solid var(--line);padding:17px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px}h1{font-size:25px;font-weight:normal;margin:0}header p{font:11px/1.6 Verdana,sans-serif;margin:5px 0 0;color:#586b60}.stamp{font:10px/1.7 Verdana,sans-serif;border:1px solid #aebfb2;padding:6px 10px;flex-shrink:0}.workspace{display:grid;grid-template-columns:minmax(0,1fr) 316px}.stage{min-width:0;background:#dce5df}.toolbar{padding:9px 12px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:5px;flex-wrap:wrap;background:#f8faf6}.toolbar .spacer{flex:1}#viewport{position:relative;height:calc(100vh - 185px);min-height:520px;overflow:hidden}canvas{display:block;width:100%;height:100%;touch-action:none}#view-label{position:absolute;top:15px;left:16px;max-width:calc(100% - 32px);font:10px/1.5 Verdana,sans-serif;background:#fffffff0;padding:8px 11px;pointer-events:none;border:1px solid #d5ded7}.loading{position:absolute;inset:0;display:grid;place-items:center;background:#e4e9e3;font:13px/1.7 Verdana,sans-serif;padding:30px;text-align:center}.loading[hidden]{display:none}.stage-footer{display:flex;justify-content:space-between;gap:12px;padding:9px 15px;font:10px/1.5 Verdana,sans-serif;border-top:1px solid var(--line);background:#f8faf6}.stage-footer span{max-width:74%}aside{background:#fafcf8;border-left:1px solid var(--line);padding:18px 18px;font:11px/1.6 Verdana,sans-serif;overflow-y:auto;max-height:calc(100vh - 78px)}h2{font:20px Georgia,serif;margin:0 0 10px}h3{font:15px Georgia,serif;margin:18px 0 7px}dl{margin:0}dl div{padding:5px 0;border-bottom:1px solid #e0e6df;display:flex;justify-content:space-between;gap:8px}dt{color:#607266}dd{margin:0;font-weight:bold;text-align:right}.toggle{display:flex;gap:8px;align-items:center;padding:4px 0;cursor:pointer}.toggle input{accent-color:var(--accent);flex-shrink:0}.note{border-left:3px solid #b78a51;padding-left:10px;color:#6b563e;font-size:11px;line-height:1.7;margin:10px 0}.swatches{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}.swatches span{display:inline-flex;align-items:center;gap:5px;font-size:10px}.swatch{width:12px;height:12px;border:1px solid #0002;display:inline-block}.checks{margin-top:14px;padding-top:11px;border-top:1px solid var(--line)}.checks output{display:block;font-weight:bold;color:#274b3e;margin:4px 0}.doc{background:#fff;border-top:1px solid var(--line);padding:30px 5%;font:12px/1.8 Verdana,sans-serif}.doc h2{font-size:25px}.doc p{max-width:1180px}.doc nav{display:flex;gap:14px;flex-wrap:wrap;margin-top:14px}.doc a{color:var(--ink)}.table-wrap{overflow:auto;margin:14px 0}table{width:100%;border-collapse:collapse;font:11px/1.6 Verdana,sans-serif;min-width:720px}th,td{text-align:left;vertical-align:top;padding:10px;border-bottom:1px solid #dfe5df}th{background:#eef3ed;font-weight:normal;color:#39594a}.stats{display:flex;gap:22px;flex-wrap:wrap;font-size:12px;margin:15px 0}.stats strong{font:23px Georgia,serif;display:block;color:var(--ink)}.factory-link{align-self:center;padding:8px;color:#315c46;font:12px Verdana,sans-serif;text-decoration:underline}@media(max-width:900px){.workspace{grid-template-columns:1fr}#viewport{height:65vh;min-height:440px}aside{border-left:0;border-top:1px solid var(--line);max-height:none;display:grid;grid-template-columns:1fr 1fr;gap:18px}.aside-bottom{grid-column:1/-1}header{padding:14px}h1{font-size:21px}.toolbar{padding:8px}.toolbar button{font-size:10px;padding:7px}.doc{padding:24px 16px}}@media(max-width:480px){aside{grid-template-columns:1fr}header{align-items:flex-start}.stamp{font-size:9px;max-width:110px}h1{font-size:19px}header p{font-size:10px}.toolbar .spacer{display:none}.stage-footer{font-size:9px}}@media print{header{padding:0 0 12px}.toolbar,aside,.stage-footer,.print-hide,.factory-link{display:none}.workspace{display:block}#viewport{height:160mm;min-height:0}.doc{break-before:page;padding:0;border:0}table{min-width:0}tr{break-inside:avoid}.table-wrap{overflow:visible}body{background:white}}
 </style>
-<script type="importmap">
-{
-  "imports": {
-    "three": "https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js",
-    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"
-  }
-}
-</script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
 </head>
 <body>
-<header class="page-header">
-  <div class="header-titles">
-    <h1>Living &amp; Dining Hall / Interior Study 04</h1>
-    <p>Curved PU Capsule TV Panel &nbsp;&bull;&nbsp; Fluted Glass Vitrine &nbsp;&bull;&nbsp; Sculptural Botanical Leaf Relief Wall &bull;&nbsp; Modular Curved Sofa &bull;&nbsp; Quartz Dining &bull;&nbsp; Mandir</p>
+<header>
+  <div>
+    <h1>Living &amp; Dining Area / Interior Study 12</h1>
+    <p>8,975 x 3,300 mm &nbsp; / &nbsp; Swapped Walls: North Full-Height Wavy 3D HDHMR TV Wall &amp; Curved Credenza, South 3,823 mm Dual-Sleeper &amp; DXF Leaf Mural + 600 mm Sitout-Corner Tall White CNC Pooja Mandir</p>
   </div>
-  <div class="header-actions">
-    <nav class="rooms-nav" aria-label="Room 3D models">
-      <a href="index.html">Overview</a>
-      <a href="living-dining.html" class="active" aria-current="page">Living &amp; Dining</a>
-      <a href="kitchen-design.html">Kitchen</a>
-      <a href="master-bedroom.html">Master Bedroom</a>
-      <a href="bedroom-1.html">Bedroom 1</a>
-      <a href="bedroom-2.html">Bedroom 2</a>
-    </nav>
-    <span class="stamp">Site-Matched Refined</span>
-  </div>
+  <div class="stamp">COORDINATION MODEL<br>Study 12 / Swapped + Mandir</div>
 </header>
-
-<main class="app-layout">
-  <section class="viewport-pane" aria-label="Interactive 3D Viewport">
-    <div class="toolbar" role="toolbar" aria-label="3D Controls">
-      <div class="toolbar-group">
-        <button type="button" data-view="overview" class="active" title="Expansive 3D overview">&#127963;&#65039; Open Overview</button>
-        <button type="button" data-view="entry" title="First-person from Main Door">&#128682; Foyer Entry</button>
-        <button type="button" data-view="tv" title="Curved PU Capsule TV Panel">&#128250; Curved PU TV Wall</button>
-        <button type="button" data-view="leafart" title="Sculptural Leaf Relief Art">&#127811; Sofa &amp; Leaf Art Wall</button>
-        <button type="button" data-view="lounge" title="Living room central perspective">&#128715;&#65039; Living Lounge</button>
-        <button type="button" data-view="dining" title="Quartz dining table and kitchen">&#127869;&#65039; Dining &amp; Kitchen</button>
-        <button type="button" data-view="mandir" title="Sacred 600 mm Mandir">&#128725; Mandir Sanctum</button>
-        <button type="button" data-view="sitout" title="East Sitout balcony">&#127749; Sitout Balcony</button>
-        <button type="button" data-view="plan" title="Top-down orthographic plan">&#128208; CAD Plan</button>
-      </div>
-      <div class="toolbar-divider"></div>
-      <div class="toolbar-group">
-        <button type="button" id="toggle-bed" aria-pressed="false" title="Expand sofa-cum-bed">&#128715;&#65039; Expand Bed</button>
-        <button type="button" id="toggle-mandir" aria-pressed="false" title="Slide out Aarti tray">&#128725; Mandir Trays</button>
-        <button type="button" id="toggle-tv-storage" aria-pressed="false" title="Open TV drawers">&#128230; Open Storage</button>
-        <button type="button" id="toggle-balcony-door" aria-pressed="false" title="Slide balcony door">&#128682; Open Balcony</button>
-        <button type="button" id="toggle-lights" aria-pressed="false" title="Evening Warm Mood">&#128161; Evening Mood</button>
-        <button type="button" id="btn-tour" aria-pressed="false" title="Cinematic walkthrough">&#128694; Walkthrough</button>
-      </div>
-      <div class="toolbar-divider"></div>
-      <div class="toolbar-group">
-        <button type="button" id="btn-snapshot" title="Download snapshot">&#128248; Snapshot</button>
-      </div>
+<main class="workspace">
+<section class="stage" aria-label="Interactive living and dining 3D design">
+  <nav class="toolbar" aria-label="Drawing views">
+    <button class="active" data-view="overview">3D overview</button>
+    <button data-view="entry">Entrance</button>
+    <button data-view="plan">Plan</button>
+    <button data-view="tvWall">Wavy TV &amp; DB Wall (North)</button>
+    <button data-view="sofaWall">Sofa &amp; DXF Mural (South)</button>
+    <button data-view="sleeperMode">Sleeper Deployed</button>
+    <button data-view="poojaMandir">Pooja Mandir (600 Wall)</button>
+    <button data-view="dining">Dining &amp; Sitout</button>
+    <button data-view="sitout">Sitout Elevation</button>
+    <button data-view="foyerDb">DB Fluted Tower &amp; Foyer</button>
+    <button data-view="section">Room Section A-A</button>
+    <button data-view="sofaSection">Sofa Kinematics B-B</button>
+    <a href="#factory" class="factory-link">Component register</a>
+  </nav>
+  <nav class="toolbar" aria-label="Model tools">
+    <button id="tour" aria-pressed="false" title="Start or pause guided walkthrough"><i data-lucide="play"></i><span id="tour-text">Walkthrough</span></button>
+    <button id="previous" title="Previous walkthrough viewpoint" aria-label="Previous walkthrough viewpoint"><i data-lucide="chevron-left"></i></button>
+    <button id="next" title="Next walkthrough viewpoint" aria-label="Next walkthrough viewpoint"><i data-lucide="chevron-right"></i></button>
+    <span class="spacer"></span>
+    <button id="reset" title="Reset to default overview"><i data-lucide="rotate-ccw"></i>Reset</button>
+    <button id="download" title="Download current 3D drawing as PNG"><i data-lucide="download"></i>PNG</button>
+    <button id="print" title="Print current drawing and schedule"><i data-lucide="printer"></i>Print</button>
+  </nav>
+  <div id="viewport">
+    <div id="view-label">01 / AXONOMETRIC OVERVIEW / mm</div>
+    <div id="loading" class="loading">Loading Study 12 Living &amp; Dining 3D coordination model...</div>
+  </div>
+  <div class="stage-footer">
+    <span id="view-state">North Wall (5185): 750 Fluted Walnut DB/Curio + 4150 Seamless 3D Wavy HDHMR TV Wall &amp; 3950 Curved Credenza / South Wall (5170): 3823 Dual-Sleeper &amp; DXF 6-Leaf Mural / East 600 Wall: 850x580x2692.4 White CNC Pooja Mandir</span>
+    <span id="tour-state">01 / Overview</span>
+  </div>
+</section>
+<aside>
+  <section>
+    <h2>Hall Schedule (mm)</h2>
+    <dl>
+      <div><dt>Combined Hall W x D x H</dt><dd>8975 x 3300 x 2794</dd></div>
+      <div><dt>North TV Wall (Z = 0)</dt><dd>5185 solid (X 0–5185)</dd></div>
+      <div><dt>Fluted DB &amp; Curio Tower</dt><dd>750 W x 360 D x 2692.4 H</dd></div>
+      <div><dt>3D Wavy HDHMR TV Wall</dt><dd>4150 W x 2692.4 H x 54 D</dd></div>
+      <div><dt>Curved Floating Credenza</dt><dd>3950 x 380 x 420 (R=190)</dd></div>
+      <div><dt>75" OLED + Soundbar</dt><dd>1680 x 960 / 1150 bar</dd></div>
+      <div><dt>South Sofa Wall (Z = 3300)</dt><dd>5170 solid (X 0–5170)</dd></div>
+      <div><dt>Dual-Sleeper Sofa S1</dt><dd>3823 W x 965 D x 813 H</dd></div>
+      <div><dt>Extended Sleeper Depth</dt><dd>2185 (Z 3300 to 1115)</dd></div>
+      <div><dt>DXF 6-Leaf South Mural</dt><dd>3100 W x 1620 H x 54 D</dd></div>
+      <div><dt>East 600 Wall Pooja P1</dt><dd>850 W x 580 D x 2692.4 H</dd></div>
+      <div><dt>Pooja Pull-Outs (3-Tier)</dt><dd>Prasad + Sit Tbl + Thin/Box</dd></div>
+      <div><dt>6-Seater Dining DT-1</dt><dd>1950 x 1050 x 760 H</dd></div>
+      <div><dt>Sitout Slider SLD1</dt><dd>2100 W (Z 600–2700)</dd></div>
+    </dl>
+    <h3>Clearances &amp; Checks</h3>
+    <dl>
+      <div><dt>Bed Extended to TV Con</dt><dd>695 mm clear passage</dd></div>
+      <div><dt>FS0136 Side Clearance</dt><dd>13 mm / side (1664 in 1690)</dd></div>
+      <div><dt>Pooja Depth vs 600 Wall</dt><dd>580 D inside 600 return</dd></div>
+      <div><dt>Ceiling Cove Drop</dt><dd>101.6 (4 in) / 2692.4 soffit</dd></div>
+    </dl>
+  </section>
+  <section>
+    <h2>Model States</h2>
+    <label class="toggle"><input id="dimensions" type="checkbox" checked>Dimensions</label>
+    <label class="toggle"><input id="shell" type="checkbox" checked>Room walls</label>
+    <label class="toggle"><input id="sleeper-left" type="checkbox">Extend Left Sleeper (FS0136-L)</label>
+    <label class="toggle"><input id="sleeper-right" type="checkbox">Extend Right Sleeper (FS0136-R)</label>
+    <label class="toggle"><input id="headrests" type="checkbox">Tilt / Raise ST-180 Headrests</label>
+    <label class="toggle"><input id="tv-storage" type="checkbox">Open Curved Credenza &amp; DB Door</label>
+    <label class="toggle"><input id="pooja-gates" type="checkbox">Open Pooja White CNC Gates</label>
+    <label class="toggle"><input id="pooja-pullouts" type="checkbox">Extend Pooja Tray, Sit Table &amp; Box</label>
+    <label class="toggle"><input id="dining-chairs" type="checkbox">Pull Out Dining Chairs</label>
+    <label class="toggle"><input id="sitout-slider" type="checkbox">Open Sitout Slider (SLD1)</label>
+    <label class="toggle"><input id="ceiling" type="checkbox" checked>Ceiling / cove &amp; track lights</label>
+    <h3>Finish &amp; Concept Palette</h3>
+    <div class="swatches">
+      <span><i class="swatch" style="background:#ede6da"></i>Wavy 3D HDHMR Off-White</span>
+      <span><i class="swatch" style="background:#faf8f5"></i>Mandir Pure White CNC PU</span>
+      <span><i class="swatch" style="background:#f3ede0"></i>Heavy Cream Boucl&eacute; (S1)</span>
+      <span><i class="swatch" style="background:#b98b56"></i>White Oak Console (152mm)</span>
+      <span><i class="swatch" style="background:#c46843"></i>Terracotta DXF Leaf Relief</span>
+      <span><i class="swatch" style="background:#59402d"></i>Fluted Walnut DB Tower</span>
+      <span><i class="swatch" style="background:#c59b52"></i>Champagne Brass &amp; Bells</span>
     </div>
-
-    <div id="viewport-container">
-      <div id="view-badge" class="view-badge">
-        <strong id="badge-title">Expansive 3D Overview</strong>
-        <span id="badge-desc">Sculptured Botanical Leaf Art Wall &bull; Curved PU Capsule TV Panel &bull; Fluted Glass Vitrine</span>
-      </div>
-      <div id="loader" class="loader-overlay">
-        <div>Loading Refined Living &amp; Dining 3D Model...</div>
-      </div>
-      <canvas id="webgl-canvas"></canvas>
-    </div>
-
-    <div class="stage-status">
-      <span id="status-left">Floor Plan: Living 4440x3300 mm + Dining 4535x3300 mm = 8975 mm Span | 2,100 mm Clear Central Aisle</span>
-      <span id="status-right">Site-Matched Materials &bull; Curved PU Wave Relief &bull; Sculpted Leaf Art &bull; Track Lighting</span>
+    <p class="note"><strong>Study 12 Updates:</strong> (1) North &amp; South walls swapped so the North wall (`Z = 0`) features the full-height seamless 3D wavy CNC HDHMR back wall (`TV-WAVE`) and curved-edge floating credenza (`TV-CON`), while the South wall (`Z = 3,300`) hosts the `3,823 mm` Dual-Sleeper sofa (`S1`) and DXF 6-Leaf mural; (2) The `600 mm` wall left of `SLD1` (`X = 8,975, Z = 0..600`) houses the tall white CNC Pooja Mandir (`P1`) with bi-fold jaali gates, pull-out prasad tray, hidden pull-out sitting table, thin prep tray, and rolling puja storage box.</p>
+  </section>
+  <section class="aside-bottom">
+    <p class="note">All CNC HDHMR wave panels, curved credenza shells, Dual-Sleeper FS0136 / ST-180 components, DXF leaf layers, and 4-tier Pooja Mandir pull-outs are registered in the Factory Schedule below.</p>
+    <div class="checks">
+      <small>Model verification</small>
+      <output id="checks">Pending</output>
+      <small id="render-status">Renderer pending</small>
     </div>
   </section>
-
-  <aside class="sidebar">
-    <h2>Client Reference Features</h2>
-    <p>Study 04 &mdash; Refined with <strong>site-matched</strong> wall colors (warm beige from actual photos), accurate cream marble floor tiles, grey skirting, and vivid design-reference colors.</p>
-
-    <h3>Design Highlights</h3>
-    <dl class="specs-list">
-      <div><dt>TV Wall Feature</dt><dd>Curved PU Capsule + 360&deg; Halo</dd></div>
-      <div><dt>TV Console Start</dt><dd>1 ft Floating Curved Corner</dd></div>
-      <div><dt>Display Vitrine</dt><dd>Fluted Glass + Illuminated Shelves</dd></div>
-      <div><dt>Behind Sofa Art</dt><dd>Sculptural Leaf/Feather PU Relief</dd></div>
-      <div><dt>Art Lighting</dt><dd>Black Track Spotlight Rail</dd></div>
-      <div><dt>Curved Sofa</dt><dd>Dusky Terracotta/Cream Modular</dd></div>
-      <div><dt>Coffee Table</dt><dd>Round Marble + Fluted Oak Base</dd></div>
-      <div><dt>Living Aisle</dt><dd>2,100 mm (7.0 ft) Clear Flow</dd></div>
-      <div><dt>Dining Suite</dt><dd>Calacatta Quartz + Chandelier</dd></div>
-      <div><dt>Mandir Niche</dt><dd>600 mm North-East Sanctum</dd></div>
-    </dl>
-
-    <h3>3D Display &amp; Realism Options</h3>
-    <label class="control-toggle"><input type="checkbox" id="chk-cutaway" checked> Dynamic Wall Cutaways</label>
-    <label class="control-toggle"><input type="checkbox" id="toggle-ceiling" checked> 4" Peripheral False Ceiling &amp; Cove</label>
-    <label class="control-toggle"><input type="checkbox" id="toggle-dims" checked> Dimension Strings &amp; Clearances</label>
-    <label class="control-toggle"><input type="checkbox" id="toggle-adjacents" checked> Show Open Kitchen &amp; Lobby Flows</label>
-
-    <h3>Interactive Hardware</h3>
-    <label class="control-toggle"><input type="checkbox" id="chk-bed"> Expand Sofa-cum-Bed (Metal Scissor)</label>
-    <label class="control-toggle"><input type="checkbox" id="chk-mandir"> Slide Mandir Aarti Tray &amp; Hidden Table</label>
-    <label class="control-toggle"><input type="checkbox" id="chk-storage"> Open TV Console Drawers &amp; Tall Cabinet</label>
-    <label class="control-toggle"><input type="checkbox" id="chk-balcony"> Slide UPVC Glass Balcony Door</label>
-    <label class="control-toggle"><input type="checkbox" id="chk-mood"> Evening Ambient &amp; Cove Illumination</label>
-
-    <h3>Component Inspector</h3>
-    <select id="component-selector" style="width:100%;margin-bottom:8px" aria-label="Select component to inspect">
-      <option value="none">-- Click in 3D or Select Component --</option>
-      <option value="tv-capsule">Curved PU Capsule TV Feature Panel</option>
-      <option value="leaf-art">Sculptural Botanical Leaf/Feather Wall Relief</option>
-      <option value="track-light">Black Architectural Spot Track Light</option>
-      <option value="sofa">Curved Modular Sofa with Storage / Bed</option>
-      <option value="coffee-table">Round Marble Coffee Table with Fluted Pedestal</option>
-      <option value="tv-console">1 ft Floating TV Console (Curved Start)</option>
-      <option value="fluted-glass">Fluted &amp; Tinted Glass Display Vitrine</option>
-      <option value="tall-storage">2 ft Seamless Tall Storage Unit</option>
-      <option value="dining-table">6-Seater Calacatta Quartz Dining Table</option>
-      <option value="mandir">600 mm Sacred Mandir (Tray + Hidden Table)</option>
-      <option value="false-ceiling">4-inch Peripheral False Ceiling &amp; Cove</option>
-      <option value="balcony">Sitout Balcony &amp; UPVC Sliding Door</option>
-    </select>
-    <div id="inspector-output" class="inspector-card">
-      <h4 id="insp-name">Curved PU Capsule TV Feature Panel</h4>
-      <p><strong>Dimensions:</strong> <span id="insp-dims">2,500 W x 1,450 H x 40 D mm</span></p>
-      <p><strong>Level:</strong> <span id="insp-lvl">600 to 2,050 mm AFF</span></p>
-      <p><strong>Finish:</strong> <span id="insp-fin">Warm Ivory PU Lacquer + Rippled Wave Relief + 360&deg; LED Halo</span></p>
-      <p><strong>Hardware / Function:</strong> <span id="insp-desc">Capsule pill-shaped floating panel with 220 mm radius rounded corners, rippled organic relief texture, continuous warm LED perimeter halo backlighting, and flush 75" OLED display mount.</span></p>
-    </div>
-
-    <div class="note-box">
-      <strong>Study 04 Refinements:</strong> Site-matched warm beige walls, accurate cream marble tile floor with grey skirting, vivid terracotta/rose sofa, lush indoor plants, multi-arm brass chandelier, sheer balcony curtains &mdash; all from your real photos &amp; design reference!
-    </div>
-
-    <button type="button" id="btn-export-csv" style="width:100%;margin-top:10px;">&#128203; Download Millwork Schedule CSV</button>
-  </aside>
+</aside>
 </main>
 
+<section class="doc" id="schedule">
+  <h2>Living &amp; Dining Area / Study 12 Coordination Drawings (Swapped Walls, 3D Wavy HDHMR TV Wall &amp; 600 mm Sitout-Corner White CNC Pooja Mandir)</h2>
+  <p>This Study 12 coordination model incorporates all requested layout and millwork revisions: (1) <strong>North &amp; South Walls Swapped</strong> — the `5,185 mm` North wall (`Z = 0`) now houses the <strong>Full-Height Seamless 3D Wavy Sculpted HDHMR TV Wall (`TV-WAVE`)</strong> framed on the left by the vertical fluted walnut DB/curio column (`DB-CURIO`) and below by the <strong>Curved-Edge Floating Credenza (`TV-CON`)</strong> (matching `5b653be6982f2ecbd922162ecae0a06e.jpg`), while the `5,170 mm` South wall (`Z = 3,300`) hosts the <strong>`3,823 mm` Modular Dual-Sleeper Lounge Sofa (`S1`)</strong> and <strong>DXF 6-Leaf Botanical Relief Mural (`W-LEAF`)</strong>; and (2) the **`600 mm` North-East wall return (`X = 8,975, Z = 0..600 mm`)** next to the `SLD1` sitout slider (`highres_floor_plan.jpg`) now houses a **Tall Modern White CNC Pooja Mandir (`P1`)** with bi-fold CNC jaali gates, a pull-out prasad offering tray, a hidden pull-out sitting/kneeling table, a thin pull-out ritual prep table, and a rolling low-height puja item storage box below.</p>
 
-<section class="section-doc" id="factory">
-  <h2>Architectural &amp; Millwork Coordination Register</h2>
-  <p>Study 04 &mdash; Refined with site-matched materials from actual room photographs. All dimensions from official <strong>floor plan measurement.pdf</strong>. Design elements from <strong>living-design-reference.jpg</strong>.</p>
+  <div class="stats">
+    <span><strong>4,150 x 2,692.4</strong>3D Wavy HDHMR TV Wall (North)</span>
+    <span><strong>3,950 (R=190 Ends)</strong>Curved Floating TV Credenza</span>
+    <span><strong>3,823 Dual-Sleeper</strong>South Sofa + DXF 6-Leaf Mural</span>
+    <span><strong>850 x 580 x 2,692.4</strong>600mm Wall White CNC Mandir</span>
+  </div>
 
-  <h3>1. Clearance &amp; Spatial Flow Verification</h3>
+  <h3>1. Architectural &amp; Swapped Wall Allocation Schedule (Origin X = 0 West, Z = 0 North, Y = 0 Floor)</h3>
   <div class="table-wrap">
     <table>
-      <thead>
-        <tr>
-          <th>Zone / Corridor</th>
-          <th>Design Clearance</th>
-          <th>Standard Benchmark</th>
-          <th>Compliance Status &amp; Spatial Realism</th>
-        </tr>
-      </thead>
+      <thead><tr><th>Zone / Wall Mark</th><th>Dimensions &amp; Coordinates (mm)</th><th>Study 12 Swapped Layout &amp; Site Coordination Notes</th></tr></thead>
       <tbody>
-        <tr>
-          <td><strong>Living Room Primary Aisle</strong> (Sofa front to floating TV console)</td>
-          <td><strong>2,100 mm (7.0 ft)</strong> (Sofa mode)<br><strong>1,200 mm</strong> (Bed mode)</td>
-          <td>Min 900 mm; Rec 1,200 mm</td>
-          <td>Extraordinarily wide lounge aisle. Floating 300 mm TV console reveals floor tiles underneath, magnifying visual width.</td>
-        </tr>
-        <tr>
-          <td><strong>Main Entrance Vestibule</strong> (MD door swing to curved console)</td>
-          <td><strong>1,150 mm</strong> clear swing radius</td>
-          <td>Min 900 mm for 1050 door</td>
-          <td>Main door (1,050 x 2,400 mm) swings inward freely. Console's 300 mm radius curve eliminates sharp corners.</td>
-        </tr>
-        <tr>
-          <td><strong>Dining Room Circulation Aisle</strong></td>
-          <td><strong>1,450 mm</strong> (Bench in use)<br><strong>1,850 mm</strong> (Bench tucked)</td>
-          <td>Min 1,000 mm</td>
-          <td>Unobstructed flow between living, kitchen, and dining. Low-profile bench preserves continuous sightline.</td>
-        </tr>
-        <tr>
-          <td><strong>North Dining Chair Pull-out</strong></td>
-          <td><strong>950 mm</strong> clear pull-out</td>
-          <td>Min 800 mm</td>
-          <td>Comfortable seating and egress without contacting the wall or bedroom lobby opening.</td>
-        </tr>
-        <tr>
-          <td><strong>Mandir Prayer Envelope</strong></td>
-          <td><strong>1,150 mm</strong> clear prayer space</td>
-          <td>Min 900 mm</td>
-          <td>Located in sacred North-East (Ishanya) niche. Extends Aarti tray and hidden table without obstructing balcony door.</td>
-        </tr>
+        <tr><td><strong>North Wall (`Z = 0`, Living TV Wall)</strong></td><td>X = 0..5,185: 180 left scribe + <strong>750 Fluted Walnut DB &amp; Curio Tower (`DB-CURIO`, X 180..930)</strong> + <strong>4,150 Full-Height 3D Wavy HDHMR TV Wall (`TV-WAVE`, X 930..5,080)</strong> + 105 right reveal</td><td>Matches reference `5b653be6982f2ecbd922162ecae0a06e.jpg` and site photo 2: the thick rectangular ply box is completely removed. Instead, seamless 18+18 mm CNC-sculpted wavy HDHMR panels run floor-to-ceiling (`Y = 0..2,692.4`) in warm off-white micro-cement PU (`#ede6da`), grazed by top ceiling cove LEDs. The left fluted walnut tower conceals the electrical DB box (`Y = 1,200..1,850`).</td></tr>
+        <tr><td><strong>Curved Floating Credenza (`TV-CON`)</strong></td><td>3,950 W x 380 H x 420 D (`X = 1,030..4,980, Y = 240..620, Z = 0..420`)</td><td>Floating off-white matte PU console with <strong>smoothly curved R = 190 mm waterfall left and right ends</strong>, 4 handleless push-to-open drawers (`TV-DRW-1..4`), recessed under-console LED floor grazing, 75" OLED TV (`1,680 x 960`), and Dolby Atmos soundbar (`1,150 x 65 x 95`).</td></tr>
+        <tr><td><strong>South Wall (`Z = 3,300`, Sofa &amp; DXF Mural)</strong></td><td>X = 0..5,170: 1,050 West accent zone (`AC-1` chair) + <strong>3,823 Dual-Sleeper Sofa (`S1`, X 1,050..4,873, Z 2,335..3,300)</strong> + 297 buffer before `D1` M.Bed door (`X 5,170..6,085`)</td><td>Sofa `S1` faces North toward the Wavy TV wall. When the `FS0136` 3-fold sleeper beds unfold Northward (`Z = 3,300` down to `1,115 mm`, `2,185 mm` total extended depth), a clear <strong>`695 mm` passage</strong> remains between the extended bed foot (`Z = 1,115`) and the North TV credenza (`Z = 420`). Above `S1` (`Y = 1,020..2,640`) sits the 6-layer DXF botanical leaf mural (`W-LEAF`) lit by a 4-spot track bar.</td></tr>
+        <tr><td><strong>East `600 mm` Wall Return &amp; Pooja Mandir (`P1`)</strong></td><td>North-East Corner (`X = 8,125..8,975, Z = 0..580, Y = 0..2,692.4`): <strong>850 W x 580 D x 2,692.4 H</strong></td><td>Utilizes the exact <strong>`600 mm` solid wall return (`X = 8,975, Z = 0..600`)</strong> left/north of the `SLD1` sitout slider (`Z = 600..2,700`) from `highres_floor_plan.jpg`. The `580 mm` cabinet depth tucks flush inside the `600 mm` return so it never obstructs the `2,100 mm` sitout sliding door or drapery.</td></tr>
+        <tr><td><strong>Dining Zone (`DT-1` &amp; `CR-1`)</strong></td><td>Dining Hall `4,535 x 3,300` (`X = 4,440..8,975`): Table `1,950 x 1,050 x 760 H` centered at `X = 6,850, Z = 1,750`; Sideboard `1,300 W` at `X = 6,750..8,050, Z = 0..400`</td><td>6-seater oval Patagonia marble table on dual fluted walnut pedestals with 6 charcoal-velvet chairs, brass branch chandelier, and a `1,300 mm` crockery console alongside the `850 mm` Pooja Mandir on the `2,265 mm` North dining wall (`1300 + 850 = 2150 <= 2265 mm`).</td></tr>
       </tbody>
     </table>
   </div>
 
-  <h3>2. Component Dimension Schedule for Factory Review</h3>
+  <h3>2. Tall Modern White CNC Pooja Mandir (`P1` — `850 W x 580 D x 2,692.4 H mm` on the `600 mm` Sitout Wall)</h3>
+  <p>Designed specifically for the `600 mm` North-East wall return (`X = 8,125..8,975 mm, Z = 0..580 mm`), facing South into the Dining/Living hall with four vertically integrated ritual &amp; ergonomic levels:</p>
   <div class="table-wrap">
     <table>
-      <thead>
-        <tr>
-          <th>Code</th>
-          <th>Component Description</th>
-          <th>Dimensions W x H x D (mm)</th>
-          <th>Level AFF</th>
-          <th>Material Finish</th>
-          <th>Hardware &amp; Fabrication Notes</th>
-        </tr>
-      </thead>
+      <thead><tr><th>Pooja Mandir Component</th><th>Finished Size W x D x H &amp; Elevation (mm)</th><th>Hardware, CNC Pattern &amp; Interactive Function</th></tr></thead>
       <tbody>
-        <tr>
-          <td><strong>TV-PANEL</strong></td>
-          <td>Curved PU Capsule TV Feature Panel</td>
-          <td>2,500 x 1,450 x 40</td>
-          <td>600 to 2,050</td>
-          <td>Warm Ivory PU Lacquer + Rippled Relief + 360&deg; LED Halo</td>
-          <td>Capsule pill-shaped panel with 220 mm radius rounded corners, CNC rippled wave relief, continuous perimeter warm LED backlighting, 75" OLED mount.</td>
-        </tr>
-        <tr>
-          <td><strong>WALL-ART</strong></td>
-          <td>Sculptural Botanical Leaf/Feather Wall Relief</td>
-          <td>2,600 x 1,850 x 45 (Assembly)</td>
-          <td>750 to 2,600</td>
-          <td>Multi-layered PU in Terracotta, Wheat, Taupe &amp; Cream</td>
-          <td>4 overlapping stylized leaves/feathers with diagonal ribbed fluting. Highlighted by overhead track spots.</td>
-        </tr>
-        <tr>
-          <td><strong>TR-01</strong></td>
-          <td>Black Architectural Track Spotlight Rail</td>
-          <td>2,400 L x 40 W x 60 H</td>
-          <td>2,630 AFF (Ceiling)</td>
-          <td>Matte Anodized Black Aluminium</td>
-          <td>4 adjustable 12W COB warm spotlights (3000K, 24&deg; beam) aimed at the botanical relief art.</td>
-        </tr>
-        <tr>
-          <td><strong>TV-01</strong></td>
-          <td>Entrance Curved Floating TV Console</td>
-          <td>3,100 x 350 x 300 (1 ft depth)</td>
-          <td>250 to 600</td>
-          <td>Matte warm beige PU lacquer</td>
-          <td>Starts at entrance with 300 mm radius curve. 3 soft-close push drawers + 1 center drop-down flap. Full-width floor under-glow.</td>
-        </tr>
-        <tr>
-          <td><strong>GL-01</strong></td>
-          <td>Fluted &amp; Tinted Glass Display Vitrine</td>
-          <td>900 x 2,092.4 x 300</td>
-          <td>600 to 2,692.4</td>
-          <td>8 mm bronze fluted tempered glass + dark bronze aluminium frame</td>
-          <td>Vertical vitrine reaching 4" peripheral false ceiling. 4 illuminated glass shelves with warm downlights.</td>
-        </tr>
-        <tr>
-          <td><strong>ST-01</strong></td>
-          <td>2 ft Seamless Tall Storage Unit</td>
-          <td>600 (2 ft) x 2,092.4 x 400</td>
-          <td>600 to 2,692.4 (or Floor)</td>
-          <td>Matte beige/sage slab door with push-to-open latch</td>
-          <td>Full-height seamless cabinet. 6-tier adjustable shelving on 32 mm system drilling.</td>
-        </tr>
-        <tr>
-          <td><strong>SF-01</strong></td>
-          <td>Curved Modular Sofa with Storage / Bed</td>
-          <td>3,500 x 850 x 950 (Sofa)<br>3,500 x 850 x 1,850 (Bed)</td>
-          <td>Floor to 850</td>
-          <td>Textured dusky terracotta/rose or cream boucl&eacute;</td>
-          <td>Organic curved modular with circular chaise end, under-seat drawers, WIN-STAR metal pull-out scissor bed mechanism.</td>
-        </tr>
-        <tr>
-          <td><strong>CT-01</strong></td>
-          <td>Round Marble Coffee Table</td>
-          <td>760 Diam x 380 H</td>
-          <td>Floor to 380</td>
-          <td>Calacatta Statuario Marble + Dark fluted oak pedestal</td>
-          <td>30 mm chamfered round marble top on architectural fluted cylinder base.</td>
-        </tr>
-        <tr>
-          <td><strong>DT-01</strong></td>
-          <td>6-Seater Designer Quartz Dining Table</td>
-          <td>1,800 x 750 x 900</td>
-          <td>Floor to 750</td>
-          <td>Calacatta Gold Quartz (35 mm) + Dual fluted oak pedestals</td>
-          <td>Dual architectural fluted pedestals in champagne bronze / fluted oak. 50 mm radius corners.</td>
-        </tr>
-        <tr>
-          <td><strong>MD-01</strong></td>
-          <td>Sacred Mandir (Temple) in 600 Niche</td>
-          <td>600 x 2,400 x 450</td>
-          <td>Floor to 2,400</td>
-          <td>Pure white Corian / Statuario marble + backlit CNC lattice + teak accents</td>
-          <td>North-East Ishanya niche. Upper backlit sanctum with brass bells. Telescopic pull-out Aarti tray + hidden pull-out table + dual lower drawers.</td>
-        </tr>
-        <tr>
-          <td><strong>FC-01</strong></td>
-          <td>4-Inch Peripheral False Ceiling</td>
-          <td>420 wide perimeter border x 101.6 drop</td>
-          <td>2,692.4 finished AFF</td>
-          <td>Gypsum board + painted off-white + aluminum light cove profile</td>
-          <td>Continuous false ceiling perimeter around living and dining with warm LED cove trough (3000K) and central ceiling fan.</td>
-        </tr>
+        <tr><td><strong>P1-CARCASS &amp; SANCTUM</strong><br>Full-Height White Mandir Tower</td><td><strong>850 W x 580 D x 2,692.4 H</strong><br>(`X = 8,125..8,975, Z = 0..580, Y = 0..2,692.4`)</td><td>18 mm HDHMR finished in pure satin warm-white PU (`#faf8f5`) with a backlit warm-onyx/acrylic sacred lotus backplate (`Y = 1,080..2,550`), stepped marble deity sinhasan (`Y = 1,120..1,260`), hanging brass temple bells, and concealed top cove downlight.</td></tr>
+        <tr><td><strong>P1-GATE-L / R</strong><br>Bi-Fold White CNC Jaali Doors</td><td>2 Leaves, each <strong>405 W x 22 T x 1,560 H</strong><br>(`Y = 1,080..2,640, Z = 570`)</td><td>CNC-routed 22 mm HDHMR doors with geometric lotus/mandala lattice cutouts, champagne-brass perimeter inlays, and 350 mm vertical brass pulls. Swings open 110&deg; (`Toggle: Open Pooja White CNC Gates`).</td></tr>
+        <tr><td><strong>1. P1-TRAY (Serving God)</strong><br>Pull-Out Bhog / Prasad Offering Tray</td><td><strong>774 W x 420 D x 36 H</strong><br>(`Y = 1,020..1,056`, extends +360 mm to `Z = 940`)</td><td>Soft-close full-extension telescopic tray with a 15 mm brushed-brass gallery rail and heat-safe 6 mm quartz/brassarti inlay for serving prasad, holding diya/aarti thali during worship.</td></tr>
+        <tr><td><strong>2. P1-SIT-TBL (Pullable Sitting Table)</strong><br>Hidden Pull-Out Sitting / Kneeling Table</td><td><strong>774 W x 480 D x 320 H</strong><br>(Top at `Y = 720`, side legs to `Y = 400`, extends +420 mm to `Z = 1,000`)</td><td>Concealed pull-out low table / cushioned asana bench on heavy-duty 60 kg locking telescopic slides (`Y = 400..720 mm`), allowing the devotee to pull out a comfortable sitting/reading surface during puja and push it flush afterward.</td></tr>
+        <tr><td><strong>3. P1-THIN-TBL &amp; P1-BOX</strong><br>Thin Pull-Out Table + Low Puja Storage Box Below</td><td>&bull; <strong>Thin Pull-Out Table (`P1-THIN-TBL`):</strong> `774 W x 460 D x 28 T` at `Y = 364..392` (extends +380 mm)<br>&bull; <strong>Low Puja Storage Box (`P1-BOX`):</strong> `774 W x 480 D x 250 H` at `Y = 95..345` (extends +400 mm)</td><td>Directly below the sitting table is a <strong>28 mm thin pull-out samagri/book tray (`Y = 364..392`)</strong>, and beneath it a <strong>hidden low-height rolling drawer box (`250 mm` H, `Y = 95..345`)</strong> divided into compartments for storing incense sticks, ghee jars, cotton wicks, matchboxes, and brass puja vessels.</td></tr>
       </tbody>
     </table>
   </div>
 
-  <h3>3. Design References &amp; Concept Gallery</h3>
-  <div class="reference-gallery">
-    <figure class="reference-card">
-      <img src="living-design-reference.jpg" alt="Client living room design reference">
-      <figcaption>
-        <strong>Primary Reference: Client Living Room Design</strong>
-        Curved PU capsule TV panel with 360&deg; LED halo, fluted glass vitrine, sculptural feather/leaf relief, and modular curved sofa.
-      </figcaption>
-    </figure>
-    <figure class="reference-card">
-      <img src="sofa-cumbed-1.png" alt="Curved modular cream sofa">
-      <figcaption>
-        <strong>Reference 2: Curved Modular Sofa</strong>
-        Plush boucl&eacute; upholstery, articulated headrests, and natural wood console divider.
-      </figcaption>
-    </figure>
-    <figure class="reference-card">
-      <img src="sofa-cumbed-2.png" alt="3-tier scissor metal pull-out mechanism">
-      <figcaption>
-        <strong>Reference 3: Metal Scissor Mechanism</strong>
-        WIN-STAR heavy-duty metal pull-out cascade mechanism with linkage arms.
-      </figcaption>
-    </figure>
-    <figure class="reference-card">
-      <img src="living_dining_crop.png" alt="Floor plan crop of Living, Dining, Sitout">
-      <figcaption>
-        <strong>Reference 4: Floor Plan Geometry</strong>
-        Verified: Living 4,440 x 3,300 mm, Dining 4,535 x 3,300 mm, Sitout 1,525 x 3,300 mm.
-      </figcaption>
-    </figure>
+  <h3>3. Modular Dual-Sleeper 12.5-Ft Lounge Sofa (`S1` — Blueprint Rev 3.2 on South Wall)</h3>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Blueprint Part Mark</th><th>Material &amp; Hardware Spec</th><th>Qty</th><th>Finished Size W x D x H (mm)</th><th>South-Wall Placement &amp; Kinematic Tolerance</th></tr></thead>
+      <tbody>
+        <tr><td><strong>S1-PLAT / Base Platforms</strong></td><td>18 mm BWP Marine Plywood (IS:710) + 45x45 Marandi battens</td><td>2</td><td>1,690 x 890 x 18</td><td>Positioned at `X = 1,190..2,880` (Module L) and `X = 3,032..4,722` (Module R), `Z = 2,335..3,300`.</td></tr>
+        <tr><td><strong>S1-ARM / Waterfall Arms</strong></td><td>4x 18 mm BWP CNC ribs + 2x 6 mm Flexi-Ply (`R = 150 mm` crest) + Heavy Cream Boucl&eacute;</td><td>2</td><td>140 W x 965 D x 740 H</td><td>Left Arm at `X = 1,050..1,190`, Right Arm at `X = 4,733..4,873` (`3,823 mm` total width).</td></tr>
+        <tr><td><strong>S1-CON / White Oak Console</strong></td><td>18 mm White Oak Veneer over BWP Ply (45&deg; miter waterfall)</td><td>1</td><td>152 W x 965 D x 610 H</td><td>Centered at `X = 2,880..3,032` with 36 mm mated BWP center spine, 3x crocodile brackets &amp; 2x M10 bolts.</td></tr>
+        <tr><td><strong>FS0136 &amp; 95mm Mattress</strong></td><td>2x FS0136 3-fold steel mechanisms (`1,664 W`) + 45mm 80D + 50mm 40D HR foam mattress</td><td>2</td><td>1,664 W x 670 closed / 2,185 extended</td><td>Unfolds Northward from `Z = 3,300` to `Z = 1,115 mm` (`13 mm` side clearance per bay; `695 mm` clear aisle to North TV credenza).</td></tr>
+        <tr><td><strong>ST-180 / Ratchet Headrests</strong></td><td>4x Win Star ST-180 6-click chrome ratchets (90&deg;–180&deg;)</td><td>4</td><td>710 W x 58 D x 120 H</td><td>2 units per module; rises from `813 mm` backrest crest to `978 mm` raised apex.</td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
-<footer class="doc-footer">
-  <div>Living &amp; Dining Hall Interior Study 04 &bull; Site-Matched &amp; Design-Reference Refined</div>
-  <div><a href="complete_3bhk_master_manufacturing_docket-wardrobe-bed-baywindow-etc.pdf">Project Docket</a> &bull; <a href="floor%20plan%20measurement.pdf">Floor Plan Source</a></div>
-</footer>
-
+<section class="doc" id="factory">
+  <h2>Component Dimensions / Factory &amp; Carpentry Review Register (Study 12)</h2>
+  <p><strong>All sizes in mm. COORDINATION &amp; WORKSHOP REGISTER (Study 12).</strong> Select any assembly or individual CNC panel below to isolate and inspect its 3D geometry and exact `W x H x D` envelope in the viewport, or export the complete schedule to CSV.</p>
+  <div class="toolbar print-hide">
+    <label for="part-select">Component</label>
+    <select id="part-select" style="max-width:100%;min-width:0"></select>
+    <button id="inspect-part" title="Inspect 3D component dimensions"><i data-lucide="box"></i>Inspect 3D Part</button>
+    <button id="parts-csv" title="Export component dimensions CSV"><i data-lucide="download"></i>Dimensions CSV</button>
+  </div>
+  <p id="part-size" role="status"></p>
+  <p id="factory-checks" role="status"></p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Mark / Component</th><th>Qty</th><th>W x H x D (mm)</th><th>Panel L x B x T (mm)</th><th>Material, Hardware &amp; Release Spec</th></tr></thead>
+      <tbody id="part-rows"></tbody>
+    </table>
+  </div>
+</section>
 
 <script type="module">
-import * as THREE from 'three';
-import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
-import { RoomEnvironment } from 'three/addons/environments/RoomEnvironment.js';
+const loading = document.getElementById('loading');
+try {
+  const THREE = await import('three');
+  const { OrbitControls } = await import('three/addons/controls/OrbitControls.js');
+  const { RoomEnvironment } = await import('three/addons/environments/RoomEnvironment.js');
+  import('https://cdn.jsdelivr.net/npm/lucide@0.468.0/+esm').then(({ createIcons, icons }) => createIcons({ icons })).catch(() => {});
 
-// --- ROOM MEASUREMENTS (Millimeters from official PDF) ---
-const DIM = {
-  livingL: 4440,
-  diningL: 4535,
-  totalL: 8975,
-  width: 3300,
-  height: 2794,
-  falseDrop: 101.6,
-  falseH: 2692.4,
-  balconyL: 1525,
-  mdOffsetNorth: 450,
-  mdWidth: 1050,
-  mdHeight: 2400,
-  mdOffsetSouth: 1800,
-  lobbyOffset: 5185,
-  lobbyWidth: 1750,
-  bed1Wall: 2265,
-  mandirWidth: 600,
-  mandirDepth: 450,
-  sldWidth: 2400,
-  sldHeight: 2100,
-  mbrDoorOffset: 5170,
-  mbrDoorWidth: 915,
-  kitchenPassage: 2630
-};
+  const spec = {
+    hallWidth: 8975,
+    livingWidth: 4440,
+    diningWidth: 4535,
+    depth: 3300,
+    sitoutWidth: 1525,
+    height: 2794,
+    falseCeilingDrop: 101.6,
+    soffit: 2692.4,
+    tv: {
+      dbX: 180,
+      dbW: 750,
+      dbD: 360,
+      waveX: 930,
+      waveW: 4150,
+      waveH: 2692.4,
+      waveD: 54,
+      conX: 1030,
+      conW: 3950,
+      conH: 380,
+      conD: 420,
+      conBottomY: 240,
+      cornerR: 190
+    },
+    sofa: {
+      startX: 1050,
+      width: 3823,
+      closedDepth: 965,
+      extendedDepth: 2185,
+      seatHeight: 464,
+      crestHeight: 813,
+      apexHeight: 978,
+      armWidth: 140,
+      bayWidth: 1690,
+      mechWidth: 1664,
+      consoleWidth: 152
+    },
+    pooja: {
+      startX: 8125,
+      endX: 8975,
+      width: 850,
+      depth: 580,
+      height: 2692.4
+    },
+    dining: {
+      centerX: 6850,
+      centerZ: 1750,
+      tableL: 1950,
+      tableW: 1050,
+      tableH: 760
+    }
+  };
 
-// --- INITIALIZE THREE.JS RENDERER & SCENE ---
-const container = document.getElementById('viewport-container');
-const canvas = document.getElementById('webgl-canvas');
-const loader = document.getElementById('loader');
+  const viewport = document.getElementById('viewport');
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color('#dce5df');
 
-const scene = new THREE.Scene();
-scene.background = new THREE.Color('#d8e2db');
+  const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.06;
+  viewport.prepend(renderer.domElement);
+  renderer.domElement.setAttribute('aria-label', 'Living and dining area Study 12 interactive 3D interior');
 
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, preserveDrawingBuffer: true, powerPreference: 'high-performance' });
-renderer.setSize(container.clientWidth, container.clientHeight);
-renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-renderer.shadowMap.enabled = true;
-renderer.shadowMap.type = THREE.PCFSoftShadowMap;
-renderer.toneMapping = THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.25;
+  const envGen = new THREE.PMREMGenerator(renderer);
+  scene.environment = envGen.fromScene(new RoomEnvironment(), 0.04).texture;
+  envGen.dispose();
 
-const pmremGenerator = new THREE.PMREMGenerator(renderer);
-scene.environment = pmremGenerator.fromScene(new RoomEnvironment(), 0.04).texture;
-pmremGenerator.dispose();
+  const camera = new THREE.PerspectiveCamera(46, 1, 10, 45000);
+  const ortho = new THREE.OrthographicCamera(-5000, 5000, 3500, -3500, 1, 45000);
+  let activeCamera = camera;
+  let controls = new OrbitControls(activeCamera, renderer.domElement);
+  controls.enableDamping = true;
 
-const aspect = container.clientWidth / container.clientHeight;
-const camera = new THREE.PerspectiveCamera(54, aspect, 10, 45000);
-const ortho = new THREE.OrthographicCamera(-5000 * aspect, 5000 * aspect, 5000, -5000, 1, 40000);
-let activeCamera = camera;
-
-let controls = new OrbitControls(activeCamera, canvas);
-controls.enableDamping = true;
-controls.dampingFactor = 0.08;
-controls.maxDistance = 24000;
-controls.minDistance = 500;
-const roomCenter = new THREE.Vector3(DIM.totalL * 0.48, 1100, DIM.width * 0.5);
-controls.target.copy(roomCenter);
-
-// --- ENHANCED LIGHTING (Vivid & Warm) ---
-const hemiLight = new THREE.HemisphereLight('#fff8ee', '#74867c', 2.2);
-scene.add(hemiLight);
-
-// Sunlight pouring in from Sitout Balcony (East)
-const sunLight = new THREE.DirectionalLight('#fff2db', 2.8);
-sunLight.position.set(11500, 4800, 1650);
-sunLight.castShadow = true;
-sunLight.shadow.mapSize.set(4096, 4096);
-sunLight.shadow.camera.left = -5000;
-sunLight.shadow.camera.right = 5000;
-sunLight.shadow.camera.top = 4000;
-sunLight.shadow.camera.bottom = -4000;
-sunLight.shadow.camera.near = 150;
-sunLight.shadow.camera.far = 18000;
-sunLight.shadow.bias = -0.0002;
-sunLight.shadow.normalBias = 2.5;
-scene.add(sunLight);
-
-// West ambient fill light
-const fillLight = new THREE.DirectionalLight('#d8eaf5', 1.2);
-fillLight.position.set(-2500, 3800, 2000);
-scene.add(fillLight);
-
-// Additional warm fill for vibrancy
-const warmFill = new THREE.DirectionalLight('#ffe8d0', 0.8);
-warmFill.position.set(4500, 2200, 3500);
-scene.add(warmFill);
-
-// Evening Mood Lighting Group
-const eveningGroup = new THREE.Group();
-eveningGroup.visible = false;
-scene.add(eveningGroup);
-
-const covePoint1 = new THREE.PointLight('#ffc46b', 3.0, 5200, 1.2);
-covePoint1.position.set(DIM.livingL * 0.5, DIM.falseH - 35, DIM.width * 0.5);
-eveningGroup.add(covePoint1);
-
-const covePoint2 = new THREE.PointLight('#ffc46b', 3.0, 5600, 1.2);
-covePoint2.position.set(DIM.livingL + DIM.diningL * 0.5, DIM.falseH - 35, DIM.width * 0.5);
-eveningGroup.add(covePoint2);
-
-const tvBacklight = new THREE.PointLight('#ffcb7d', 2.8, 3600, 1.3);
-tvBacklight.position.set(2200, 1320, 80);
-eveningGroup.add(tvBacklight);
-
-const leafSpotLight = new THREE.PointLight('#ffddaa', 2.8, 3000, 1.3);
-leafSpotLight.position.set(2400, 2400, DIM.width - 200);
-eveningGroup.add(leafSpotLight);
-
-const mandirLight = new THREE.PointLight('#ffd18a', 2.8, 2200, 1.4);
-mandirLight.position.set(DIM.totalL - 300, 1400, 250);
-eveningGroup.add(mandirLight);
-
-const diningChandelierLight = new THREE.PointLight('#ffdc9e', 3.2, 3800, 1.2);
-diningChandelierLight.position.set(6900, 1950, DIM.width * 0.5);
-eveningGroup.add(diningChandelierLight);
-
-// --- SITE-MATCHED PBR MATERIALS (from real photos) ---
-const mat = (color, opt = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.65, ...opt });
-
-const M = {
-  // Floor: Cream marble large-format tiles (from site photos: warm cream/beige ~600x600mm)
-  floor: mat('#ede5d8', { roughness: 0.18, metalness: 0.14 }),
-  adjacentFloor: mat('#e2ded4', { roughness: 0.38 }),
-  balconyDeck: mat('#805736', { roughness: 0.72 }),
-  // Walls: Warm beige (MATCHED to site photos - smooth plaster)
-  wall: mat('#ece5da', { roughness: 0.88 }),
-  wallAccent: mat('#d4cab8', { roughness: 0.72 }),
-  // Grey skirting/dado (visible in site photos at floor-wall junction)
-  skirting: mat('#9e968c', { roughness: 0.55 }),
-  // Curved PU Finishes (from design reference)
-  puIvory: mat('#f0ebe2', { roughness: 0.40, metalness: 0.06 }),
-  puWave: mat('#e8dfc8', { roughness: 0.62 }),
-  // VIVID Sculpted Leaf Colors (boosted saturation from reference photo)
-  leafTerracotta: mat('#c45a35', { roughness: 0.68 }),
-  leafWheat: mat('#d4a060', { roughness: 0.68 }),
-  leafTaupe: mat('#8c7a68', { roughness: 0.68 }),
-  leafCream: mat('#e8d0b0', { roughness: 0.68 }),
-  flutedOak: mat('#a87d4e', { roughness: 0.50 }),
-  darkMetal: mat('#1e2220', { roughness: 0.25, metalness: 0.92 }),
-  chrome: mat('#e8ecee', { roughness: 0.12, metalness: 0.96 }),
-  goldBrass: mat('#c99540', { roughness: 0.25, metalness: 0.88 }),
-  // VIVID Dusky terracotta/rose sofa fabric (richer than Study 03)
-  sofaRose: mat('#c06a58', { roughness: 0.90 }),
-  sofaRoseLight: mat('#d8907e', { roughness: 0.92 }),
-  boucle: mat('#e8e0d0', { roughness: 0.92 }),
-  pillowCream: mat('#f2ece2', { roughness: 0.92 }),
-  pillowGold: mat('#d4b078', { roughness: 0.88 }),
-  sofaWood: mat('#3e2e22', { roughness: 0.52 }),
-  // Dining Charcoal upholstery (from reference photo - dark grey chairs)
-  diningCharcoal: mat('#3a3a42', { roughness: 0.85 }),
-  // Calacatta Statuario quartz
-  quartz: mat('#faf8f4', { roughness: 0.10, metalness: 0.14 }),
-  // Fluted & Tinted Glass for Vitrine
-  flutedGlass: new THREE.MeshPhysicalMaterial({
-    color: '#4a3b2b',
-    roughness: 0.15,
-    transmission: 0.82,
-    thickness: 18,
-    transparent: true,
-    opacity: 0.78
-  }),
-  clearGlass: new THREE.MeshPhysicalMaterial({
-    color: '#ffffff',
-    roughness: 0.04,
-    transmission: 0.95,
-    thickness: 8,
-    transparent: true,
-    opacity: 0.32
-  }),
-  // Sheer curtain fabric
-  sheer: new THREE.MeshPhysicalMaterial({
-    color: '#f0ebe4',
-    roughness: 0.95,
-    transmission: 0.35,
-    thickness: 2,
-    transparent: true,
-    opacity: 0.55,
-    side: THREE.DoubleSide
-  }),
-  corianMandir: mat('#fcfbf7', { roughness: 0.22 }),
-  mandirGlow: new THREE.MeshStandardMaterial({
-    color: '#ffdd9e',
-    emissive: '#ffbe5c',
-    emissiveIntensity: 2.5,
-    roughness: 0.9
-  }),
-  coveGlow: new THREE.MeshStandardMaterial({
-    color: '#ffe5b4',
-    emissive: '#ffa733',
-    emissiveIntensity: 2.2,
-    roughness: 1.0
-  }),
-  tvScreen: mat('#0a0c0d', { roughness: 0.06, metalness: 0.28 }),
-  rug: mat('#d5cebb', { roughness: 0.96 }),
-  // Green indoor plant material
-  plantGreen: mat('#3a6830', { roughness: 0.82 }),
-  plantDark: mat('#2a4820', { roughness: 0.85 }),
-  potWhite: mat('#f0ede8', { roughness: 0.55 }),
-  potTerracotta: mat('#b06840', { roughness: 0.72 })
-};
-
-// --- SCENE GROUPS ---
-const groups = {
-  floor: new THREE.Group(),
-  adjacents: new THREE.Group(),
-  walls: new THREE.Group(),
-  ceiling: new THREE.Group(),
-  furniture: new THREE.Group(),
-  tvSuite: new THREE.Group(),
-  leafArt: new THREE.Group(),
-  sofa: new THREE.Group(),
-  dining: new THREE.Group(),
-  mandir: new THREE.Group(),
-  balcony: new THREE.Group(),
-  plants: new THREE.Group(),
-  dims: new THREE.Group()
-};
-for (const g of Object.values(groups)) scene.add(g);
-
-// Utility mesh builders
-function box(parent, w, h, d, x, y, z, material, cast = true, receive = true) {
-  const geom = new THREE.BoxGeometry(w, h, d);
-  const mesh = new THREE.Mesh(geom, material);
-  mesh.position.set(x + w / 2, y + h / 2, z + d / 2);
-  mesh.castShadow = cast;
-  mesh.receiveShadow = receive;
-  parent.add(mesh);
-  return mesh;
-}
-
-function cylinder(parent, rTop, rBot, height, segs, x, y, z, material, cast = true) {
-  const geom = new THREE.CylinderGeometry(rTop, rBot, height, segs);
-  const mesh = new THREE.Mesh(geom, material);
-  mesh.position.set(x, y + height / 2, z);
-  mesh.castShadow = cast;
-  mesh.receiveShadow = true;
-  parent.add(mesh);
-  return mesh;
-}
-
-function line(parent, pts, color) {
-  const geom = new THREE.BufferGeometry().setFromPoints(pts.map(p => new THREE.Vector3(...p)));
-  const lineMesh = new THREE.Line(geom, new THREE.LineBasicMaterial({ color, linewidth: 1 }));
-  parent.add(lineMesh);
-  return lineMesh;
-}
-
-// 2D Capsule shape helper
-function createRoundedRectShape(w, h, r) {
-  const shape = new THREE.Shape();
-  const x = -w / 2, y = -h / 2;
-  shape.moveTo(x + r, y);
-  shape.lineTo(x + w - r, y);
-  shape.quadraticCurveTo(x + w, y, x + w, y + r);
-  shape.lineTo(x + w, y + h - r);
-  shape.quadraticCurveTo(x + w, y + h, x + w - r, y + h);
-  shape.lineTo(x + r, y + h);
-  shape.quadraticCurveTo(x, y + h, x, y + h - r);
-  shape.lineTo(x, y + r);
-  shape.quadraticCurveTo(x, y, x + r, y);
-  return shape;
-}
-
-// 2D Leaf / Feather shape helper (improved with more curvature)
-function createLeafShape(length, width, curvature = 0) {
-  const shape = new THREE.Shape();
-  shape.moveTo(0, 0);
-  shape.bezierCurveTo(width * 0.7 + curvature, length * 0.35, width * 0.6 + curvature, length * 0.75, curvature * 0.5, length);
-  shape.bezierCurveTo(-width * 0.6 + curvature, length * 0.75, -width * 0.7 + curvature, length * 0.35, 0, 0);
-  return shape;
-}
-
-// Indoor Plant Builder
-function makePlant(parent, x, y, z, potR, potH, stemH, leafCount, scale) {
-  const plantG = new THREE.Group();
-  plantG.position.set(x, y, z);
-  plantG.scale.setScalar(scale || 1);
-  // Pot
-  cylinder(plantG, potR, potR * 0.85, potH, 16, 0, 0, 0, M.potWhite);
-  // Soil
-  cylinder(plantG, potR * 0.9, potR * 0.9, 20, 16, 0, potH, 0, mat('#4a3520', { roughness: 0.95 }), false);
-  // Stem
-  cylinder(plantG, 10, 8, stemH, 8, 0, potH + 20, 0, mat('#2a4020', { roughness: 0.8 }), false);
-  // Leaves (splayed out)
-  for (let i = 0; i < leafCount; i++) {
-    const leafLen = 180 + Math.random() * 120;
-    const leafW = 60 + Math.random() * 40;
-    const leafMesh = box(plantG, leafW, 6, leafLen, -leafW / 2, potH + stemH * 0.5 + i * 30, -leafLen / 2, 
-      i % 2 === 0 ? M.plantGreen : M.plantDark, false, false);
-    leafMesh.rotation.y = i * (Math.PI * 2 / leafCount);
-    leafMesh.rotation.x = -0.35 - Math.random() * 0.25;
+  const groupNames = ['floor', 'walls', 'doors', 'tvUnit', 'sofa', 'leafWall', 'pooja', 'accent', 'dining', 'ceiling', 'labels', 'dimensions', 'section', 'sofaSection', 'component'];
+  const groups = {};
+  for (const name of groupNames) {
+    groups[name] = new THREE.Group();
+    groups[name].name = name;
+    scene.add(groups[name]);
   }
-  parent.add(plantG);
-  return plantG;
-}
 
-// ==========================================
-// 1. FLOOR WITH POLISHED MARBLE TILES (Site-Matched)
-// ==========================================
-box(groups.floor, DIM.totalL, 20, DIM.width, 0, -20, 0, M.floor, false, true);
-
-// Tile joint grid (600 x 600 mm - matching site photos)
-const tileGridColor = '#c8bead';
-for (let z = 600; z < DIM.width; z += 600) {
-  line(groups.floor, [[0, 1.5, z], [DIM.totalL, 1.5, z]], tileGridColor);
-}
-for (let x = 600; x < DIM.totalL; x += 600) {
-  line(groups.floor, [[x, 1.5, 0], [x, 1.5, DIM.width]], tileGridColor);
-}
-
-// GREY SKIRTING / DADO at floor-wall junction (80mm high, visible in site photos)
-const skirtH = 80;
-box(groups.floor, DIM.totalL, skirtH, 12, 0, 0, 0, M.skirting, false, true);
-box(groups.floor, DIM.totalL, skirtH, 12, 0, 0, DIM.width - 12, M.skirting, false, true);
-box(groups.floor, 12, skirtH, DIM.width, 0, 0, 0, M.skirting, false, true);
-box(groups.floor, 12, skirtH, DIM.width, DIM.totalL - 12, 0, 0, M.skirting, false, true);
-
-// Open adjacent spaces (Kitchen passage & Bedroom lobby)
-box(groups.adjacents, DIM.kitchenPassage, 20, 1200, DIM.totalL - DIM.kitchenPassage, -20, DIM.width, M.adjacentFloor, false, true);
-box(groups.adjacents, 1200, 860, 600, DIM.totalL - 600, 0, DIM.width + 100, M.wallAccent);
-box(groups.adjacents, 1200, 30, 620, DIM.totalL - 600, 860, DIM.width + 90, M.quartz);
-
-box(groups.adjacents, DIM.lobbyWidth, 20, 1200, DIM.lobbyOffset, -20, -1200, M.adjacentFloor, false, true);
-box(groups.adjacents, 40, 2100, 915, DIM.lobbyOffset + DIM.lobbyWidth - 40, 0, -1100, M.flutedOak);
-box(groups.adjacents, 40, 2100, 915, DIM.lobbyOffset, 0, -1100, M.flutedOak);
-
-box(groups.adjacents, 800, 20, 1400, -800, -20, DIM.mdOffsetNorth, M.adjacentFloor, false, true);
-
-
-// ==========================================
-// 2. WALLS & DYNAMIC CUTAWAYS
-// ==========================================
-const wallMeshes = [];
-function addWall(w, h, d, x, y, z, sideName) {
-  const mesh = box(groups.walls, w, h, d, x, y, z, M.wall);
-  mesh.userData.side = sideName;
-  mesh.userData.center = new THREE.Vector3(x + w / 2, y + h / 2, z + d / 2);
-  wallMeshes.push(mesh);
-  return mesh;
-}
-
-// West Walls (Entrance)
-addWall(150, DIM.height, DIM.mdOffsetNorth, -150, 0, 0, 'west');
-addWall(150, DIM.height - DIM.mdHeight, DIM.mdWidth, -150, DIM.mdHeight, DIM.mdOffsetNorth, 'west');
-addWall(150, DIM.height, DIM.mdOffsetSouth, -150, 0, DIM.mdOffsetNorth + DIM.mdWidth, 'west');
-
-// Main Door MD (1050 x 2400 mm)
-const mdGroup = new THREE.Group();
-mdGroup.position.set(-140, 0, DIM.mdOffsetNorth);
-box(mdGroup, 50, DIM.mdHeight, 1050, 0, 0, 0, M.flutedOak);
-box(mdGroup, 30, 260, 40, 50, 1050, 920, M.goldBrass);
-groups.walls.add(mdGroup);
-
-// North Walls
-addWall(DIM.lobbyOffset, DIM.height, 150, 0, 0, -150, 'north');
-addWall(DIM.lobbyWidth, DIM.height - 2250, 150, DIM.lobbyOffset, 2250, -150, 'north');
-addWall(DIM.bed1Wall, DIM.height, 150, DIM.lobbyOffset + DIM.lobbyWidth, 0, -150, 'north');
-
-// East Walls (Sitout opening)
-addWall(150, DIM.height, DIM.mandirWidth, DIM.totalL, 0, 0, 'east');
-addWall(150, DIM.height, 300, DIM.totalL, 0, DIM.width - 300, 'east');
-addWall(150, DIM.height - DIM.sldHeight, DIM.sldWidth, DIM.totalL, DIM.sldHeight, DIM.mandirWidth, 'east');
-
-// South Walls
-addWall(DIM.mbrDoorOffset, DIM.height, 150, 0, 0, DIM.width, 'south');
-addWall(1175, DIM.height - 2100, 150, DIM.mbrDoorOffset, 2100, DIM.width, 'south');
-const mbrDoor = box(groups.walls, 40, 2100, 915, DIM.mbrDoorOffset + 260, 0, DIM.width + 10, M.flutedOak);
-mbrDoor.rotation.y = 0.35;
-addWall(DIM.kitchenPassage, DIM.height - 2400, 150, DIM.totalL - DIM.kitchenPassage, 2400, DIM.width, 'south');
-
-// Switch boards on wall (from site photos: 1100mm AFF switchboard)
-const switchPlate = mat('#ffffff', { roughness: 0.3 });
-box(groups.walls, 12, 100, 180, 2, 1100, 200, switchPlate);
-box(groups.walls, 12, 100, 180, 2, 1100, DIM.width - 400, switchPlate);
-
-// ==========================================
-// 3. SITOUT BALCONY (EAST)
-// ==========================================
-box(groups.balcony, DIM.balconyL, 20, DIM.width, DIM.totalL, -20, 0, M.balconyDeck, false, true);
-box(groups.balcony, 150, 600, DIM.width, DIM.totalL + DIM.balconyL - 150, 0, 0, M.wall);
-box(groups.balcony, 30, 500, DIM.width, DIM.totalL + DIM.balconyL - 90, 600, 0, M.clearGlass);
-box(groups.balcony, 60, 40, DIM.width, DIM.totalL + DIM.balconyL - 100, 1100, 0, M.darkMetal);
-box(groups.balcony, DIM.balconyL, DIM.height, 150, DIM.totalL, 0, -150, M.wall);
-box(groups.balcony, DIM.balconyL, DIM.height, 150, DIM.totalL, 0, DIM.width, M.wall);
-
-// UPVC Sliding Balcony Doors SLD1 (2400 x 2100 mm)
-const balconyDoorsGroup = new THREE.Group();
-balconyDoorsGroup.position.set(DIM.totalL + 20, 0, DIM.mandirWidth);
-box(balconyDoorsGroup, 60, DIM.sldHeight, DIM.sldWidth * 0.5, 0, 0, DIM.sldWidth * 0.5, M.darkMetal);
-box(balconyDoorsGroup, 10, DIM.sldHeight - 160, DIM.sldWidth * 0.5 - 160, 25, 80, DIM.sldWidth * 0.5 + 80, M.clearGlass);
-
-const slidingDoorPanel = new THREE.Group();
-box(slidingDoorPanel, 60, DIM.sldHeight, DIM.sldWidth * 0.5, 40, 0, 0, M.darkMetal);
-box(slidingDoorPanel, 10, DIM.sldHeight - 160, DIM.sldWidth * 0.5 - 160, 65, 80, 80, M.clearGlass);
-box(slidingDoorPanel, 20, 300, 30, 90, 950, DIM.sldWidth * 0.5 - 80, M.chrome);
-balconyDoorsGroup.add(slidingDoorPanel);
-groups.walls.add(balconyDoorsGroup);
-
-// Elegant sheer drapes flanking the balcony sliders (from reference photo)
-const curtainL = box(groups.balcony, 40, 2350, 320, DIM.totalL - 30, 0, DIM.mandirWidth + 20, M.sheer, false, false);
-const curtainR = box(groups.balcony, 40, 2350, 320, DIM.totalL - 30, 0, DIM.mandirWidth + DIM.sldWidth - 340, M.sheer, false, false);
-
-// Potted Balcony Palm
-makePlant(groups.balcony, DIM.totalL + 600, 0, DIM.width - 500, 170, 380, 900, 10, 1.1);
-
-// ==========================================
-// 4. 4-INCH PERIPHERAL FALSE CEILING & COVE
-// ==========================================
-const borderW = 420;
-const dropH = DIM.falseDrop; // 101.6 mm
-const fBase = DIM.height - dropH;
-
-box(groups.ceiling, DIM.totalL, dropH, borderW, 0, fBase, 0, M.wall);
-box(groups.ceiling, DIM.totalL, dropH, borderW, 0, fBase, DIM.width - borderW, M.wall);
-box(groups.ceiling, borderW, dropH, DIM.width - borderW * 2, 0, fBase, borderW, M.wall);
-box(groups.ceiling, borderW, dropH, DIM.width - borderW * 2, DIM.totalL - borderW, fBase, borderW, M.wall);
-
-// Inner LED cove troughs
-box(groups.ceiling, DIM.totalL - borderW * 2, 35, 20, borderW, fBase + dropH - 35, borderW - 20, M.coveGlow, false, false);
-box(groups.ceiling, DIM.totalL - borderW * 2, 35, 20, borderW, fBase + dropH - 35, DIM.width - borderW, M.coveGlow, false, false);
-box(groups.ceiling, 20, 35, DIM.width - borderW * 2, borderW - 20, fBase + dropH - 35, borderW, M.coveGlow, false, false);
-box(groups.ceiling, 20, 35, DIM.width - borderW * 2, DIM.totalL - borderW, fBase + dropH - 35, borderW, M.coveGlow, false, false);
-
-// Ceiling Fan in Living area (from photo)
-const fanGroup = new THREE.Group();
-fanGroup.position.set(2300, DIM.height - 20, DIM.width * 0.5);
-cylinder(fanGroup, 80, 70, 30, 24, 0, -30, 0, M.puIvory);
-cylinder(fanGroup, 12, 12, 160, 12, 0, -190, 0, M.puIvory);
-cylinder(fanGroup, 90, 90, 40, 24, 0, -230, 0, M.puIvory);
-for (let b = 0; b < 3; b++) {
-  const blade = box(fanGroup, 550, 10, 120, 0, -225, -60, M.puIvory);
-  blade.rotation.y = b * (Math.PI * 2 / 3);
-}
-groups.ceiling.add(fanGroup);
-
-// ====================================================================
-// 5. CURVED PU CAPSULE TV PANEL & FLUTED GLASS VITRINE (NORTH WALL)
-// ====================================================================
-const tvUnitGroup = new THREE.Group();
-groups.tvSuite.add(tvUnitGroup);
-
-// A. Entrance 1 ft Floating Curved Corner (X = 0 to 300 mm, Level 250 to 600 mm AFF)
-const curveR = 300;
-const curveHeight = 350;
-const curveY = 250;
-const curveGeom = new THREE.CylinderGeometry(curveR, curveR, curveHeight, 32, 1, false, 0, Math.PI * 0.5);
-const curveMesh = new THREE.Mesh(curveGeom, M.puIvory);
-curveMesh.position.set(300, curveY + curveHeight * 0.5, 0);
-curveMesh.rotation.y = Math.PI * 0.5;
-curveMesh.castShadow = true;
-tvUnitGroup.add(curveMesh);
-
-// B. Long Floating TV Console (X = 300 to 3100 mm, Depth = 300 mm / 1 ft)
-box(tvUnitGroup, 2800, curveHeight, 300, 300, curveY, 0, M.puIvory);
-// Full-width continuous floor under-glow (casts warm ambient wash on marble floor)
-box(tvUnitGroup, 3100, 15, 20, 0, curveY - 10, 150, M.coveGlow, false, false);
-
-const tvDrawers = [];
-const dW = 700;
-for (let i = 0; i < 4; i++) {
-  const dGroup = new THREE.Group();
-  dGroup.position.set(300 + i * dW, curveY, 300);
-  box(dGroup, dW - 6, curveHeight - 6, 20, 3, 3, 0, M.puIvory);
-  box(dGroup, 140, 10, 12, (dW - 140) * 0.5, curveHeight - 20, 15, M.goldBrass);
-  tvUnitGroup.add(dGroup);
-  tvDrawers.push(dGroup);
-}
-
-// C. FLUTED & TINTED GLASS DISPLAY VITRINE (X = 300 to 1100 mm)
-const vitrineGroup = new THREE.Group();
-vitrineGroup.position.set(300, 600, 0);
-box(vitrineGroup, 20, DIM.falseH - 600, 300, 0, 0, 0, M.darkMetal);
-box(vitrineGroup, 20, DIM.falseH - 600, 300, 780, 0, 0, M.darkMetal);
-box(vitrineGroup, 800, 20, 300, 0, DIM.falseH - 620, 0, M.darkMetal);
-box(vitrineGroup, 800, 20, 300, 0, 0, 0, M.darkMetal);
-
-// 4 Illuminated glass shelves with decorative ceramic vases
-const shelfCount = 4;
-const shelfSpacing = (DIM.falseH - 640) / (shelfCount + 1);
-for (let s = 1; s <= shelfCount; s++) {
-  const sy = s * shelfSpacing;
-  box(vitrineGroup, 760, 12, 280, 20, sy, 10, M.flutedGlass);
-  box(vitrineGroup, 760, 8, 12, 20, sy - 8, 15, M.coveGlow, false, false);
-  // Decorative artifacts
-  if (s === 1) cylinder(vitrineGroup, 35, 50, 150, 20, 220, sy + 12, 140, M.puIvory);
-  if (s === 2) box(vitrineGroup, 140, 120, 80, 480, sy + 12, 100, M.corianMandir);
-  if (s === 3) cylinder(vitrineGroup, 28, 42, 160, 20, 380, sy + 12, 140, M.goldBrass);
-  if (s === 4) cylinder(vitrineGroup, 40, 25, 130, 20, 200, sy + 12, 120, M.puWave);
-}
-// Fluted glass door
-box(vitrineGroup, 796, DIM.falseH - 604, 10, 2, 2, 300, M.flutedGlass);
-tvUnitGroup.add(vitrineGroup);
-
-// D. CURVED PU CAPSULE TV FEATURE PANEL WITH 360° HALO GLOW
-const capsuleW = 2500, capsuleH = 1450, capsuleR = 220;
-const capsuleGroup = new THREE.Group();
-capsuleGroup.position.set(1200 + capsuleW * 0.5, 600 + capsuleH * 0.5, 30);
-
-// 1. 360-degree Halo Glow Backing
-const haloShape = createRoundedRectShape(capsuleW + 35, capsuleH + 35, capsuleR + 15);
-const haloGeom = new THREE.ExtrudeGeometry(haloShape, { depth: 10, bevelEnabled: false });
-const haloMesh = new THREE.Mesh(haloGeom, M.coveGlow);
-haloMesh.position.set(0, 0, -10);
-capsuleGroup.add(haloMesh);
-
-// 2. Main Curved PU Capsule Panel with rounded bevel
-const capsuleShape = createRoundedRectShape(capsuleW, capsuleH, capsuleR);
-const capsuleGeom = new THREE.ExtrudeGeometry(capsuleShape, { depth: 32, bevelEnabled: true, bevelSegments: 6, steps: 1, bevelSize: 8, bevelThickness: 8 });
-const capsuleMesh = new THREE.Mesh(capsuleGeom, M.puIvory);
-capsuleMesh.castShadow = true;
-capsuleGroup.add(capsuleMesh);
-
-// 3. Inner Rippled / Wave PU Texture
-const waveShape = createRoundedRectShape(capsuleW - 120, capsuleH - 120, capsuleR - 50);
-const waveGeom = new THREE.ExtrudeGeometry(waveShape, { depth: 6, bevelEnabled: false });
-const waveMesh = new THREE.Mesh(waveGeom, M.puWave);
-waveMesh.position.set(0, 0, 40);
-capsuleGroup.add(waveMesh);
-
-// 4. Centered 75-inch Ultra-thin OLED Television
-const tvW = 1680, tvH = 960;
-box(capsuleGroup, tvW, tvH, 20, -tvW * 0.5, -tvH * 0.5 + 20, 48, M.tvScreen);
-box(capsuleGroup, tvW + 12, tvH + 12, 6, -tvW * 0.5 - 6, -tvH * 0.5 + 14, 44, M.darkMetal);
-
-tvUnitGroup.add(capsuleGroup);
-
-// Small decorative vase on TV console
-cylinder(tvUnitGroup, 30, 20, 160, 20, 3000, 600, 150, M.corianMandir);
-makePlant(tvUnitGroup, 3000, 760, 150, 25, 20, 80, 5, 0.45);
-
-// E. 2-Foot Width (600 mm) Seamless Tall Storage Unit (X = 3800 to 4400 mm, Depth = 400 mm)
-const tallStorageGroup = new THREE.Group();
-tallStorageGroup.position.set(3800, 250, 0);
-box(tallStorageGroup, 600, DIM.falseH - 250, 400, 0, 0, 0, M.wallAccent);
-for (let y = 350; y < DIM.falseH - 300; y += 380) {
-  box(tallStorageGroup, 564, 18, 370, 18, y, 15, M.sofaWood);
-}
-const tallDoorL = new THREE.Group();
-tallDoorL.position.set(0, 0, 400);
-box(tallDoorL, 296, DIM.falseH - 254, 20, 2, 2, 0, M.wall);
-tallStorageGroup.add(tallDoorL);
-
-const tallDoorR = new THREE.Group();
-tallDoorR.position.set(600, 0, 400);
-box(tallDoorR, 296, DIM.falseH - 254, 20, -298, 2, 0, M.wall);
-tallStorageGroup.add(tallDoorR);
-tvUnitGroup.add(tallStorageGroup);
-
-// ====================================================================
-// 6. SCULPTURAL BOTANICAL LEAF / FEATHER WALL RELIEF & TRACK LIGHTS
-// ====================================================================
-const leafArtGroup = new THREE.Group();
-leafArtGroup.position.set(0, 0, DIM.width);
-groups.leafArt.add(leafArtGroup);
-
-// Leaf 1: Center Leaf in Sandy Wheat PU (Height 1750 mm, Width 420 mm)
-const leafShape1 = createLeafShape(1750, 420, 60);
-const leafGeom1 = new THREE.ExtrudeGeometry(leafShape1, { depth: 28, bevelEnabled: true, bevelSegments: 4, steps: 1, bevelSize: 6, bevelThickness: 6 });
-const leafMesh1 = new THREE.Mesh(leafGeom1, M.leafWheat);
-leafMesh1.position.set(2450, 780, -32);
-leafMesh1.rotation.z = -0.06;
-leafMesh1.castShadow = true;
-leafArtGroup.add(leafMesh1);
-
-// Leaf 2: Right Accent Leaf in Warm Terracotta PU (Height 1600 mm, Width 380 mm)
-const leafShape2 = createLeafShape(1600, 380, -50);
-const leafGeom2 = new THREE.ExtrudeGeometry(leafShape2, { depth: 32, bevelEnabled: true, bevelSegments: 4, steps: 1, bevelSize: 6, bevelThickness: 6 });
-const leafMesh2 = new THREE.Mesh(leafGeom2, M.leafTerracotta);
-leafMesh2.position.set(2850, 850, -26);
-leafMesh2.rotation.z = 0.08;
-leafMesh2.castShadow = true;
-leafArtGroup.add(leafMesh2);
-
-// Leaf 3: Left Accent Leaf in Warm Taupe PU (Height 1350 mm, Width 340 mm)
-const leafShape3 = createLeafShape(1350, 340, 40);
-const leafGeom3 = new THREE.ExtrudeGeometry(leafShape3, { depth: 24, bevelEnabled: true, bevelSegments: 4, steps: 1, bevelSize: 5, bevelThickness: 5 });
-const leafMesh3 = new THREE.Mesh(leafGeom3, M.leafTaupe);
-leafMesh3.position.set(2050, 750, -22);
-leafMesh3.rotation.z = -0.12;
-leafMesh3.castShadow = true;
-leafArtGroup.add(leafMesh3);
-
-// Leaf 4: Lower Overlapping Leaf in Cream PU (Height 1050 mm, Width 280 mm)
-const leafShape4 = createLeafShape(1050, 280, -30);
-const leafGeom4 = new THREE.ExtrudeGeometry(leafShape4, { depth: 22, bevelEnabled: true, bevelSegments: 4, steps: 1, bevelSize: 5, bevelThickness: 5 });
-const leafMesh4 = new THREE.Mesh(leafGeom4, M.leafCream);
-leafMesh4.position.set(2280, 700, -16);
-leafMesh4.rotation.z = 0.05;
-leafMesh4.castShadow = true;
-leafArtGroup.add(leafMesh4);
-
-// BLACK ARCHITECTURAL SPOTLIGHT TRACK RAIL (Overhead on False Ceiling)
-box(groups.leafArt, 2400, 25, 45, 1700, fBase - 25, DIM.width - 550, M.darkMetal);
-for (let sp = 0; sp < 4; sp++) {
-  const spotX = 1850 + sp * 650;
-  const spotHead = cylinder(groups.leafArt, 24, 22, 70, 16, spotX, fBase - 70, DIM.width - 550, M.darkMetal);
-  spotHead.rotation.x = -0.45;
-  const bulb = cylinder(groups.leafArt, 18, 18, 6, 16, spotX, fBase - 95, DIM.width - 530, M.coveGlow, false, false);
-  bulb.rotation.x = -0.45;
-}
-
-
-// ====================================================================
-// 7. MODULAR CURVED SOFA-CUM-BED & COFFEE TABLE
-// ====================================================================
-const sofaGroup = new THREE.Group();
-sofaGroup.position.set(800, 0, DIM.width - 920);
-groups.sofa.add(sofaGroup);
-
-// Plush textured neutral area rug
-box(groups.furniture, 3800, 12, 2300, 650, 0, DIM.width - 2600, M.rug, false, true);
-
-// ROUND MARBLE COFFEE TABLE WITH FLUTED DARK OAK BASE
-const coffeeTable = new THREE.Group();
-coffeeTable.position.set(2300, 0, DIM.width - 1650);
-cylinder(coffeeTable, 260, 260, 350, 32, 0, 0, 0, M.sofaWood);
-cylinder(coffeeTable, 380, 380, 30, 36, 0, 350, 0, M.quartz);
-cylinder(coffeeTable, 45, 30, 110, 20, -60, 380, -40, M.corianMandir);
-cylinder(coffeeTable, 70, 70, 10, 20, 80, 380, 60, M.goldBrass);
-groups.furniture.add(coffeeTable);
-
-// Sculptural Rounded Barrel Armchair (matching reference photo)
-const accentChair = new THREE.Group();
-accentChair.position.set(900, 0, DIM.width - 1750);
-cylinder(accentChair, 380, 360, 320, 32, 0, 0, 0, M.sofaRose);
-box(accentChair, 680, 340, 140, -340, 320, -70, M.sofaRose);
-box(accentChair, 260, 260, 90, -130, 340, -40, M.pillowCream);
-groups.furniture.add(accentChair);
-
-// Lush potted indoor ficus near the sofa (from reference photo)
-makePlant(groups.furniture, 450, 0, DIM.width - 700, 150, 340, 800, 10, 1.0);
-
-// SOFA STRUCTURE (Curved modular with rounded circular end chaises)
-const sofaL = 3500, sofaD = 920, seatH = 450, backH = 760;
-
-box(sofaGroup, sofaL - 60, 70, sofaD - 60, 30, 0, 30, M.darkMetal);
-box(sofaGroup, sofaL, backH - 70, 220, 0, 70, sofaD - 220, M.sofaRose);
-
-const backCapGeom = new THREE.CylinderGeometry(110, 110, sofaL, 24, 1, false, 0, Math.PI);
-const backCap = new THREE.Mesh(backCapGeom, M.sofaRose);
-backCap.position.set(sofaL * 0.5, backH, sofaD - 110);
-backCap.rotation.z = Math.PI * 0.5;
-sofaGroup.add(backCap);
-
-// Bolster armrests & circular chaise ends
-const armW = 260, armH = 640;
-box(sofaGroup, armW, armH, sofaD, 0, 70, 0, M.sofaRose);
-const leftArmRound = new THREE.Mesh(new THREE.CylinderGeometry(armW * 0.5, armW * 0.5, sofaD, 24), M.sofaRose);
-leftArmRound.position.set(armW * 0.5, armH + 70, sofaD * 0.5);
-leftArmRound.rotation.x = Math.PI * 0.5;
-sofaGroup.add(leftArmRound);
-
-box(sofaGroup, armW, armH, sofaD, sofaL - armW, 70, 0, M.sofaRose);
-const rightArmRound = new THREE.Mesh(new THREE.CylinderGeometry(armW * 0.5, armW * 0.5, sofaD, 24), M.sofaRose);
-rightArmRound.position.set(sofaL - armW * 0.5, armH + 70, sofaD * 0.5);
-rightArmRound.rotation.x = Math.PI * 0.5;
-sofaGroup.add(rightArmRound);
-
-// Center console
-const consoleW = 380;
-const consoleX = (sofaL - consoleW) * 0.5;
-const consoleGroup = new THREE.Group();
-consoleGroup.position.set(consoleX, 0, 0);
-box(consoleGroup, consoleW, 450, 800, 0, 30, 0, M.sofaWood);
-const consoleCurve = new THREE.Mesh(new THREE.CylinderGeometry(40, 40, consoleW, 16, 1, false, 0, Math.PI * 0.5), M.sofaWood);
-consoleCurve.position.set(consoleW * 0.5, 450, 40);
-consoleCurve.rotation.z = Math.PI * 0.5;
-consoleGroup.add(consoleCurve);
-box(consoleGroup, consoleW - 40, 110, 20, 20, 170, 800, M.darkMetal);
-box(consoleGroup, 80, 10, 12, (consoleW - 80) * 0.5, 215, 810, M.goldBrass);
-sofaGroup.add(consoleGroup);
-
-// Seating cushion banks
-const seatModuleW = (sofaL - armW * 2 - consoleW) * 0.5;
-box(sofaGroup, seatModuleW - 10, seatH - 70, sofaD - 220, armW + 5, 70, 0, M.sofaRose);
-box(sofaGroup, seatModuleW - 10, seatH - 70, sofaD - 220, consoleX + consoleW + 5, 70, 0, M.sofaRose);
-
-// Designer Pillows
-box(sofaGroup, 360, 340, 120, armW + 60, 440, sofaD - 300, M.pillowCream);
-box(sofaGroup, 360, 340, 120, consoleX - 420, 440, sofaD - 300, M.pillowGold);
-box(sofaGroup, 360, 340, 120, consoleX + consoleW + 60, 440, sofaD - 300, M.pillowGold);
-box(sofaGroup, 360, 340, 120, sofaL - armW - 420, 440, sofaD - 300, M.pillowCream);
-
-// PULL-OUT SOFA-CUM-BED MECHANISM
-const bedMechanismGroup = new THREE.Group();
-bedMechanismGroup.position.set(0, 0, 0);
-sofaGroup.add(bedMechanismGroup);
-
-const leftBed = new THREE.Group();
-leftBed.position.set(armW + 10, 0, 0);
-box(leftBed, seatModuleW - 20, seatH - 90, 30, 0, 70, 0, M.sofaRose);
-box(leftBed, seatModuleW - 40, 40, 760, 10, 90, -760, M.darkMetal);
-for (let gridZ = -720; gridZ < -50; gridZ += 95) {
-  box(leftBed, seatModuleW - 50, 6, 6, 15, 130, gridZ, M.darkMetal, false, false);
-}
-const leftMattress = box(leftBed, seatModuleW - 24, 170, 780, 2, 130, -780, M.sofaRose);
-bedMechanismGroup.add(leftBed);
-
-const rightBed = new THREE.Group();
-rightBed.position.set(consoleX + consoleW + 10, 0, 0);
-box(rightBed, seatModuleW - 20, seatH - 90, 30, 0, 70, 0, M.sofaRose);
-box(rightBed, seatModuleW - 40, 40, 760, 10, 90, -760, M.darkMetal);
-for (let gridZ = -720; gridZ < -50; gridZ += 95) {
-  box(rightBed, seatModuleW - 50, 6, 6, 15, 130, gridZ, M.darkMetal, false, false);
-}
-const rightMattress = box(rightBed, seatModuleW - 24, 170, 780, 2, 130, -780, M.sofaRose);
-bedMechanismGroup.add(rightBed);
-
-// ====================================================================
-// 8. 6-SEATER CALACATTA QUARTZ DINING TABLE & SEATING
-// ====================================================================
-const diningGroup = new THREE.Group();
-diningGroup.position.set(6100, 0, 1000);
-groups.dining.add(diningGroup);
-
-const dtTable = new THREE.Group();
-box(dtTable, 1800, 35, 900, 0, 715, 0, M.quartz);
-box(dtTable, 1720, 20, 820, 40, 695, 40, M.darkMetal);
-cylinder(dtTable, 170, 190, 695, 28, 450, 0, 450, M.flutedOak);
-cylinder(dtTable, 170, 190, 695, 28, 1350, 0, 450, M.flutedOak);
-cylinder(dtTable, 195, 195, 15, 28, 450, 0, 450, M.goldBrass);
-cylinder(dtTable, 195, 195, 15, 28, 1350, 0, 450, M.goldBrass);
-cylinder(dtTable, 110, 70, 45, 24, 900, 750, 450, M.corianMandir);
-diningGroup.add(dtTable);
-
-// Charcoal Upholstered Dining Chairs (matching design reference photo)
-function makeChair(parent, x, z, rotY) {
-  const ch = new THREE.Group();
-  ch.position.set(x, 0, z);
-  ch.rotation.y = rotY;
-  const legR = 13;
-  cylinder(ch, legR, 8, 440, 12, -180, 0, -180, M.darkMetal);
-  cylinder(ch, legR, 8, 440, 12, 180, 0, -180, M.darkMetal);
-  cylinder(ch, legR, 8, 440, 12, -180, 0, 180, M.darkMetal);
-  cylinder(ch, legR, 8, 440, 12, 180, 0, 180, M.darkMetal);
-  cylinder(ch, 9, 8, 45, 12, -180, 0, -180, M.goldBrass);
-  cylinder(ch, 9, 8, 45, 12, 180, 0, -180, M.goldBrass);
-  cylinder(ch, 9, 8, 45, 12, -180, 0, 180, M.goldBrass);
-  cylinder(ch, 9, 8, 45, 12, 180, 0, 180, M.goldBrass);
-  // Charcoal plush upholstery
-  box(ch, 460, 70, 460, -230, 440, -230, M.diningCharcoal);
-  box(ch, 460, 340, 60, -230, 500, 170, M.diningCharcoal);
-  parent.add(ch);
-  return ch;
-}
-
-makeChair(diningGroup, 500, -220, 0);
-makeChair(diningGroup, 1300, -220, 0);
-makeChair(diningGroup, -230, 450, Math.PI * 0.5);
-makeChair(diningGroup, 2030, 450, -Math.PI * 0.5);
-
-const bench = new THREE.Group();
-bench.position.set(200, 0, 1080);
-box(bench, 1400, 400, 420, 0, 0, 0, M.sofaWood);
-box(bench, 1420, 90, 440, -10, 400, -10, M.diningCharcoal);
-diningGroup.add(bench);
-
-// MULTI-ARM BRASS CHANDELIER (from reference photo)
-const chandelier = new THREE.Group();
-chandelier.position.set(6100 + 900, 2150, 1000 + 450);
-// Central brass stem
-cylinder(chandelier, 8, 8, 450, 16, 0, 0, 0, M.goldBrass);
-cylinder(chandelier, 35, 35, 20, 20, 0, -200, 0, M.goldBrass);
-// 6 radiating brass arms with globes
-for (let arm = 0; arm < 6; arm++) {
-  const armAngle = arm * (Math.PI / 3);
-  const armLen = 280;
-  const armX = Math.cos(armAngle) * armLen;
-  const armZ = Math.sin(armAngle) * armLen;
-  cylinder(chandelier, 4, 4, armLen, 8, armX * 0.5, -200, armZ * 0.5, M.goldBrass);
-  chandelier.children[chandelier.children.length - 1].rotation.z = Math.PI * 0.5;
-  chandelier.children[chandelier.children.length - 1].rotation.y = armAngle;
-  // Glowing glass globe
-  const globe = cylinder(chandelier, 32, 32, 60, 16, armX, -200, armZ, M.coveGlow, false, false);
-}
-groups.dining.add(chandelier);
-
-// Tall Potted Plant in Dining Corner (from reference photo)
-makePlant(groups.dining, -500, 0, 1200, 160, 360, 950, 12, 1.15);
-
-// ====================================================================
-// 9. SACRED MANDIR TEMPLE (600 mm NICHE LEFT OF BALCONY)
-// ====================================================================
-const mandirGroup = new THREE.Group();
-mandirGroup.position.set(DIM.totalL - 600, 0, 0);
-groups.mandir.add(mandirGroup);
-
-box(mandirGroup, 600, 2400, 450, 0, 0, 0, M.sofaWood);
-box(mandirGroup, 25, 2400, 25, 0, 0, 435, M.goldBrass);
-box(mandirGroup, 25, 2400, 25, 575, 0, 435, M.goldBrass);
-
-box(mandirGroup, 550, 980, 20, 25, 940, 20, M.mandirGlow, false, false);
-box(mandirGroup, 550, 40, 380, 25, 900, 40, M.corianMandir);
-box(mandirGroup, 450, 35, 200, 75, 940, 40, M.corianMandir);
-for (let bx = 120; bx <= 480; bx += 120) {
-  cylinder(mandirGroup, 2, 2, 140, 8, bx, 1800, 200, M.goldBrass);
-  cylinder(mandirGroup, 18, 25, 35, 16, bx, 1770, 200, M.goldBrass);
-}
-cylinder(mandirGroup, 18, 30, 45, 16, 140, 940, 260, M.goldBrass);
-cylinder(mandirGroup, 18, 30, 45, 16, 460, 940, 260, M.goldBrass);
-cylinder(mandirGroup, 25, 30, 90, 16, 300, 975, 140, M.goldBrass);
-
-// PULL-OUT AARTI TRAY & HIDDEN PUJA TABLE
-const mandirServingTray = new THREE.Group();
-mandirServingTray.position.set(30, 860, 30);
-box(mandirServingTray, 540, 24, 380, 0, 0, 0, M.corianMandir);
-box(mandirServingTray, 540, 12, 15, 0, 24, 370, M.goldBrass);
-mandirGroup.add(mandirServingTray);
-
-const mandirHiddenTable = new THREE.Group();
-mandirHiddenTable.position.set(50, 100, 20);
-box(mandirHiddenTable, 500, 30, 390, 0, 690, 0, M.sofaWood);
-cylinder(mandirHiddenTable, 14, 10, 690, 12, 30, 0, 30, M.darkMetal);
-cylinder(mandirHiddenTable, 14, 10, 690, 12, 470, 0, 30, M.darkMetal);
-cylinder(mandirHiddenTable, 14, 10, 690, 12, 30, 0, 360, M.darkMetal);
-cylinder(mandirHiddenTable, 14, 10, 690, 12, 470, 0, 360, M.darkMetal);
-mandirGroup.add(mandirHiddenTable);
-
-box(mandirGroup, 265, 140, 20, 30, 710, 440, M.flutedOak);
-box(mandirGroup, 265, 140, 20, 305, 710, 440, M.flutedOak);
-cylinder(mandirGroup, 10, 10, 15, 12, 162, 780, 455, M.goldBrass);
-cylinder(mandirGroup, 10, 10, 15, 437, 780, 455, M.goldBrass);
-box(mandirGroup, 265, 540, 20, 30, 150, 440, M.wallAccent);
-box(mandirGroup, 265, 540, 20, 305, 150, 440, M.wallAccent);
-
-// ==========================================
-// 10. 3D DIMENSION CALLOUT LABELS & STRINGS
-// ==========================================
-function makeDim(parent, start, end, labelText, offset = [0, 0, 0]) {
-  const g = new THREE.Group();
-  const vS = new THREE.Vector3(...start).add(new THREE.Vector3(...offset));
-  const vE = new THREE.Vector3(...end).add(new THREE.Vector3(...offset));
-  
-  const lineGeom = new THREE.BufferGeometry().setFromPoints([vS, vE]);
-  const lineMesh = new THREE.Line(lineGeom, new THREE.LineBasicMaterial({ color: '#274b3e', linewidth: 2 }));
-  g.add(lineMesh);
-
-  const c = document.createElement('canvas');
-  c.width = 256; c.height = 64;
-  const ctx = c.getContext('2d');
-  ctx.fillStyle = '#ffffff';
-  ctx.roundRect(4, 4, 248, 56, 8);
-  ctx.fill();
-  ctx.strokeStyle = '#27523c';
-  ctx.lineWidth = 3;
-  ctx.stroke();
-  ctx.fillStyle = '#1a2b24';
-  ctx.font = 'bold 24px Verdana, sans-serif';
-  ctx.textAlign = 'center';
-  ctx.textBaseline = 'middle';
-  ctx.fillText(labelText, 128, 32);
-
-  const texture = new THREE.CanvasTexture(c);
-  const spriteMat = new THREE.SpriteMaterial({ map: texture, depthTest: false });
-  const sprite = new THREE.Sprite(spriteMat);
-  sprite.position.copy(vS).add(vE).multiplyScalar(0.5).add(new THREE.Vector3(0, 70, 0));
-  sprite.scale.set(380, 95, 1);
-  g.add(sprite);
-
-  parent.add(g);
-  return g;
-}
-
-makeDim(groups.dims, [0, 20, 0], [DIM.totalL, 20, 0], '8,975 mm (COMBINED HALL)', [0, 0, -400]);
-makeDim(groups.dims, [0, 20, 0], [DIM.livingL, 20, 0], 'LIVING 4,440 mm', [0, 0, -220]);
-makeDim(groups.dims, [DIM.livingL, 20, 0], [DIM.totalL, 20, 0], 'DINING 4,535 mm', [0, 0, -220]);
-makeDim(groups.dims, [0, 20, 0], [0, 20, DIM.width], 'WIDTH 3,300 mm', [-420, 0, 0]);
-makeDim(groups.dims, [DIM.totalL, 20, 0], [DIM.totalL + DIM.balconyL, 20, 0], 'SITOUT 1,525 mm', [0, 0, -220]);
-makeDim(groups.dims, [2000, 300, 300], [2000, 300, DIM.width - 920], 'CLEAR AISLE 2,100 mm (7 FT)', [0, 0, 0]);
-makeDim(groups.dims, [DIM.totalL - 600, 2420, 200], [DIM.totalL, 2420, 200], 'MANDIR 600 mm', [0, 80, 0]);
-
-// ==============================================================
-// 11. CAMERA VIEWS & DYNAMIC WALL CUTAWAY SYSTEM
-// ==============================================================
-const views = {
-  overview: {
-    pos: [4400, 4800, 7500],
-    target: [DIM.totalL * 0.48, 1000, DIM.width * 0.5],
-    fov: 54,
-    title: 'Expansive 3D Overview',
-    desc: 'Unobstructed view across the entire 8.975m hall. Front walls cut away dynamically so the 2.1m aisle is fully visible.'
-  },
-  entry: {
-    pos: [120, 1650, DIM.mdOffsetNorth + 350],
-    target: [4800, 1350, 1650],
-    fov: 65,
-    title: 'Main Entrance Foyer (First Impression)',
-    desc: 'Wide-angle 65° eye-level view: Gentle curved TV console on left, terracotta lounge on right, stretching to the balcony.'
-  },
-  tv: {
-    pos: [2400, 1400, 2300],
-    target: [2400, 1300, 0],
-    fov: 62,
-    title: 'Curved PU Capsule TV Panel & Vitrine',
-    desc: 'From design photo: Rounded capsule PU panel with 360° LED halo, 75" TV, and fluted glass display vitrine.'
-  },
-  leafart: {
-    pos: [2400, 1450, 800],
-    target: [2400, 1400, DIM.width],
-    fov: 64,
-    title: 'Sofa & Botanical Leaf Relief Wall Art',
-    desc: 'From design photo: 4 sculptural overlapping leaves in terracotta, wheat, and taupe with overhead track spotlights.'
-  },
-  lounge: {
-    pos: [1400, 1400, 2100],
-    target: [2800, 1100, 1650],
-    fov: 64,
-    title: 'Living Room Lounge Perspective',
-    desc: 'Standing in the lounge looking across the generous 2,100 mm central walking aisle.'
-  },
-  dining: {
-    pos: [4800, 1550, 2400],
-    target: [7000, 1100, 1450],
-    fov: 64,
-    title: 'Quartz Dining & Open Kitchen Connection',
-    desc: 'Calacatta quartz table, charcoal chairs, long bench, multi-arm chandelier, and seamless flow into kitchen.'
-  },
-  mandir: {
-    pos: [7100, 1400, 550],
-    target: [DIM.totalL - 300, 1300, 220],
-    fov: 60,
-    title: '600 mm Sacred Mandir Sanctum',
-    desc: 'North-East (Ishanya) niche: Backlit CNC jaali screen, bells, sliding Aarti tray, and hidden puja table.'
-  },
-  sitout: {
-    pos: [7200, 1500, 1650],
-    target: [DIM.totalL + 750, 1100, 1650],
-    fov: 62,
-    title: 'Sitout Balcony & UPVC Glass Doors',
-    desc: 'UPVC sliding doors (SLD1 2400x2100 mm), sheer drapes, teak decking, and exterior panoramic view.'
-  },
-  plan: {
-    pos: [DIM.totalL * 0.5, 11500, DIM.width * 0.5],
-    target: [DIM.totalL * 0.5, 0, DIM.width * 0.5],
-    ortho: true,
-    span: 7000,
-    title: 'Top-down CAD Floor Plan',
-    desc: 'Orthographic CAD projection with exact millimeter strings matching floor plan measurement.pdf.'
+  const mat = (color, extra = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.65, ...extra });
+  const wallMat = mat('#ece5d8', { roughness: 0.86 });
+  const tileMat = mat('#dfd5c5', { roughness: 0.32, metalness: 0.05 });
+  const sitoutTileMat = mat('#b8b2a6', { roughness: 0.65 });
+  const wavyHdmrMat = mat('#ede6da', { roughness: 0.82, metalness: 0.02 });
+  const wavyRidgeMat = mat('#e5dccd', { roughness: 0.78, metalness: 0.02 });
+  const credenzaMat = mat('#f2ece1', { roughness: 0.74, metalness: 0.03 });
+  const poojaWhiteMat = mat('#faf8f5', { roughness: 0.62, metalness: 0.04 });
+  const poojaBackGlowMat = mat('#fff4d8', { emissive: '#ffbe58', emissiveIntensity: 1.45, roughness: 0.4 });
+  const boucleMat = mat('#f3ede0', { roughness: 0.92 });
+  const mattressMat = mat('#faf6ee', { roughness: 0.85 });
+  const whiteOakMat = mat('#b98b56', { roughness: 0.52 });
+  const walnutMat = mat('#59402d', { roughness: 0.48 });
+  const darkWalnutMat = mat('#3e2b1d', { roughness: 0.45 });
+  const travertineMat = mat('#e3d6c1', { roughness: 0.72 });
+  const marbleMat = mat('#f2ece1', { roughness: 0.25, metalness: 0.06 });
+  const terracottaRoseMat = mat('#c97c63', { roughness: 0.86 });
+  const leafTerracotta = mat('#c46843', { roughness: 0.78 });
+  const leafClay = mat('#9e5536', { roughness: 0.82 });
+  const leafSand = mat('#dfd3be', { roughness: 0.84 });
+  const leafCream = mat('#efe6d5', { roughness: 0.82 });
+  const leafWalnut = mat('#7d5338', { roughness: 0.76 });
+  const charcoalVelvet = mat('#5a5d58', { roughness: 0.84 });
+  const brassMat = mat('#c59b52', { metalness: 0.78, roughness: 0.24 });
+  const chromeMat = mat('#d0d5d2', { metalness: 0.88, roughness: 0.16 });
+  const blackMetal = mat('#232524', { metalness: 0.55, roughness: 0.35 });
+  const oledMat = mat('#111417', { metalness: 0.85, roughness: 0.12 });
+  const glowMat = mat('#fff2ce', { emissive: '#ffbe66', emissiveIntensity: 2.5 });
+  const glassMat = mat('#bcd4ce', { transparent: true, opacity: 0.26, roughness: 0.1, metalness: 0.1, depthWrite: false });
+  const drapeMat = mat('#8a7966', { roughness: 0.88 });
+  const sheerMat = mat('#f8f6f0', { transparent: true, opacity: 0.46, roughness: 0.9, depthWrite: false });
+  const plantGreen = mat('#3f5e3d', { roughness: 0.75 });
+  const rugMat = mat('#d5cab8', { roughness: 0.94 });
+
+  function box(parent, width, height, depth, centerX, centerY, centerZ, material, edges = false) {
+    const mesh = new THREE.Mesh(new THREE.BoxGeometry(width, height, depth), material);
+    mesh.position.set(centerX, centerY, centerZ);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    parent.add(mesh);
+    if (edges) {
+      mesh.add(new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry), new THREE.LineBasicMaterial({ color: '#6c7569', transparent: true, opacity: 0.24 })));
+    }
+    return mesh;
   }
-};
 
-let currentViewName = 'overview';
-function setView(name) {
-  const v = views[name];
-  if (!v) return;
-  currentViewName = name;
+  function cylinder(parent, radiusTop, radiusBottom, height, position, material, segments = 28) {
+    const mesh = new THREE.Mesh(new THREE.CylinderGeometry(radiusTop, radiusBottom, height, segments), material);
+    mesh.position.set(...position);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    parent.add(mesh);
+    return mesh;
+  }
 
-  document.querySelectorAll('[data-view]').forEach(btn => {
-    btn.classList.toggle('active', btn.dataset.view === name);
+  function rod(parent, start, end, radius = 8, material = chromeMat) {
+    const first = new THREE.Vector3(...start), last = new THREE.Vector3(...end);
+    const dir = last.clone().sub(first);
+    const mesh = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, dir.length(), 14), material);
+    mesh.position.copy(first.add(last).multiplyScalar(0.5));
+    mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
+    parent.add(mesh);
+    return mesh;
+  }
+
+  function line(parent, points, color = '#436e55', dashed = false) {
+    const geometry = new THREE.BufferGeometry().setFromPoints(points.map(p => new THREE.Vector3(...p)));
+    const material = dashed ? new THREE.LineDashedMaterial({ color, dashSize: 55, gapSize: 35 }) : new THREE.LineBasicMaterial({ color });
+    const res = new THREE.Line(geometry, material);
+    res.computeLineDistances();
+    parent.add(res);
+    return res;
+  }
+
+  function label(parent, value, position, size = 135, color = '#264b38') {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1024;
+    canvas.height = 128;
+    const ctx = canvas.getContext('2d');
+    ctx.font = '60px Georgia';
+    const w = Math.min(1000, ctx.measureText(value).width + 36);
+    ctx.fillStyle = '#fffffff2';
+    ctx.fillRect((1024 - w) / 2, 4, w, 120);
+    ctx.fillStyle = color;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText(value, 512, 64);
+    const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(canvas), depthTest: false, transparent: true, toneMapped: false }));
+    sprite.position.set(...position);
+    sprite.scale.set(size * 8, size, 1);
+    sprite.renderOrder = 10;
+    parent.add(sprite);
+    return sprite;
+  }
+
+  function dimension(parent, start, end, value, offset = [0, 0, 0], textSize = 140) {
+    const first = start.map((n, i) => n + offset[i]);
+    const last = end.map((n, i) => n + offset[i]);
+    line(parent, [start, first]);
+    line(parent, [end, last]);
+    line(parent, [first, last]);
+    for (const pt of [first, last]) {
+      line(parent, [[pt[0] - 25, pt[1] - 25, pt[2] - 25], [pt[0] + 25, pt[1] + 25, pt[2] + 25]]);
+    }
+    label(parent, value, first.map((n, i) => (n + last[i]) / 2), textSize);
+  }
+
+  function makeRoundedRectShape(halfW, bottomY, topY, r) {
+    const s = new THREE.Shape();
+    const rad = Math.min(r, halfW, Math.abs(topY - bottomY) / 2);
+    const flatW = halfW - rad;
+    s.moveTo(-flatW, bottomY);
+    s.lineTo(flatW, bottomY);
+    s.absarc(flatW, bottomY + rad, rad, -Math.PI / 2, 0, false);
+    s.lineTo(halfW, topY - rad);
+    s.absarc(flatW, topY - rad, rad, 0, Math.PI / 2, false);
+    s.lineTo(-flatW, topY);
+    s.absarc(-flatW, topY - rad, rad, Math.PI / 2, Math.PI, false);
+    s.lineTo(-halfW, bottomY + rad);
+    s.absarc(-flatW, bottomY + rad, rad, Math.PI, Math.PI * 1.5, false);
+    return s;
+  }
+
+  // --- 1. FLOOR, VITRIFIED MARBLE TILES, VESTIBULE & SITOUT BALCONY ---
+  box(groups.floor, 8975, 70, 3300, 4487.5, -35, 1650, tileMat);
+  box(groups.floor, 1525, 70, 900, 5947.5, -35, -450, tileMat);
+  box(groups.floor, 1525, 70, 3300, 9737.5, -40, 1650, sitoutTileMat);
+  for (let x = 800; x < 8975; x += 800) line(groups.floor, [[x, 1, 0], [x, 1, 3300]], '#cbbba4');
+  for (let z = 800; z < 3300; z += 800) line(groups.floor, [[0, 1, z], [8975, 1, z]], '#cbbba4');
+  line(groups.floor, [[4440, 2, 0], [4440, 2, 3300]], '#8c7a62', true);
+  // Textured woven area rug in Living zone (matching 5b653be6982f2ecbd922162ecae0a06e.jpg)
+  box(groups.floor, 4150, 8, 2500, 2960, 4, 1850, rugMat, true);
+
+  // --- 2. ARCHITECTURAL WALLS & OPENINGS (from highres_floor_plan.jpg) ---
+  const wallMeshes = [];
+  function wallPart(w, h, d, cx, cy, cz, sideName) {
+    const m = box(groups.walls, w, h, d, cx, cy, cz, wallMat);
+    m.userData.side = sideName;
+    wallMeshes.push(m);
+    return m;
+  }
+  // West Wall (X = 0): 450 North return + 1050 MD door + 1800 South return
+  wallPart(120, 2794, 450, -60, 1397, 225, 'west');
+  wallPart(120, 544, 1050, -60, 2522, 975, 'west');
+  wallPart(120, 2794, 1800, -60, 1397, 2400, 'west');
+
+  // North Wall (Z = 0): 5185 Wavy TV Wall + 1525 Bedroom Vestibule + 2265 Dining & Pooja Wall
+  wallPart(5185, 2794, 120, 2592.5, 1397, -60, 'north');
+  wallPart(1525, 2794, 120, 5947.5, 1397, -960, 'north');
+  wallPart(120, 544, 900, 5125, 2522, -450, 'north');
+  wallPart(120, 544, 900, 6770, 2522, -450, 'north');
+  wallPart(2265, 2794, 120, 7842.5, 1397, -60, 'north');
+
+  // South Wall (Z = 3300): 5170 Dual-Sleeper Sofa & DXF Leaf Wall + 915 Master Bedroom D1 + 260 Pier + 2630 Kitchen Portal
+  wallPart(5170, 2794, 120, 2585, 1397, 3360, 'south');
+  wallPart(915, 544, 120, 5627.5, 2522, 3360, 'south');
+  wallPart(260, 2794, 120, 6215, 1397, 3360, 'south');
+  wallPart(2630, 394, 120, 7660, 2597, 3360, 'south');
+
+  // East Wall (X = 8975): 600 North Return (Z 0..600 -> Pooja Mandir!) + 2100 SLD1 Sitout Slider (Z 600..2700) + 600 South Return (Z 2700..3300)
+  wallPart(120, 2794, 600, 9035, 1397, 300, 'east');
+  wallPart(120, 544, 2100, 9035, 2522, 1650, 'east');
+  wallPart(120, 2794, 600, 9035, 1397, 3000, 'east');
+
+  // --- 3. DOORS, SLIDERS, DRAPERY & SITOUT BALCONY ---
+  for (const jz of [450, 1500]) box(groups.doors, 65, 2250, 40, 10, 1125, jz, darkWalnutMat);
+  box(groups.doors, 65, 40, 1090, 10, 2250, 975, darkWalnutMat);
+  box(groups.doors, 1010, 2210, 42, 520, 1105, 475, walnutMat, true);
+  box(groups.doors, 120, 24, 22, 920, 1020, 505, brassMat);
+  const mdArc = [];
+  for (let i = 0; i <= 28; i++) {
+    const a = (i * Math.PI) / 56;
+    mdArc.push([1010 * Math.sin(a), 8, 450 + 1010 * Math.cos(a)]);
+  }
+  line(groups.labels, mdArc, '#a37d4f', true);
+  label(groups.labels, 'MD / 1050', [420, 70, 960], 115);
+
+  // Master Bedroom D1 Door (X = 5170..6085, Z = 3300)
+  for (const jx of [5170, 6085]) box(groups.doors, 40, 2250, 65, jx, 1125, 3300, darkWalnutMat);
+  box(groups.doors, 955, 40, 65, 5627.5, 2250, 3300, darkWalnutMat);
+  box(groups.doors, 885, 2210, 38, 5627.5, 1105, 3315, walnutMat, true);
+  label(groups.labels, 'M.BED D1 / 915', [5627.5, 70, 3120], 110);
+
+  // Bedroom 2 & Bedroom 1 Vestibule Doors
+  box(groups.doors, 38, 2150, 840, 5140, 1075, -450, walnutMat, true);
+  box(groups.doors, 38, 2150, 840, 6755, 1075, -450, walnutMat, true);
+
+  // SLD1 Sitout Sliding Door (X = 8975, Z = 600..2700, 2100 mm opening per Schedule of Openings)
+  for (const fz of [600, 2700]) box(groups.doors, 55, 2250, 38, 8975, 1125, fz, blackMetal);
+  for (const fy of [18, 2250]) box(groups.doors, 55, 38, 2100, 8975, fy, 1650, blackMetal);
+  box(groups.doors, 18, 2210, 1070, 8965, 1125, 1135, glassMat);
+  const sitoutSlidingLeaf = new THREE.Group();
+  groups.doors.add(sitoutSlidingLeaf);
+  box(sitoutSlidingLeaf, 18, 2210, 1070, 8985, 1125, 2165, glassMat);
+  box(sitoutSlidingLeaf, 28, 2210, 35, 8985, 1125, 1635, blackMetal);
+  // Curtains kept clear of Z = 0..600 so the Pooja Mandir on the 600 mm wall is 100% unobstructed
+  box(groups.doors, 95, 100, 2450, 8900, 2635, 1825, travertineMat, true);
+  for (const [zStart, zEnd] of [[615, 920], [2680, 3040]]) {
+    for (let p = 0; p < 5; p++) {
+      const pz = zStart + (p + 0.5) * (zEnd - zStart) / 5;
+      box(groups.doors, 48, 2560, 42, 8900, 1285, pz, sheerMat);
+    }
+  }
+  box(groups.doors, 30, 1100, 3300, 10485, 550, 1650, glassMat);
+  box(groups.doors, 45, 35, 3300, 10485, 1100, 1650, blackMetal);
+  for (const pz of [450, 2850]) {
+    cylinder(groups.doors, 160, 130, 420, [9850, 210, pz], travertineMat);
+    cylinder(groups.doors, 260, 120, 950, [9850, 780, pz], plantGreen);
+  }
+  label(groups.labels, 'SLD1 / 2100', [9150, 70, 1650], 115);
+
+  // --- 4. SWAPPED NORTH WALL (Z = 0): FLUTED WALNUT DB/CURIO TOWER + FULL-HEIGHT 3D WAVY HDHMR TV WALL + CURVED-EDGE FLOATING CREDENZA ---
+  const tvParts = [];
+  function registerTvPart(id, name, mesh, finish, qty = 1) {
+    tvParts.push({ id, name, mesh, module: 'North Wavy TV Wall (TV-1)', axis: 'x', finish, qty });
+  }
+
+  // 4A. Left Vertical Fluted Walnut DB Concealment & Curio Column (DB-CURIO: X = 180..930, Z = 0..360, H = 2692.4)
+  // Matches the vertical wood-slat column on the left side of 5b653be6982f2ecbd922162ecae0a06e.jpg while housing the site DB box
+  const dbCarcass = box(groups.tvUnit, 750, 2692.4, 340, 555, 1346.2, 170, walnutMat, true);
+  registerTvPart('DB-CURIO', 'Left Fluted Walnut DB Concealment & Curio Column (750 x 2692.4 x 360)', dbCarcass, '18mm BWR Ply + Vertical Fluted Dark Walnut Slats (conceals North-wall DB box)');
+  // Simulated internal electrical DB box at Y = 1550
+  box(groups.tvUnit, 420, 380, 60, 555, 1550, 40, blackMetal);
+
+  const dbDoorPivot = new THREE.Group();
+  dbDoorPivot.position.set(185, 1346.2, 342);
+  groups.tvUnit.add(dbDoorPivot);
+  const dbDoorMesh = box(dbDoorPivot, 740, 2680, 20, 370, 0, 10, walnutMat, true);
+  for (let fx = 22; fx < 730; fx += 28) {
+    box(dbDoorPivot, 12, 2670, 10, fx, 0, 22, darkWalnutMat);
+  }
+  registerTvPart('DB-SLAT-DR', 'Full-Height Vertical Fluted Walnut Slat Door (740 x 2680 x 22)', dbDoorMesh, 'CNC Fluted Walnut HDHMR Door on 165° Concealed Hinges');
+
+  // 4B. Full-Height Seamless 3D Wavy Sculpted HDHMR Feature Wall (TV-WAVE: X = 930..5080 -> 4150 W x 2692.4 H x 54 D)
+  // Completely replaces the thick rectangular stadium box with organic flowing 3D horizontal dune waves (matching 5b653be6982f2ecbd922162ecae0a06e.jpg)
+  const waveBaseBoard = box(groups.tvUnit, 4150, 2692.4, 18, 3005, 1346.2, 9, wavyHdmrMat);
+  registerTvPart('TV-WAVE-BASE', 'Seamless 3D Wavy HDHMR Back Wall Substrate (4x Modular 1037.5 x 2692.4 x 18 Panels)', waveBaseBoard, '18 mm Moisture-Resistant HDHMR Backing + Micro-Cement Off-White PU (#ede6da)', 4);
+
+  // Build 26 sculpted 3D sinusoidal wave ridges across X = 930..5080, Y = 80..2670 so ceiling cove lights cast soft dune shadows
+  const waveStripCount = 26;
+  const waveSpanX = 4140;
+  const waveSegsX = 64;
+  for (let r = 0; r < waveStripCount; r++) {
+    const baseY = 110 + r * 98;
+    const pts = [];
+    const phase = r * 0.62;
+    const freq1 = (Math.PI * 2) / 1950;
+    const freq2 = (Math.PI * 2) / 1180;
+    for (let s = 0; s <= waveSegsX; s++) {
+      const localX = (s / waveSegsX) * waveSpanX;
+      const worldX = 935 + localX;
+      const dy = Math.sin(localX * freq1 + phase) * 32 + Math.cos(localX * freq2 - phase * 0.7) * 16;
+      const dz = 22 + Math.sin(localX * freq1 + phase + 0.8) * 14 + Math.cos(r * 0.5) * 6;
+      pts.push(new THREE.Vector3(worldX, Math.min(2675, Math.max(40, baseY + dy)), dz));
+    }
+    const curve = new THREE.CatmullRomCurve3(pts);
+    const tubeGeo = new THREE.TubeGeometry(curve, 64, 24, 8, false);
+    tubeGeo.scale(1, 0.82, 0.52); // Sculpted organic dune crest cross-section
+    const waveMesh = new THREE.Mesh(tubeGeo, r % 2 === 0 ? wavyHdmrMat : wavyRidgeMat);
+    waveMesh.castShadow = true;
+    waveMesh.receiveShadow = true;
+    groups.tvUnit.add(waveMesh);
+  }
+  const tvWaveProxy = new THREE.Mesh(new THREE.BoxGeometry(4150, 2692.4, 36), wavyHdmrMat);
+  tvWaveProxy.visible = false;
+  groups.tvUnit.add(tvWaveProxy);
+  registerTvPart('TV-WAVE-3D', '3D CNC Wavy Dune-Sculpted HDHMR Face Panels (4x 1037.5 x 2692.4 x 36 mm)', tvWaveProxy, '36 mm 3-Axis CNC Wave-Routed HDHMR + Seamless Micro-Cement Matte PU (#ede6da)', 4);
+
+  // Warm top ceiling cove grazing strip + 2 recessed architectural downlights washing the 3D Wavy HDHMR wall
+  box(groups.tvUnit, 4120, 10, 16, 3005, 2684, 58, glowMat);
+  for (const spotX of [1950, 4060]) {
+    cylinder(groups.tvUnit, 28, 28, 8, [spotX, 2686, 260], glowMat, 20);
+  }
+
+  // 4C. Curved-Edge Floating Credenza Console (TV-CON: X = 1030..4980 -> 3950 W x 380 H x 420 D, Y = 240..620, R = 190 curved left/right waterfall ends)
+  const credenzaPlanShape = makeRoundedRectShape(1975, -210, 210, 190);
+  const credenzaGeo = new THREE.ExtrudeGeometry(credenzaPlanShape, { depth: 380, bevelEnabled: true, bevelThickness: 10, bevelSize: 10, curveSegments: 36 });
+  const credenzaMesh = new THREE.Mesh(credenzaGeo, credenzaMat);
+  credenzaMesh.rotation.x = Math.PI / 2;
+  credenzaMesh.position.set(3005, 620, 210);
+  credenzaMesh.castShadow = true;
+  credenzaMesh.receiveShadow = true;
+  groups.tvUnit.add(credenzaMesh);
+
+  const credenzaProxy = new THREE.Mesh(new THREE.BoxGeometry(3950, 380, 420), credenzaMat);
+  credenzaProxy.visible = false;
+  groups.tvUnit.add(credenzaProxy);
+  registerTvPart('TV-CON', 'Curved-Edge Floating Credenza Carcass (3950 x 380 x 420, R=190 Curved Waterfall Ends)', credenzaProxy, '18 mm HDHMR + Kerf-Bent R=190 Curved Ends in Matte Off-White PU (#f2ece1)');
+
+  // Warm under-credenza LED grazing strip
+  box(groups.tvUnit, 3600, 8, 14, 3005, 234, 310, glowMat);
+
+  // 4 Handleless Push-to-Open Drawer Fronts across the central 3560 mm straight run (890 mm each)
+  const tvDrawerGroup = new THREE.Group();
+  groups.tvUnit.add(tvDrawerGroup);
+  const tvDrwW = 3560 / 4;
+  for (let i = 0; i < 4; i++) {
+    const dx = 1225 + (i + 0.5) * tvDrwW;
+    const dFront = box(tvDrawerGroup, tvDrwW - 4, 364, 20, dx, 430, 422, credenzaMat, true);
+    if (i === 0) {
+      registerTvPart('TV-DRW-1..4', 'Curved Credenza Push-to-Open Drawer Front (4x 886 x 364 x 20)', dFront, '20 mm Matte Off-White PU HDHMR Front on 350mm Blum Tip-On Runners', 4);
+    }
+  }
+
+  // 75" Ultra-Slim OLED TV (1680 x 960 x 32 at X = 3005, Y = 1360) + Dolby Atmos Soundbar (1150 x 65 x 95) + Ceramic Vases & Books (matching reference image!)
+  const oledTv = box(groups.tvUnit, 1680, 960, 32, 3005, 1360, 56, oledMat, true);
+  registerTvPart('TV-OLED', '75-Inch Wall-Mounted OLED Television (1680 x 960 x 32)', oledTv, 'Recessed VESA Mount on Wavy HDHMR Wall');
+  const soundbar = box(groups.tvUnit, 1150, 65, 95, 3005, 655, 260, blackMetal, true);
+  registerTvPart('TV-SBAR', 'Dolby Atmos Center Soundbar (1150 x 65 x 95)', soundbar, 'Matte Black Acoustic Grille');
+
+  // Left ceramic amphora vase + olive branch + Kinfolk book stack + right sculptural donut vase (matching 5b653be6982f2ecbd922162ecae0a06e.jpg)
+  cylinder(groups.tvUnit, 68, 52, 230, [1320, 735, 230], leafSand, 24);
+  cylinder(groups.tvUnit, 95, 40, 340, [1320, 960, 230], plantGreen, 18);
+  box(groups.tvUnit, 290, 36, 210, 1720, 638, 240, leafCream, true);
+  cylinder(groups.tvUnit, 72, 42, 42, [1720, 677, 240], walnutMat, 24);
+  const donutVase = new THREE.Mesh(new THREE.TorusGeometry(68, 26, 16, 32), leafCream);
+  donutVase.position.set(4520, 710, 230);
+  groups.tvUnit.add(donutVase);
+  cylinder(groups.tvUnit, 28, 28, 52, [4340, 646, 250], blackMetal, 20);
+  label(groups.labels, 'TV-WAVE / 4150 WAVY HDHMR + 3950 CURVED CONSOLE', [2950, 2540, 210], 115);
+
+  // --- 5. SWAPPED SOUTH WALL (Z = 3300): MODULAR DUAL-SLEEPER 12.5-FT LOUNGE SOFA (S1: X = 1050..4873, Z = 2335..3300, FACING NORTH) ---
+  const sofaStartX = spec.sofa.startX; // 1050 mm
+  const modLCenterX = sofaStartX + 140 + 845; // 2035 mm
+  const consoleCenterX = sofaStartX + 140 + 1690 + 76; // 2956 mm
+  const modRCenterX = sofaStartX + 140 + 1690 + 152 + 845; // 3877 mm
+  const rightArmCenterX = sofaStartX + 3823 - 70; // 4803 mm
+
+  const sofaParts = [];
+  function registerSofaPart(id, name, mesh, finish, qty = 1) {
+    sofaParts.push({ id, name, mesh, module: 'South Dual-Sleeper Sofa (S1)', axis: 'x', finish, qty });
+  }
+
+  // Waterfall Arms (R = 150 mm crest, 140 W x 965 D x 740 H at Z = 2335..3300)
+  for (const [armId, armX] of [['S1-ARM-L', sofaStartX + 70], ['S1-ARM-R', rightArmCenterX]]) {
+    const armShape = makeRoundedRectShape(482.5, 0, 740, 150);
+    const armGeo = new THREE.ExtrudeGeometry(armShape, { depth: 140, bevelEnabled: true, bevelThickness: 14, bevelSize: 12, curveSegments: 28 });
+    const armMesh = new THREE.Mesh(armGeo, boucleMat);
+    armMesh.rotation.y = Math.PI / 2;
+    armMesh.position.set(armX - 70, 0, 2817.5);
+    armMesh.castShadow = true;
+    armMesh.receiveShadow = true;
+    groups.sofa.add(armMesh);
+
+    const armProxy = new THREE.Mesh(new THREE.BoxGeometry(140, 740, 965), boucleMat);
+    armProxy.visible = false;
+    groups.sofa.add(armProxy);
+    registerSofaPart(armId, 'Waterfall Arm Assembly (4x 18mm BWP ribs + 2x 6mm flexi-ply, R=150mm)', armProxy, '18mm BWP Ply + 2x 6mm Flexi-Ply + 10mm 32D Foam + Heavy Cream Bouclé');
+  }
+
+  // Central White Oak Waterfall Console (152 W x 965 D x 610 H at X = 2880..3032, Z = 2335..3300)
+  const oakConsole = box(groups.sofa, 152, 610, 965, consoleCenterX, 305, 2817.5, whiteOakMat, true);
+  registerSofaPart('S1-CON', 'Central White Oak Waterfall Console (152 x 965 x 610, 45° miter fold)', oakConsole, '18mm White Oak Veneer over BWP Marine Ply + 3x Crocodile Brackets & 2x M10 Bolts');
+  box(groups.sofa, 96, 8, 220, consoleCenterX, 612, 2760, brassMat);
+
+  const sleeperLeftGroup = new THREE.Group();
+  const sleeperRightGroup = new THREE.Group();
+  const seatCushionLeft = new THREE.Group();
+  const seatCushionRight = new THREE.Group();
+  groups.sofa.add(sleeperLeftGroup, sleeperRightGroup, seatCushionLeft, seatCushionRight);
+  const headrestPivots = [];
+
+  for (const [side, centerX, sleeperGrp, cushionGrp] of [['L', modLCenterX, sleeperLeftGroup, seatCushionLeft], ['R', modRCenterX, sleeperRightGroup, seatCushionRight]]) {
+    // 1. Base Floor Platform (1,690 x 890 x 18 mm BWP Ply)
+    const basePlat = box(groups.sofa, 1690, 18, 890, centerX, 28, 2835, darkWalnutMat);
+    registerSofaPart('S1-PLAT-' + side, 'Module ' + side + ' Base Floor Platform (1690 x 890 x 18 BWP Ply)', basePlat, '18 mm BWP Marine Plywood (IS:710) + 45x45 Marandi battens');
+
+    // 2. Stationary Backrest Cavity against South Wall (Z = 3005..3300, 1,686 W x 813 H x 295 D)
+    const backCarcass = box(groups.sofa, 1686, 813, 295, centerX, 406.5, 3152.5, boucleMat, true);
+    registerSofaPart('S1-BACK-' + side, 'Module ' + side + ' Backrest Carcass & Bouclé Spine (813mm crest)', backCarcass, 'Solid Hardwood 45x70 Beam Rail + 18mm BWP Ply + Heavy Cream Bouclé');
+
+    // 3. Lower Front Fascia Valance (Z = 2345..3005, 1,686 W x 240 H x 660 D)
+    const frontValance = box(groups.sofa, 1686, 240, 660, centerX, 140, 2675, boucleMat, true);
+    registerSofaPart('S1-VAL-' + side, 'Module ' + side + ' Upholstered Lower Carcass Box (1690 clear bay)', frontValance, '18mm BWP Ply + 10mm 32D Foam + Heavy Cream Bouclé');
+
+    // 4. Plush Seat Cushion (Z = 2335..3005, top at Y = 464 mm)
+    box(cushionGrp, 1684, 204, 670, centerX, 362, 2670, boucleMat, true);
+    box(cushionGrp, 440, 380, 160, centerX - 480, 560, 2940, side === 'L' ? terracottaRoseMat : leafSand);
+    box(cushionGrp, 420, 340, 150, centerX + 460, 550, 2935, boucleMat);
+
+    // 5. Two Win Star ST-180 Multi-Position Ratcheting Headrests per Module (710 x 120 x 58 mm)
+    for (const [hIdx, offsetX] of [[1, -410], [2, 410]]) {
+      const hPivot = new THREE.Group();
+      hPivot.position.set(centerX + offsetX, 813, 3155);
+      groups.sofa.add(hPivot);
+      for (const stemX of [-225, 225]) {
+        rod(hPivot, [stemX, 0, 0], [stemX, 65, 0], 9, chromeMat);
+        cylinder(hPivot, 14, 14, 18, [stemX, 12, 0], chromeMat, 16);
+      }
+      const capMesh = box(hPivot, 710, 120, 58, 0, 105, -10, boucleMat, true);
+      headrestPivots.push(hPivot);
+      if (hIdx === 1) {
+        registerSofaPart('ST180-' + side, 'Win Star ST-180 Ratcheting Capsule Headrest (710 x 120 x 58 mm)', capMesh, 'Win Star ST-180 6-click Chrome Ratchet + 50D/32D Foam + Bouclé', 2);
+      }
+    }
+
+    // 6. FS0136 3-Fold Sleeper Mechanism & 95mm Tri-Fold Mattress (unfolds Northward from Z=2950 to Z=1115 when extended by -1220 mm)
+    const mechFrame = box(sleeperGrp, 1664, 42, 1220, centerX, 340, 2950, blackMetal, true);
+    const mattMesh = box(sleeperGrp, 1650, 95, 1200, centerX, 408.5, 2950, mattressMat, true);
+    for (const lx of [centerX - 790, centerX + 790]) {
+      rod(sleeperGrp, [lx, 20, 2380], [lx, 340, 2380], 11, blackMetal);
+    }
+    registerSofaPart('FS0136-' + side, 'FS0136 3-Fold Sleeper Mechanism Frame (1664 W, 13mm side clearance)', mechFrame, 'Tubular Steel FS0136 Rack anchored with 6x M8 Grade 8.8 Bolts');
+    registerSofaPart('S1-MATT-' + side, 'Tri-Fold Sleeper Mattress (45mm 80D Rebonded + 50mm 40D HR = 95mm)', mattMesh, '95 mm (3.75 in) Dual-Density Foam + 100 GSM Dacron + Butterfly Webbing');
+  }
+  label(groups.labels, 'S1 / 3823 DUAL-SLEEPER (SOUTH WALL)', [2956, 1040, 2820], 120);
+
+  // --- 6. SOUTH WALL DXF 6-LEAF BOTANICAL RELIEF MURAL (W-LEAF: X = 1411.5..4511.5, Y = 1020..2640, Z = 3246..3300) ---
+  const leafWallParts = [];
+  function createSouthDxfLeafPanel(id, title, cx, bottomY, w, h, tiltDeg, zOffsetFromSouthWall, thickness, mainMat, veinMat) {
+    const leafGroup = new THREE.Group();
+    leafGroup.position.set(cx, bottomY, 3300 - zOffsetFromSouthWall);
+    leafGroup.rotation.y = Math.PI; // Facing North into the room!
+    leafGroup.rotation.z = THREE.MathUtils.degToRad(tiltDeg);
+    groups.leafWall.add(leafGroup);
+
+    const shape = new THREE.Shape();
+    const hw = w / 2;
+    shape.moveTo(0, 0);
+    shape.bezierCurveTo(hw * 0.95, h * 0.16, hw * 1.12, h * 0.58, 0, h);
+    shape.bezierCurveTo(-hw * 1.12, h * 0.58, -hw * 0.95, h * 0.16, 0, 0);
+
+    const leafMesh = new THREE.Mesh(
+      new THREE.ExtrudeGeometry(shape, { depth: thickness, bevelEnabled: true, bevelThickness: 5, bevelSize: 4, curveSegments: 32 }),
+      mainMat
+    );
+    leafMesh.castShadow = true;
+    leafMesh.receiveShadow = true;
+    leafGroup.add(leafMesh);
+
+    rod(leafGroup, [0, -90, thickness + 2], [0, h * 0.92, thickness + 5], 8, veinMat);
+    const veinPairs = 9;
+    for (let i = 1; i <= veinPairs; i++) {
+      const frac = i / (veinPairs + 1);
+      const vy = h * (0.1 + frac * 0.78);
+      const span = hw * Math.sin(frac * Math.PI) * 0.78;
+      rod(leafGroup, [0, vy, thickness + 4], [span, vy + h * 0.07, thickness + 3], 4.5, veinMat);
+      rod(leafGroup, [0, vy, thickness + 4], [-span, vy + h * 0.07, thickness + 3], 4.5, veinMat);
+    }
+
+    const proxy = new THREE.Mesh(new THREE.BoxGeometry(w, h, thickness + 8), mainMat);
+    proxy.visible = false;
+    leafGroup.add(proxy);
+    leafWallParts.push({ id, name: title, mesh: proxy, module: 'South DXF 6-Leaf Mural', axis: 'x', finish: 'CNC 3D Routed HDF/BWR Ply + Mineral Stucco & Terracotta Coating' });
+  }
+
+  createSouthDxfLeafPanel('DXF-LEAF-1', 'DXF Leaf 1 (Lower-Left Spiced Walnut Frond)', 1820, 1030, 480, 880, -24, 14, 18, leafWalnut, darkWalnutMat);
+  createSouthDxfLeafPanel('DXF-LEAF-2', 'DXF Leaf 2 (Mid-Left Sandstone Relief Frond)', 2180, 1070, 560, 1280, -14, 22, 20, leafSand, whiteOakMat);
+  createSouthDxfLeafPanel('DXF-LEAF-3', 'DXF Leaf 3 (Center-Left Travertine Cream Frond)', 2640, 1050, 620, 1440, -5, 16, 18, leafCream, leafSand);
+  createSouthDxfLeafPanel('DXF-LEAF-4', 'DXF Leaf 4 (Center-Right Tallest Master Frond, Polyline 3B)', 3170, 1020, 680, 1550, 4, 26, 22, leafSand, whiteOakMat);
+  createSouthDxfLeafPanel('DXF-LEAF-5', 'DXF Leaf 5 (Right Terracotta Feature Frond)', 3680, 1040, 640, 1420, 13, 36, 22, leafTerracotta, leafClay);
+  createSouthDxfLeafPanel('DXF-LEAF-6', 'DXF Leaf 6 (Lower-Right Warm Clay Accent Frond)', 4040, 1010, 440, 920, 23, 18, 16, leafClay, darkWalnutMat);
+
+  // Matte-black ceiling spotlight track bar on South side grazing the DXF 6-leaf mural
+  box(groups.ceiling, 2600, 18, 28, 2956, 2675, 2880, blackMetal);
+  for (const spotX of [1950, 2620, 3290, 3960]) {
+    rod(groups.ceiling, [spotX, 2675, 2880], [spotX, 2615, 2880], 8, blackMetal);
+    cylinder(groups.ceiling, 22, 22, 65, [spotX, 2595, 2905], blackMetal, 16);
+    cylinder(groups.ceiling, 16, 16, 6, [spotX, 2580, 2930], glowMat, 16);
+  }
+
+  // --- 7. MODERN TALL WHITE CNC POOJA MANDIR ON THE 600mm WALL LEFT NEXT TO SITOUT (P1: X = 8125..8975, Z = 0..580, H = 2692.4) ---
+  const poojaParts = [];
+  function registerPoojaPart(id, name, mesh, finish, qty = 1) {
+    poojaParts.push({ id, name, mesh, module: '600mm Wall White CNC Pooja Mandir (P1)', axis: 'x', finish, qty });
+  }
+  const pCenterX = 8550; // X = 8125..8975 (850 mm W), Z = 0..580 (580 mm D inside the 600 mm East wall return!)
+
+  // Outer Pure White Matte PU Tower Carcass (850 W x 2692.4 H x 580 D)
+  for (const sideX of [8134, 8966]) {
+    const gable = box(groups.pooja, 18, 2692.4, 580, sideX, 1346.2, 290, poojaWhiteMat, true);
+    if (sideX === 8134) registerPoojaPart('P1-GABLE', 'Pooja Mandir Full-Height White PU Side Gable (2x 580 x 2692.4 x 18)', gable, '18 mm HDHMR in Pure Satin White PU (#faf8f5)', 2);
+  }
+  for (const [lvlY, labelName] of [[80, 'Plinth Base'], [1065, 'Sanctum Deck'], [2600, 'Crown Cornice'], [2683.4, 'Top Roof']]) {
+    box(groups.pooja, 814, 18, 562, pCenterX, lvlY, 290, poojaWhiteMat, true);
+  }
+  // Crown fascia with CNC lotus valence
+  const crownFascia = box(groups.pooja, 850, 82, 22, pCenterX, 2642, 570, poojaWhiteMat, true);
+  box(groups.pooja, 810, 12, 8, pCenterX, 2602, 582, brassMat);
+  registerPoojaPart('P1-CROWN', 'Mandir Carved White CNC Shikhar Fascia & Brass Inlay (850 x 82 x 22)', crownFascia, '22 mm CNC-Routed White PU HDHMR + Brushed Brass Trim');
+
+  // Warm Backlit Sacred Lotus / Mandala CNC Back Panel inside Sanctum (Y = 1080..2590, Z = 22)
+  const sanctumBack = box(groups.pooja, 810, 1500, 16, pCenterX, 1830, 22, poojaBackGlowMat);
+  registerPoojaPart('P1-BACKLIT', 'Backlit Warm Onyx & CNC Mandala Sanctum Backplate (810 x 1500 x 16)', sanctumBack, '8mm Translucent Warm Onyx Acrylic + 8mm White CNC Jaali Overlay + 2700K LED Matrix');
+  // Concentric sacred mandala rings & lotus motifs on sanctum backplate
+  for (const rad of [140, 220, 300]) {
+    const ring = new THREE.Mesh(new THREE.RingGeometry(rad - 8, rad, 36), brassMat);
+    ring.position.set(pCenterX, 1880, 32);
+    groups.pooja.add(ring);
+  }
+  // Stepped White Marble Deity Sinhasan Pedestal + Sacred Idol / Kalash + Hanging Brass Temple Bells
+  const sinhasan = box(groups.pooja, 520, 95, 320, pCenterX, 1122, 260, marbleMat, true);
+  box(groups.pooja, 380, 55, 240, pCenterX, 1195, 240, marbleMat, true);
+  registerPoojaPart('P1-SINHASAN', 'Stepped White Marble Deity Sinhasan Pedestal (520 x 95 x 320)', sinhasan, 'White Vietnam Marble Stepped Altar Platform with Brass Trim');
+  // Brass Deity Murti / Arch & Diya on Sinhasan
+  cylinder(groups.pooja, 58, 72, 220, [pCenterX, 1330, 240], brassMat, 24);
+  const prabhavali = new THREE.Mesh(new THREE.TorusGeometry(115, 8, 12, 32, Math.PI), brassMat);
+  prabhavali.position.set(pCenterX, 1340, 235);
+  groups.pooja.add(prabhavali);
+  // 4 Hanging Brass Temple Bells from sanctum soffit
+  for (const bx of [pCenterX - 250, pCenterX - 95, pCenterX + 95, pCenterX + 250]) {
+    rod(groups.pooja, [bx, 2590, 380], [bx, 2320, 380], 3, brassMat);
+    cylinder(groups.pooja, 8, 28, 46, [bx, 2295, 380], brassMat, 18);
+  }
+
+  // Bi-Fold / Hinged Tall White CNC Jaali Gates (P1-GATE-L & P1-GATE-R: Y = 1080..2600, each 405 W x 1520 H x 22 T)
+  const poojaGateLeft = new THREE.Group();
+  poojaGateLeft.position.set(8143, 1840, 570);
+  const poojaGateRight = new THREE.Group();
+  poojaGateRight.position.set(8957, 1840, 570);
+  groups.pooja.add(poojaGateLeft, poojaGateRight);
+
+  function buildCncGateLeaf(parent, sign) {
+    const cx = sign * 202.5;
+    // Outer stiles & rails
+    box(parent, 48, 1516, 22, sign * 24, 0, 0, poojaWhiteMat, true);
+    box(parent, 48, 1516, 22, sign * 381, 0, 0, poojaWhiteMat, true);
+    box(parent, 405, 56, 22, cx, 730, 0, poojaWhiteMat, true);
+    box(parent, 405, 56, 22, cx, -730, 0, poojaWhiteMat, true);
+    // CNC geometric jaali lattice bars + brass lotus medallions
+    for (let gy = -560; gy <= 560; gy += 160) {
+      box(parent, 320, 14, 14, cx, gy, 0, poojaWhiteMat, true);
+      cylinder(parent, 28, 28, 16, [cx, gy + 80, 0], brassMat, 16).rotation.x = Math.PI / 2;
+    }
+    for (const gx of [sign * 135, sign * 270]) {
+      box(parent, 14, 1410, 14, gx, 0, 0, poojaWhiteMat, true);
+    }
+    // Sleek vertical champagne-brass handle
+    box(parent, 12, 340, 24, sign * 368, -120, 18, brassMat);
+  }
+  buildCncGateLeaf(poojaGateLeft, 1);
+  buildCncGateLeaf(poojaGateRight, -1);
+  const gateProxy = new THREE.Mesh(new THREE.BoxGeometry(405, 1516, 22), poojaWhiteMat);
+  gateProxy.visible = false;
+  groups.pooja.add(gateProxy);
+  registerPoojaPart('P1-GATE-L/R', 'White CNC Jaali Sanctum Gate Leaf with Brass Medallions (2x 405 x 1516 x 22)', gateProxy, '22 mm CNC-Routed HDHMR in Pure White PU + Champagne Brass Pulls', 2);
+
+  // --- LOWER MULTI-TIER PULL-OUT SYSTEM OF POOJA MANDIR (Y = 80..1056) ---
+  const poojaPulloutTray = new THREE.Group(); // 1. Pull-Out Prasad / Bhog Offering Tray (Y = 1015..1055)
+  const poojaSittingTable = new THREE.Group(); // 2. Hidden Pull-Out Sitting / Kneeling Low Table (Y = 410..730)
+  const poojaThinTable = new THREE.Group(); // 3A. Thin Pull-Out Ritual Prep Table (Y = 360..390)
+  const poojaStorageBox = new THREE.Group(); // 3B. Hidden Low-Height Rolling Puja Item Storage Box Below (Y = 95..345)
+  groups.pooja.add(poojaPulloutTray, poojaSittingTable, poojaThinTable, poojaStorageBox);
+
+  // 1. Pull-Out Prasad / Aarti Serving Tray (P1-TRAY at Y = 1020..1056, 774 W x 440 D x 36 H)
+  const prasadTrayMesh = box(poojaPulloutTray, 774, 36, 440, pCenterX, 1038, 340, poojaWhiteMat, true);
+  box(poojaPulloutTray, 730, 6, 390, pCenterX, 1058, 340, brassMat); // Heat-safe brassarti inlay plate
+  box(poojaPulloutTray, 180, 10, 18, pCenterX, 1038, 572, brassMat); // Brass pull lip
+  // Brass Diya & Prasad bowl on pull-out tray
+  cylinder(poojaPulloutTray, 28, 18, 36, [pCenterX - 140, 1078, 420], brassMat, 20);
+  cylinder(poojaPulloutTray, 6, 6, 18, [pCenterX - 140, 1102, 420], glowMat, 12);
+  cylinder(poojaPulloutTray, 38, 24, 32, [pCenterX + 140, 1076, 420], brassMat, 20);
+  registerPoojaPart('P1-TRAY', '1. Pull-Out Prasad & Aarti Offering Tray with Brass Plate (774 x 36 x 440)', prasadTrayMesh, '36 mm White PU HDHMR Tray + 6mm Brushed Brass Heat Shield on Full-Extension Slides');
+
+  // Fixed fascia band between Prasad Tray and Pull-Out Sitting Table (Y = 735..1015, housing 2 small incense drawers)
+  box(groups.pooja, 814, 270, 540, pCenterX, 875, 290, poojaWhiteMat, true);
+  for (const dx of [pCenterX - 200, pCenterX + 200]) {
+    box(groups.pooja, 398, 262, 20, dx, 875, 568, poojaWhiteMat, true);
+    box(groups.pooja, 120, 10, 18, dx, 875, 582, brassMat);
+  }
+
+  // 2. Hidden Pull-Out Sitting / Kneeling Low Table (P1-SIT-TBL: nested at Y = 410..730, 774 W x 480 D x 320 H)
+  const sitTableTop = box(poojaSittingTable, 774, 36, 480, pCenterX, 712, 320, poojaWhiteMat, true);
+  box(poojaSittingTable, 730, 16, 440, pCenterX, 736, 320, boucleMat, true); // Soft quilted mat / top pad
+  for (const legX of [pCenterX - 368, pCenterX + 368]) {
+    box(poojaSittingTable, 28, 284, 460, legX, 552, 320, poojaWhiteMat, true);
+  }
+  box(poojaSittingTable, 220, 12, 20, pCenterX, 712, 574, brassMat);
+  registerPoojaPart('P1-SIT-TBL', '2. Hidden Pull-Out Sitting / Kneeling Table (774 x 320 x 480, Top Y=730)', sitTableTop, '28mm Reinforced HDHMR Pull-Out Table / Asana on Heavy-Duty Locking Slides');
+
+  // 3A. Thin Pull-Out Ritual Preparation Table / Chowki Tray Below (P1-THIN-TBL: Y = 362..392, 710 W x 450 D x 30 T)
+  const thinTableMesh = box(poojaThinTable, 710, 30, 450, pCenterX, 377, 325, poojaWhiteMat, true);
+  box(poojaThinTable, 180, 10, 18, pCenterX, 377, 562, brassMat);
+  registerPoojaPart('P1-THIN-TBL', '3A. Thin Pull-Out Ritual Prep Table Below Sitting Table (710 x 30 x 450)', thinTableMesh, '30 mm White PU HDHMR Pull-Out Chowki / Book Tray on Telescopic Runners');
+
+  // 3B. Hidden Low-Height Rolling Puja Item Storage Box at Bottom (P1-BOX: Y = 92..348, 710 W x 256 H x 470 D)
+  const lowBoxMesh = box(poojaStorageBox, 710, 256, 470, pCenterX, 220, 330, poojaWhiteMat, true);
+  box(poojaStorageBox, 714, 260, 20, pCenterX, 220, 568, poojaWhiteMat, true);
+  box(poojaStorageBox, 220, 12, 20, pCenterX, 295, 584, brassMat);
+  // Internal brass puja vessels & samagri jars inside the low storage box
+  cylinder(poojaStorageBox, 36, 36, 95, [pCenterX - 180, 160, 420], brassMat, 20);
+  cylinder(poojaStorageBox, 42, 32, 110, [pCenterX, 168, 420], brassMat, 20);
+  cylinder(poojaStorageBox, 34, 34, 85, [pCenterX + 180, 155, 420], leafTerracotta, 20);
+  registerPoojaPart('P1-BOX', '3B. Hidden Low-Height Pull-Out Puja Samagri Storage Box (714 x 260 x 490)', lowBoxMesh, '18 mm White PU HDHMR Rolling Storage Box on Undermount Runners + Concealed Casters');
+
+  label(groups.labels, 'P1 / 850x580 WHITE CNC POOJA (600 WALL)', [8550, 2540, 480], 110);
+
+  // --- 8. LIVING CENTER ROUND WOOD COFFEE TABLE (CT-1, matching 5b653be6982f2ecbd922162ecae0a06e.jpg) & SWIVEL BARREL CHAIR (AC-1) ---
+  const coffeeTableGroup = new THREE.Group();
+  coffeeTableGroup.position.set(2956, 0, 1480);
+  groups.accent.add(coffeeTableGroup);
+  const ctBase = cylinder(coffeeTableGroup, 330, 330, 280, [0, 140, 0], walnutMat, 36);
+  const ctTop = cylinder(coffeeTableGroup, 490, 490, 48, [0, 304, 0], whiteOakMat, 44);
+  // Vase, olive branch, wooden bowl & art book on coffee table (matching 5b653be6982f2ecbd922162ecae0a06e.jpg)
+  cylinder(coffeeTableGroup, 58, 44, 165, [110, 410, -60], leafSand, 24);
+  cylinder(coffeeTableGroup, 85, 35, 220, [110, 540, -60], plantGreen, 18);
+  cylinder(coffeeTableGroup, 72, 45, 42, [-80, 349, -90], darkWalnutMat, 24);
+  box(coffeeTableGroup, 260, 32, 195, [80, 344, 140], leafCream, true);
+
+  // Swivel Barrel Accent Chair (AC-1 at X = 560, Z = 2250)
+  const chairGroup = new THREE.Group();
+  chairGroup.position.set(560, 0, 2250);
+  chairGroup.rotation.y = Math.PI * 0.72;
+  groups.accent.add(chairGroup);
+  const acSeat = cylinder(chairGroup, 410, 390, 410, [0, 205, 0], terracottaRoseMat, 32);
+  const acBack = new THREE.Mesh(new THREE.CylinderGeometry(420, 410, 360, 28, 1, false, -Math.PI * 0.65, Math.PI * 1.3), terracottaRoseMat);
+  acBack.position.set(0, 560, 0);
+  acBack.castShadow = true;
+  chairGroup.add(acBack);
+  box(chairGroup, 320, 260, 120, 0, 520, -180, boucleMat);
+
+  // --- 9. DINING AREA (X = 4440..8975): 6-SEATER MARBLE TABLE (DT-1), CHAIRS (DC-1..6), SIDEBOARD (CR-1) & CHANDELIER ---
+  const diningParts = [];
+  function registerDiningPart(id, name, mesh, finish, qty = 1) {
+    diningParts.push({ id, name, mesh, module: 'Dining Zone (D-1)', axis: 'x', finish, qty });
+  }
+
+  const dtX = spec.dining.centerX, dtZ = spec.dining.centerZ; // X = 6850, Z = 1750
+  for (const pedX of [dtX - 450, dtX + 450]) {
+    cylinder(groups.dining, 195, 245, 725, [pedX, 362.5, dtZ], darkWalnutMat, 32);
+    cylinder(groups.dining, 252, 252, 18, [pedX, 9, dtZ], brassMat, 32);
+  }
+  const dtShape = makeRoundedRectShape(975, -525, 525, 500);
+  const dtTopMesh = new THREE.Mesh(
+    new THREE.ExtrudeGeometry(dtShape, { depth: 35, bevelEnabled: true, bevelThickness: 6, bevelSize: 6, curveSegments: 40 }),
+    marbleMat
+  );
+  dtTopMesh.rotation.x = Math.PI / 2;
+  dtTopMesh.position.set(dtX, 760, dtZ);
+  dtTopMesh.castShadow = true;
+  dtTopMesh.receiveShadow = true;
+  groups.dining.add(dtTopMesh);
+  const dtProxy = new THREE.Mesh(new THREE.BoxGeometry(1950, 760, 1050), marbleMat);
+  dtProxy.visible = false;
+  groups.dining.add(dtProxy);
+  registerDiningPart('DT-1', '6-Seater Oval Marble & Fluted-Pedestal Dining Table (1950 x 1050 x 760)', dtProxy, '35 mm Patagonia/Travertine Marble Top + Dual Fluted Dark Walnut Pedestals');
+
+  cylinder(groups.dining, 52, 38, 175, [dtX, 848, dtZ], brassMat, 24);
+  cylinder(groups.dining, 95, 45, 260, [dtX, 1020, dtZ], plantGreen, 20);
+
+  const diningChairGroups = [];
+  const chairCoords = [
+    { x: dtX - 480, z: dtZ - 620, rot: 0, dirZ: -1, dirX: 0 },
+    { x: dtX + 480, z: dtZ - 620, rot: 0, dirZ: -1, dirX: 0 },
+    { x: dtX - 480, z: dtZ + 620, rot: Math.PI, dirZ: 1, dirX: 0 },
+    { x: dtX + 480, z: dtZ + 620, rot: Math.PI, dirZ: 1, dirX: 0 },
+    { x: dtX - 1080, z: dtZ, rot: Math.PI / 2, dirZ: 0, dirX: -1 },
+    { x: dtX + 1080, z: dtZ, rot: -Math.PI / 2, dirZ: 0, dirX: 1 }
+  ];
+  chairCoords.forEach((c, idx) => {
+    const cg = new THREE.Group();
+    cg.position.set(c.x, 0, c.z);
+    cg.rotation.y = c.rot;
+    groups.dining.add(cg);
+    box(cg, 510, 65, 490, 0, 455, 0, charcoalVelvet, true);
+    box(cg, 510, 380, 75, 0, 665, -215, charcoalVelvet, true);
+    for (const lx of [-210, 210]) {
+      for (const lz of [-195, 195]) {
+        rod(cg, [lx, 0, lz], [lx * 0.85, 425, lz * 0.85], 11, darkWalnutMat);
+      }
+    }
+    diningChairGroups.push({ group: cg, baseX: c.x, baseZ: c.z, dirX: c.dirX, dirZ: c.dirZ });
+    if (idx === 0) {
+      const chProxy = new THREE.Mesh(new THREE.BoxGeometry(510, 855, 510), charcoalVelvet);
+      chProxy.visible = false;
+      cg.add(chProxy);
+      registerDiningPart('DC-1..6', 'Upholstered Charcoal-Velvet Dining Chair (6 units, 510 x 855 x 510)', chProxy, 'Curved Ash/Plywood Shell in Charcoal Velvet + Brass-Tipped Walnut Legs', 6);
+    }
   });
 
-  document.getElementById('badge-title').textContent = v.title;
-  document.getElementById('badge-desc').textContent = v.desc;
+  // Dining Crockery Sideboard along North Dining Wall left of Pooja Mandir (CR-1: X = 6760..8060 -> 1300 W x 850 H x 400 D)
+  const crockeryConsole = box(groups.dining, 1300, 850, 400, 7410, 425, 200, travertineMat, true);
+  box(groups.dining, 1300, 28, 410, 7410, 864, 205, marbleMat, true);
+  registerDiningPart('CR-1', 'Dining Crockery & Sideboard Console (1300 x 878 x 410)', crockeryConsole, '18 mm HDHMR + Fluted Travertine Doors & Marble Top');
+  box(groups.dining, 920, 860, 24, 7410, 1580, 14, darkWalnutMat, true);
+  box(groups.dining, 850, 790, 28, 7410, 1580, 18, leafCream);
 
-  if (v.ortho) {
-    activeCamera = ortho;
-    const aspect = container.clientWidth / container.clientHeight;
-    const s = v.span || 7000;
-    ortho.left = -s * aspect * 0.5;
-    ortho.right = s * aspect * 0.5;
-    ortho.top = s * 0.5;
-    ortho.bottom = -s * 0.5;
+  // Brass Branch Chandelier over Dining Table
+  rod(groups.ceiling, [dtX, 2020, dtZ], [dtX, 2692.4, dtZ], 12, brassMat);
+  cylinder(groups.ceiling, 85, 85, 24, [dtX, 2680, dtZ], brassMat);
+  for (let arm = 0; arm < 8; arm++) {
+    const ang = (arm * Math.PI) / 4;
+    const ax = dtX + Math.cos(ang) * 380;
+    const az = dtZ + Math.sin(ang) * 380;
+    rod(groups.ceiling, [dtX, 2040, dtZ], [ax, 2080, az], 6, brassMat);
+    cylinder(groups.ceiling, 24, 16, 65, [ax, 2120, az], glowMat, 14);
+  }
+  label(groups.labels, 'DT-1 / 1950 x 1050', [dtX, 820, dtZ], 115);
+
+  // --- 10. FALSE CEILING PERIPHERAL COVE TRAY & DUAL 3-BLADE FANS ---
+  for (const cz of [140, 3160]) box(groups.ceiling, 8975, spec.falseCeilingDrop, 280, 4487.5, spec.height - spec.falseCeilingDrop / 2, cz, leafCream);
+  for (const cx of [140, 8835]) box(groups.ceiling, 280, spec.falseCeilingDrop, 2740, cx, spec.height - spec.falseCeilingDrop / 2, 1650, leafCream);
+  for (const cz of [285, 3015]) box(groups.ceiling, 8400, 10, 14, 4487.5, spec.soffit + 18, cz, glowMat);
+  for (const cx of [285, 8690]) box(groups.ceiling, 14, 10, 2730, cx, spec.soffit + 18, 1650, glowMat);
+  for (const fanX of [2956, 5650]) {
+    cylinder(groups.ceiling, 95, 95, 36, [fanX, 2610, 1650], leafCream);
+    rod(groups.ceiling, [fanX, 2610, 1650], [fanX, 2770, 1650], 12, brassMat);
+    for (let b = 0; b < 3; b++) {
+      const blade = box(groups.ceiling, 620, 12, 125, fanX, 2605, 1650, leafCream);
+      blade.geometry.translate(290, 0, 0);
+      blade.rotation.y = (b * Math.PI * 2) / 3 + 0.3;
+    }
+  }
+
+  // --- 11. SCENE LIGHTING ---
+  scene.add(new THREE.HemisphereLight('#fff7e8', '#6c7d71', 1.92));
+  const sun = new THREE.DirectionalLight('#ffefd2', 2.38);
+  sun.position.set(5200, 7600, 6800);
+  sun.castShadow = true;
+  sun.shadow.mapSize.set(2048, 2048);
+  Object.assign(sun.shadow.camera, { left: -7500, right: 7500, top: 7000, bottom: -7000, near: 200, far: 24000 });
+  sun.shadow.normalBias = 3;
+  sun.shadow.bias = -0.0002;
+  scene.add(sun);
+
+  const fillLight = new THREE.DirectionalLight('#f7e2c2', 1.25);
+  fillLight.position.set(-2500, 3800, -2200);
+  scene.add(fillLight);
+
+  // --- 12. TECHNICAL DIMENSIONS & SECTIONS ---
+  const dimensionGroups = {};
+  for (const name of ['overview', 'entry', 'plan', 'tvWall', 'sofaWall', 'sleeperMode', 'poojaMandir', 'dining', 'sitout', 'foyerDb', 'section', 'sofaSection', 'component']) {
+    dimensionGroups[name] = new THREE.Group();
+    groups.dimensions.add(dimensionGroups[name]);
+  }
+
+  for (const v of ['overview', 'plan']) {
+    dimension(dimensionGroups[v], [0, 20, 3300], [4440, 20, 3300], '4440 LIVING', [0, 0, 380]);
+    dimension(dimensionGroups[v], [4440, 20, 3300], [8975, 20, 3300], '4535 DINING', [0, 0, 380]);
+    dimension(dimensionGroups[v], [0, 20, 3300], [8975, 20, 3300], '8975 COMBINED HALL', [0, 0, 740]);
+    dimension(dimensionGroups[v], [0, 20, 0], [0, 20, 3300], '3300', [-420, 0, 0]);
+  }
+  dimension(dimensionGroups.plan, [8975, 20, 3300], [10500, 20, 3300], '1525 SITOUT', [0, 0, 380]);
+  dimension(dimensionGroups.plan, [0, 20, 0], [5185, 20, 0], '5185 NORTH WAVY TV WALL', [0, 0, -360]);
+  dimension(dimensionGroups.plan, [0, 20, 3300], [5170, 20, 3300], '5170 SOUTH SOFA WALL', [0, 0, 1080]);
+  dimension(dimensionGroups.plan, [8125, 20, 0], [8975, 20, 0], '850 POOJA ON 600 WALL', [0, 0, -360]);
+
+  // North Wavy TV Wall Dimensions
+  dimension(dimensionGroups.tvWall, [180, 0, 360], [930, 0, 360], '750 FLUTED DB/CURIO', [0, -240, 0]);
+  dimension(dimensionGroups.tvWall, [930, 2692.4, 54], [5080, 2692.4, 54], '4150 SEAMLESS 3D WAVY HDHMR WALL', [0, 150, 0]);
+  dimension(dimensionGroups.tvWall, [1030, 0, 420], [4980, 0, 420], '3950 CURVED-EDGE FLOATING CREDENZA (R=190)', [0, -240, 0]);
+  dimension(dimensionGroups.tvWall, [0, 0, 0], [5185, 0, 0], '5185 NORTH WALL', [0, -460, 0]);
+
+  // South Sofa & DXF Mural Dimensions
+  dimension(dimensionGroups.sofaWall, [1050, 0, 2335], [4873, 0, 2335], '3823 (12.5 FT) DUAL-SLEEPER', [0, -240, 0]);
+  dimension(dimensionGroups.sofaWall, [1190, 0, 2335], [2880, 0, 2335], '1690 MODULE L', [0, -460, 0]);
+  dimension(dimensionGroups.sofaWall, [2880, 0, 2335], [3032, 0, 2335], '152 OAK', [0, -460, 0]);
+  dimension(dimensionGroups.sofaWall, [3032, 0, 2335], [4722, 0, 2335], '1690 MODULE R', [0, -460, 0]);
+  dimension(dimensionGroups.sofaWall, [1411.5, 2640, 3250], [4511.5, 2640, 3250], '3100 DXF 6-LEAF RELIEF MURAL', [0, 140, 0]);
+
+  // Sleeper Mode Dimensions
+  dimension(dimensionGroups.sleeperMode, [1050, 420, 1115], [1050, 420, 3300], '2185 (86 IN) EXTENDED BED', [-320, 0, 0]);
+  dimension(dimensionGroups.sleeperMode, [2956, 420, 420], [2956, 420, 1115], '695 CLEAR TO TV CONSOLE', [0, 120, 0]);
+
+  // Pooja Mandir (600mm Sitout-Adjacent Wall) Dimensions
+  dimension(dimensionGroups.poojaMandir, [8125, 0, 580], [8975, 0, 580], '850 WHITE CNC MANDIR', [0, -220, 0]);
+  dimension(dimensionGroups.poojaMandir, [8975, 0, 0], [8975, 0, 580], '580 D (IN 600 WALL)', [240, 0, 0]);
+  dimension(dimensionGroups.poojaMandir, [8125, 0, 580], [8125, 2692.4, 580], '2692.4 H', [-240, 0, 0]);
+  dimension(dimensionGroups.poojaMandir, [8125, 1038, 580], [8125, 1038, 940], 'PRASAD TRAY', [-220, 80, 0]);
+  dimension(dimensionGroups.poojaMandir, [8125, 712, 580], [8125, 712, 1000], 'PULL-OUT SITTING TABLE', [-220, 60, 0]);
+  dimension(dimensionGroups.poojaMandir, [8125, 220, 580], [8125, 220, 980], 'THIN TRAY + PUJA BOX', [-220, -60, 0]);
+
+  // Dining, Sitout & Foyer Dimensions
+  dimension(dimensionGroups.dining, [5875, 760, 1750], [7825, 760, 1750], '1950 MARBLE TABLE', [0, 220, 0]);
+  dimension(dimensionGroups.dining, [8125, 1350, 580], [8975, 1350, 580], '850 POOJA', [0, 140, 0]);
+  dimension(dimensionGroups.sitout, [8975, 0, 600], [8975, 0, 2700], '2100 SLD1 SLIDER', [-280, -220, 0]);
+  dimension(dimensionGroups.sitout, [8975, 0, 0], [8975, 0, 600], '600 POOJA WALL', [-280, -220, 0]);
+  dimension(dimensionGroups.foyerDb, [180, 0, 360], [930, 0, 360], '750 FLUTED DB TOWER', [0, -220, 0]);
+  dimension(dimensionGroups.foyerDb, [0, 0, 450], [0, 0, 1500], '1050 MD DOOR', [-260, 0, 0]);
+
+  // Section A-A (Longitudinal Section at Z = 1650)
+  const secA = groups.section;
+  box(secA, 10500, 70, 40, 5250, -35, 1650, tileMat);
+  box(secA, 3950, 380, 40, 3005, 430, 1650, credenzaMat);
+  box(secA, 1680, 960, 30, 3005, 1360, 1650, oledMat);
+  box(secA, 1950, 760, 40, 6850, 380, 1650, marbleMat);
+  box(secA, 850, 2692.4, 40, 8550, 1346.2, 1650, poojaWhiteMat);
+  line(secA, [[0, 2794, 1650], [8975, 2794, 1650]], '#6f8276', true);
+  dimension(dimensionGroups.section, [0, 0, 1650], [4440, 0, 1650], '4440 LIVING', [0, -280, 0]);
+  dimension(dimensionGroups.section, [4440, 0, 1650], [8975, 0, 1650], '4535 DINING + POOJA', [0, -280, 0]);
+  dimension(dimensionGroups.section, [8975, 0, 1650], [10500, 0, 1650], '1525 SITOUT', [0, -280, 0]);
+  dimension(dimensionGroups.section, [0, 0, 1650], [0, 2794, 1650], '2794 SLAB', [-380, 0, 0]);
+  label(secA, 'LONGITUDINAL SECTION A-A / Z = 1650', [5250, 3080, 1650], 155);
+
+  // Section B-B (Dual-Sleeper Sofa Blueprint Kinematic Section)
+  const secB = groups.sofaSection;
+  box(secB, 2185, 18, 40, 1092.5, 9, 0, darkWalnutMat);
+  box(secB, 295, 813, 40, 147.5, 406.5, 0, boucleMat, true);
+  box(secB, 160, 58, 40, 165, 910, 0, boucleMat, true);
+  rod(secB, [155, 813, 0], [165, 885, 0], 8, chromeMat);
+  box(secB, 1890, 320, 36, 1240, 178, 0, blackMetal, true);
+  line(secB, [[295, 35, 22], [2185, 338, 22]], '#b89146');
+  line(secB, [[295, 338, 22], [2185, 35, 22]], '#b89146');
+  box(secB, 1890, 95, 40, 1240, 386, 0, mattressMat, true);
+  dimension(dimensionGroups.sofaSection, [0, 0, 0], [965, 0, 0], '965 CLOSED DEPTH', [0, -180, 0]);
+  dimension(dimensionGroups.sofaSection, [0, 0, 0], [2185, 0, 0], '2185 (86 IN) EXTENDED BED', [0, -360, 0]);
+  dimension(dimensionGroups.sofaSection, [295, 0, 0], [965, 0, 0], '670 SEAT DEPTH', [0, 140, 0]);
+  dimension(dimensionGroups.sofaSection, [0, 0, 0], [0, 813, 0], '813 CREST', [-260, 0, 0]);
+  dimension(dimensionGroups.sofaSection, [0, 813, 0], [0, 978, 0], '978 ST-180 APEX', [-260, 0, 0]);
+  label(secB, 'BLUEPRINT SECTION B-B / FS0136 3-FOLD + ST-180 RATCHET + 95MM MATTRESS', [1100, 1180, 0], 115);
+
+  // --- 13. CAMERA VIEWS & WALKTHROUGH STOPS ---
+  const viewSettings = {
+    overview: { position: [-2800, 5600, 7400], target: [4487.5, 1000, 1650], name: '01 / AXONOMETRIC OVERVIEW (SWAPPED WALLS + MANDIR)' },
+    entry: { position: [550, 1620, 980], target: [4800, 1250, 1650], name: '02 / MAIN ENTRY (MD)' },
+    plan: { position: [5100, 14500, 1650], target: [5100, 0, 1650], span: 11800, name: '03 / FLOOR PLAN (8975 x 3300 + 600 WALL POOJA + SITOUT)' },
+    tvWall: { position: [2750, 1380, 6800], target: [2750, 1380, 0], span: 5600, name: '04 / NORTH ELEVATION: 3D WAVY HDHMR TV WALL & CURVED CREDENZA' },
+    sofaWall: { position: [2956, 1380, -4500], target: [2956, 1380, 3300], span: 5600, name: '05 / SOUTH ELEVATION: 3823 DUAL-SLEEPER & DXF 6-LEAF MURAL' },
+    sleeperMode: { position: [5500, 2550, 850], target: [2956, 650, 2100], name: '06 / DUAL-SLEEPER DEPLOYED NORTHWARD (FS0136 + ST-180)' },
+    poojaMandir: { position: [7400, 1350, 2850], target: [8550, 1200, 290], name: '07 / 600MM WALL TALL WHITE CNC POOJA MANDIR & PULL-OUTS' },
+    dining: { position: [4200, 1680, 1650], target: [8200, 1250, 1450], name: '08 / DINING, POOJA MANDIR & SITOUT BALCONY' },
+    sitout: { position: [5200, 1380, 1650], target: [8975, 1380, 1650], span: 4200, name: '09 / EAST SITOUT ELEVATION (600 WALL POOJA + 2100 SLD1)' },
+    foyerDb: { position: [1950, 1420, 2250], target: [520, 1350, 250], name: '10 / FLUTED WALNUT DB TOWER & MD FOYER' },
+    section: { position: [5250, 1400, 12500], target: [5250, 1400, 1650], span: 11200, name: '11 / LONGITUDINAL SECTION A-A' },
+    sofaSection: { position: [1100, 550, 4800], target: [1100, 550, 0], span: 2900, name: '12 / SOFA BLUEPRINT SECTION B-B (FS0136)' },
+    component: { position: [2800, 2000, 3600], target: [0, 0, 0], name: '13 / FACTORY COMPONENT INSPECTOR' }
+  };
+
+  let currentView = 'overview', span = 11200, touring = false, tourIndex = 0, tourTime = 0, lastTime = 0;
+  const tourStops = [
+    { position: [550, 1620, 980], target: [3005, 1300, 250], name: 'Main Entrance (MD) to Wavy 3D HDHMR TV Wall' },
+    { position: [2956, 1550, 2150], target: [2956, 1320, 50], name: 'Full-Height Wavy HDHMR TV Wall & Curved Credenza' },
+    { position: [2956, 1550, 1050], target: [2956, 1320, 3250], name: 'South 12.5-Ft Dual-Sleeper Sofa & DXF 6-Leaf Mural' },
+    { position: [4400, 1550, 1350], target: [2956, 650, 2600], name: 'White Oak Console & ST-180 Ratcheting Headrests' },
+    { position: [5200, 1620, 1750], target: [7400, 1250, 1650], name: 'Transition to 6-Seater Marble Dining Zone' },
+    { position: [7650, 1480, 2350], target: [8550, 1180, 290], name: '600mm Wall Tall White CNC Pooja Mandir & Pull-Out Tables' },
+    { position: [7900, 1620, 1650], target: [9850, 1250, 1650], name: 'SLD1 Sliding Glass Door & Sitout Balcony' }
+  ];
+
+  function resize() {
+    const w = viewport.clientWidth, h = viewport.clientHeight, aspect = w / h;
+    renderer.setSize(w, h);
+    camera.aspect = aspect;
+    camera.fov = touring || ['entry', 'dining', 'poojaMandir', 'foyerDb'].includes(currentView) ? 58 : THREE.MathUtils.radToDeg(2 * Math.atan(Math.tan(THREE.MathUtils.degToRad(46) / 2) * Math.max(1, 1.35 / aspect)));
+    camera.updateProjectionMatrix();
+    const visibleH = Math.max(span * 0.62, span / aspect);
+    ortho.left = -visibleH * aspect / 2;
+    ortho.right = visibleH * aspect / 2;
+    ortho.top = visibleH / 2;
+    ortho.bottom = -visibleH / 2;
     ortho.updateProjectionMatrix();
-    ortho.up.set(0, 0, -1);
-  } else {
+  }
+
+  function visibility() {
+    const isSec = currentView === 'section', isSofaSec = currentView === 'sofaSection', isComp = currentView === 'component';
+    const technical = isSec || isSofaSec || isComp;
+    groups.component.visible = isComp;
+    groups.section.visible = isSec;
+    groups.sofaSection.visible = isSofaSec;
+    for (const name of ['floor', 'doors', 'tvUnit', 'sofa', 'leafWall', 'pooja', 'accent', 'dining']) {
+      groups[name].visible = !technical;
+    }
+    groups.labels.visible = ['overview', 'plan'].includes(currentView) && !touring;
+    groups.dimensions.visible = document.getElementById('dimensions').checked && !touring;
+    for (const [name, grp] of Object.entries(dimensionGroups)) grp.visible = name === currentView;
+
+    groups.walls.visible = !technical && document.getElementById('shell').checked && !['plan', 'tvWall', 'sofaWall', 'sitout'].includes(currentView);
+    for (const m of wallMeshes) {
+      m.visible = touring || ['entry', 'dining', 'sleeperMode', 'poojaMandir', 'foyerDb'].includes(currentView) || (currentView === 'overview' && ['north', 'west', 'east'].includes(m.userData.side));
+    }
+    groups.ceiling.visible = document.getElementById('ceiling').checked && !technical && currentView !== 'plan';
+    if (currentView === 'tvWall') {
+      groups.sofa.visible = false;
+      groups.leafWall.visible = false;
+      groups.accent.visible = false;
+    }
+    if (currentView === 'sofaWall') {
+      groups.tvUnit.visible = false;
+      groups.accent.visible = false;
+    }
+  }
+
+  function stopTour() {
+    const wasTouring = touring;
+    touring = false;
+    document.getElementById('tour').setAttribute('aria-pressed', 'false');
+    document.getElementById('tour-text').textContent = 'Walkthrough';
+    controls.object = activeCamera;
+    if (wasTouring) {
+      controls.target.copy(activeCamera.position).add(activeCamera.getWorldDirection(new THREE.Vector3()).multiplyScalar(2200));
+    }
+    controls.enabled = true;
+  }
+
+  function setView(name) {
+    stopTour();
+    currentView = name;
+    if (name === 'sleeperMode') {
+      document.getElementById('sleeper-left').checked = true;
+      document.getElementById('headrests').checked = true;
+    }
+    if (name === 'poojaMandir') {
+      document.getElementById('pooja-gates').checked = true;
+      document.getElementById('pooja-pullouts').checked = true;
+    }
+    const setting = viewSettings[name];
+    activeCamera = setting.span ? ortho : camera;
+    span = setting.span || 11200;
+    activeCamera.up.set(0, 1, 0);
+    if (name === 'plan') activeCamera.up.set(0, 0, -1);
+    activeCamera.position.set(...setting.position);
+    controls.dispose();
+    controls = new OrbitControls(activeCamera, renderer.domElement);
+    controls.target.set(...setting.target);
+    controls.enableDamping = true;
+    controls.enableRotate = !setting.span;
+    controls.maxDistance = 26000;
+    controls.minDistance = 400;
+    activeCamera.lookAt(...setting.target);
+    document.getElementById('view-label').textContent = setting.name + ' / mm';
+    document.getElementById('tour-state').textContent = setting.name;
+    document.querySelectorAll('[data-view]').forEach(btn => btn.classList.toggle('active', btn.dataset.view === name));
+    visibility();
+    resize();
+    controls.update();
+    renderer.render(scene, activeCamera);
+  }
+
+  function setTourView(idx) {
+    tourIndex = (idx + tourStops.length) % tourStops.length;
+    tourTime = 0;
+    const stop = tourStops[tourIndex];
+    currentView = 'entry';
     activeCamera = camera;
     camera.up.set(0, 1, 0);
-    camera.fov = v.fov || 54;
-    camera.updateProjectionMatrix();
+    camera.position.set(...stop.position);
+    camera.lookAt(...stop.target);
+    controls.enabled = false;
+    document.getElementById('view-label').textContent = 'WALKTHROUGH / ' + stop.name;
+    document.getElementById('tour-state').textContent = (tourIndex + 1) + ' / ' + tourStops.length + ' ' + stop.name;
+    visibility();
+    resize();
+    renderer.render(scene, camera);
   }
 
-  activeCamera.position.set(...v.pos);
-  controls.dispose();
-  controls = new OrbitControls(activeCamera, canvas);
-  controls.enableDamping = true;
-  controls.dampingFactor = 0.08;
-  controls.target.set(...v.target);
-  controls.update();
-
-  groups.ceiling.visible = !v.ortho && document.getElementById('toggle-ceiling').checked;
-  syncWallCutaways();
-}
-
-document.querySelectorAll('[data-view]').forEach(btn => {
-  btn.addEventListener('click', () => setView(btn.dataset.view));
-});
-
-function syncWallCutaways() {
-  const autoCutaway = document.getElementById('chk-cutaway').checked;
-  if (!autoCutaway || currentViewName === 'plan') {
-    wallMeshes.forEach(m => { m.visible = true; });
-    return;
+  function startTour() {
+    touring = true;
+    document.getElementById('tour').setAttribute('aria-pressed', 'true');
+    document.getElementById('tour-text').textContent = 'Pause';
+    setTourView(tourIndex);
   }
-  if (currentViewName === 'entry') {
-    wallMeshes.forEach(m => { m.visible = true; });
-    return;
-  }
-  const camDir = new THREE.Vector3().subVectors(activeCamera.position, controls.target);
-  wallMeshes.forEach(m => {
-    const toWall = m.userData.center.clone().sub(controls.target);
-    const dot = toWall.dot(camDir);
-    m.visible = dot < 200;
+
+  document.getElementById('tour').addEventListener('click', () => {
+    if (touring) { stopTour(); visibility(); } else startTour();
   });
-}
-
-// ==========================================
-// 12. ANIMATIONS & HARDWARE CONTROLS
-// ==========================================
-const state = {
-  bedExpanded: false,
-  mandirPulled: false,
-  storageOpen: false,
-  balconyOpen: false,
-  eveningMood: false,
-  touring: false
-};
-
-function setBedState(val) {
-  state.bedExpanded = val;
-  document.getElementById('toggle-bed').setAttribute('aria-pressed', val);
-  document.getElementById('chk-bed').checked = val;
-}
-document.getElementById('toggle-bed').addEventListener('click', () => setBedState(!state.bedExpanded));
-document.getElementById('chk-bed').addEventListener('change', e => setBedState(e.target.checked));
-
-function setMandirState(val) {
-  state.mandirPulled = val;
-  document.getElementById('toggle-mandir').setAttribute('aria-pressed', val);
-  document.getElementById('chk-mandir').checked = val;
-}
-document.getElementById('toggle-mandir').addEventListener('click', () => setMandirState(!state.mandirPulled));
-document.getElementById('chk-mandir').addEventListener('change', e => setMandirState(e.target.checked));
-
-function setStorageState(val) {
-  state.storageOpen = val;
-  document.getElementById('toggle-tv-storage').setAttribute('aria-pressed', val);
-  document.getElementById('chk-storage').checked = val;
-}
-document.getElementById('toggle-tv-storage').addEventListener('click', () => setStorageState(!state.storageOpen));
-document.getElementById('chk-storage').addEventListener('change', e => setStorageState(e.target.checked));
-
-function setBalconyState(val) {
-  state.balconyOpen = val;
-  document.getElementById('toggle-balcony-door').setAttribute('aria-pressed', val);
-  document.getElementById('chk-balcony').checked = val;
-}
-document.getElementById('toggle-balcony-door').addEventListener('click', () => setBalconyState(!state.balconyOpen));
-document.getElementById('chk-balcony').addEventListener('change', e => setBalconyState(e.target.checked));
-
-function setMoodState(val) {
-  state.eveningMood = val;
-  document.getElementById('toggle-lights').setAttribute('aria-pressed', val);
-  document.getElementById('chk-mood').checked = val;
-  eveningGroup.visible = val;
-  sunLight.intensity = val ? 0.35 : 2.8;
-  hemiLight.intensity = val ? 0.75 : 2.2;
-}
-document.getElementById('toggle-lights').addEventListener('click', () => setMoodState(!state.eveningMood));
-document.getElementById('chk-mood').addEventListener('change', e => setMoodState(e.target.checked));
-
-document.getElementById('toggle-ceiling').addEventListener('change', e => {
-  groups.ceiling.visible = e.target.checked && currentViewName !== 'plan';
-});
-document.getElementById('chk-cutaway').addEventListener('change', syncWallCutaways);
-document.getElementById('toggle-dims').addEventListener('change', e => {
-  groups.dims.visible = e.target.checked;
-});
-document.getElementById('toggle-adjacents').addEventListener('change', e => {
-  groups.adjacents.visible = e.target.checked;
-});
-
-// Component Inspector metadata
-const componentData = {
-  'tv-capsule': {
-    name: 'Curved PU Capsule TV Feature Panel',
-    dims: '2,500 W x 1,450 H x 40 D mm',
-    lvl: '600 to 2,050 mm AFF',
-    fin: 'Warm Ivory PU Lacquer + Rippled Wave Relief + 360° LED Halo',
-    desc: 'From client reference image. Capsule pill-shaped floating panel with large 220 mm radius rounded corners, rippled organic relief texture, continuous warm LED perimeter halo backlighting, and flush 75" OLED display mount.'
-  },
-  'leaf-art': {
-    name: 'Sculptural Botanical Leaf/Feather Wall Relief',
-    dims: '2,600 W x 1,850 H x 45 D mm (Overall Composition)',
-    lvl: '750 to 2,600 mm AFF',
-    fin: 'Multi-layered PU Lacquer in Terracotta, Wheat, Taupe & Cream',
-    desc: 'From client reference image. 4 overlapping stylized curved leaves/feathers with diagonal ribbed fluting. Highlighted by overhead ceiling track spots.'
-  },
-  'track-light': {
-    name: 'Black Architectural Spot Track Light',
-    dims: '2,400 L x 40 W x 60 H mm',
-    lvl: '2,630 mm AFF (Ceiling)',
-    fin: 'Matte Anodized Black Aluminium Rail + 4 Adjustable Spot Cylinders',
-    desc: 'Surface-mounted ceiling track with 4 adjustable 12W COB warm spotlights (3000K, 24° beam) casting dramatic illumination down the leaf relief art wall.'
-  },
-  sofa: {
-    name: 'Curved Modular Sofa with Storage / Bed',
-    dims: '3,500 W x 920 D x 850 H mm (Expands to 1,850 mm D in Bed Mode)',
-    lvl: '2,100 mm clear central aisle',
-    fin: 'Textured Dusky Terracotta / Rose Fabric + Fluted Dark Oak Details',
-    desc: 'Based on client photo & sofa-cumbed-2.png. Organic curved modular layout with circular chaise end, under-seat storage drawers, and WIN-STAR metal pull-out scissor bed mechanism.'
-  },
-  'coffee-table': {
-    name: 'Round Marble Coffee Table with Fluted Pedestal',
-    dims: '760 Diam x 380 H mm',
-    lvl: 'Floor to 380 mm AFF',
-    fin: 'Calacatta Statuario Marble Slab + Dark Fluted Oak Cylinder Base',
-    desc: 'From client reference image. 30 mm chamfered round marble top supported by an architectural fluted timber cylinder base, topped with ceramic vase and brass candle plate.'
-  },
-  'tv-console': {
-    name: '1 ft Floating TV Console (Curved Start)',
-    dims: '3,100 W x 350 H x 300 D mm (1 ft Depth)',
-    lvl: '250 to 600 mm AFF',
-    fin: 'Matte Warm Beige PU Lacquer + Push-to-Open Drawers + Floor Wash',
-    desc: 'Begins near the entrance door with a 300 mm radius curved floating corner for smooth, safe entry. Houses 3 soft-close push drawers and 1 acoustic drop-down flap with integrated warm under-glow.'
-  },
-  'fluted-glass': {
-    name: 'Fluted & Tinted Glass Display Vitrine',
-    dims: '900 W x 2,092.4 H x 300 D mm',
-    lvl: '600 to 2,692.4 mm AFF (Reaches 4" False Ceiling Underside)',
-    fin: '8 mm Bronze Fluted Tempered Glass + Anodized Black Aluminium Frame',
-    desc: 'From client reference image. Vertical vitrine reaching 4" peripheral false ceiling. 4 illuminated glass shelves with warm downlights displaying ceramic vases and artifacts.'
-  },
-  'tall-storage': {
-    name: '2 ft Seamless Tall Storage Unit',
-    dims: '600 W (2 ft) x 2,442.4 H x 400 D mm',
-    lvl: '250 to 2,692.4 mm AFF',
-    fin: 'Seamless Push-to-Open Off-White Panels with Concealed Blum Hinges',
-    desc: 'Located after the tinted glass unit. Extends full height up to the 4" peripheral false ceiling. Houses 6 adjustable storage tiers for linens, board games, glassware, and tableware.'
-  },
-  'dining-table': {
-    name: '6-Seater Calacatta Quartz Dining Table',
-    dims: '1,800 W x 900 D x 750 H mm',
-    lvl: 'Floor to 750 mm AFF',
-    fin: 'Calacatta Gold / Statuario Quartz (35 mm) + Dual Fluted Oak Pedestals',
-    desc: 'Engineered quartz slab with 50 mm radius pill corners, chamfered edge profile, and dual 380 mm fluted architectural columns with brass base ferrules.'
-  },
-  mandir: {
-    name: '600 mm Sacred Mandir (Tray + Hidden Table)',
-    dims: '600 W x 450 D x 2,400 H mm',
-    lvl: 'Floor to 2,400 mm AFF',
-    fin: 'American White Oak + Corian Sanctum + Backlit CNC Jali + Brass Detailing',
-    desc: 'Located in the sacred North-East (Ishanya) niche immediately left of the Sitout balcony. Features upper sanctum with bells, telescopic Aarti serving tray (540x380 mm), hidden pull-out ritual table (500x400x720 mm), and dual lower storage drawers.'
-  },
-  'false-ceiling': {
-    name: '4-inch Peripheral False Ceiling & Cove',
-    dims: '420 mm Perimeter Border x 101.6 mm Drop (4") throughout',
-    lvl: '2,692.4 mm Finished Ceiling AFF (Slab at 2,794 mm)',
-    fin: 'Moisture-resistant Gypsum Board + High-CRI 3000K LED Cove',
-    desc: 'Continuous peripheral false ceiling running throughout the 8.975-meter living and dining space with integrated indirect warm cove wash, central ceiling fan, and spot lights.'
-  },
-  balcony: {
-    name: 'Sitout Balcony & UPVC Sliding Door',
-    dims: '1,525 X-span x 3,300 Z-depth mm | SLD1 Door 2,400 x 2,100 mm',
-    lvl: 'Floor to 2,794 mm AFF',
-    fin: 'Weatherproof Teak Decking + UPVC Glass Slider + Parapet Railing',
-    desc: 'Spacious private sitout accessible via SLD1 sliding glass doors. Features 1,100 mm safety parapet, sheer curtains, and glass railing overlooking panoramic views.'
+  for (const [id, dir] of [['previous', -1], ['next', 1]]) {
+    document.getElementById(id).addEventListener('click', () => {
+      tourIndex = (tourIndex + dir + tourStops.length) % tourStops.length;
+      startTour();
+    });
   }
-};
 
-document.getElementById('component-selector').addEventListener('change', e => {
-  const d = componentData[e.target.value];
-  if (d) {
-    document.getElementById('insp-name').textContent = d.name;
-    document.getElementById('insp-dims').textContent = d.dims;
-    document.getElementById('insp-lvl').textContent = d.lvl;
-    document.getElementById('insp-fin').textContent = d.fin;
-    document.getElementById('insp-desc').innerHTML = d.desc;
+  // Interactive Kinematic States
+  const states = { sleeperL: 0, sleeperR: 0, headrests: 0, tvOpen: 0, poojaGates: 0, poojaPull: 0, chairsOut: 0, sliderOpen: 0 };
+  function setStates(immediate = false) {
+    const desired = {
+      sleeperL: document.getElementById('sleeper-left').checked ? 1 : 0,
+      sleeperR: document.getElementById('sleeper-right').checked ? 1 : 0,
+      headrests: document.getElementById('headrests').checked ? 1 : 0,
+      tvOpen: document.getElementById('tv-storage').checked ? 1 : 0,
+      poojaGates: document.getElementById('pooja-gates').checked ? 1 : 0,
+      poojaPull: document.getElementById('pooja-pullouts').checked ? 1 : 0,
+      chairsOut: document.getElementById('dining-chairs').checked ? 1 : 0,
+      sliderOpen: document.getElementById('sitout-slider').checked ? 1 : 0
+    };
+    for (const k of Object.keys(states)) {
+      states[k] = immediate ? desired[k] : states[k] + (desired[k] - states[k]) * 0.12;
+    }
+
+    // South Dual-Sleeper FS0136 pull-out Northward (extends from Z=2335 to Z=1115 -> -1220 mm)
+    sleeperLeftGroup.position.z = -states.sleeperL * 1220;
+    sleeperLeftGroup.visible = states.sleeperL > 0.02;
+    seatCushionLeft.position.y = -states.sleeperL * 130;
+    sleeperRightGroup.position.z = -states.sleeperR * 1220;
+    sleeperRightGroup.visible = states.sleeperR > 0.02;
+    seatCushionRight.position.y = -states.sleeperR * 130;
+
+    const maxSleeper = Math.max(states.sleeperL, states.sleeperR);
+    coffeeTableGroup.position.set(2956 + maxSleeper * 1550, 0, 1480 - maxSleeper * 420);
+
+    // Win Star ST-180 ratcheting headrests
+    for (const hp of headrestPivots) {
+      hp.rotation.x = states.headrests * THREE.MathUtils.degToRad(28);
+      hp.position.y = 813 + states.headrests * 42;
+    }
+
+    // North Curved TV Credenza drawers & Fluted DB door
+    tvDrawerGroup.position.z = states.tvOpen * 260;
+    dbDoorPivot.rotation.y = -states.tvOpen * Math.PI * 0.52;
+
+    // 600mm Wall Pooja Mandir White CNC Gates & 4-Tier Pull-Outs
+    poojaGateLeft.rotation.y = -states.poojaGates * Math.PI * 0.6;
+    poojaGateRight.rotation.y = states.poojaGates * Math.PI * 0.6;
+    poojaPulloutTray.position.z = states.poojaPull * 340;
+    poojaSittingTable.position.z = states.poojaPull * 420;
+    poojaThinTable.position.z = states.poojaPull * 360;
+    poojaStorageBox.position.z = states.poojaPull * 390;
+
+    // Dining Chairs pull-out
+    for (const dc of diningChairGroups) {
+      dc.group.position.set(dc.baseX + dc.dirX * states.chairsOut * 260, 0, dc.baseZ + dc.dirZ * states.chairsOut * 260);
+    }
+
+    // Sitout Slider SLD1
+    sitoutSlidingLeaf.position.z = -states.sliderOpen * 980;
+    visibility();
   }
-});
 
-// CSV Export
-document.getElementById('btn-export-csv').addEventListener('click', () => {
-  const rows = [
-    ['Code', 'Component Name', 'Dimensions WxHxD mm', 'Level AFF mm', 'Finish', 'Hardware / Description'],
-    ['TV-PANEL', 'Curved PU Capsule TV Feature Panel', '2500 x 1450 x 40', '600-2050', 'Warm Ivory PU + Wave Relief', 'Capsule rounded corners (R220), 360 deg LED halo, 75in TV mount'],
-    ['WALL-ART', 'Sculptural Botanical Leaf/Feather Wall Relief', '2600 x 1850 x 45', '750-2600', 'Terracotta, Wheat, Taupe & Cream PU', '4 overlapping sculpted ribbed leaf panels'],
-    ['TR-01', 'Black Spot Track Light Rail', '2400 x 40 x 60', '2630 (Ceiling)', 'Anodized Black Aluminum', '4 directional 12W COB warm spots (3000K)'],
-    ['SF-01', 'Curved Modular Sofa with Storage/Bed', '3500 x 850 x 920', '0-850', 'Terracotta/Rose Fabric', 'Circular chaise, under-seat drawers, WIN-STAR pull-out scissor bed'],
-    ['CT-01', 'Round Marble Coffee Table', '760 Diam x 380 H', '0-380', 'Statuario Marble + Fluted Oak Base', 'Chamfered round top, fluted cylinder pedestal'],
-    ['TV-01', 'Entrance 1ft Floating TV Console', '3100 x 350 x 300', '250-600', 'Matte Warm Beige PU', '300mm curved entry start, 3 push drawers, under-glow'],
-    ['GL-01', 'Fluted Glass Display Vitrine', '900 x 2092.4 x 300', '600-2692.4', 'Bronze Fluted Glass + Dark Aluminum', '4 illuminated tiers with downlights'],
-    ['ST-01', '2ft Seamless Tall Storage Unit', '600 x 2442.4 x 400', '250-2692.4', 'Seamless Off-White Slab', 'Full height, push-to-open doors, 6 adjustable shelves'],
-    ['DT-01', '6-Seater Quartz Dining Table', '1800 x 750 x 900', '0-750', 'Calacatta Gold Quartz + Fluted Oak', '50mm radius corners, dual fluted pedestal columns'],
-    ['MD-01', 'Sacred Mandir in 600mm Niche', '600 x 2400 x 450', '0-2400', 'Oak + Corian + Backlit CNC', 'Pull-out Aarti tray, hidden ritual table, lower storage'],
-    ['FC-01', '4-Inch Peripheral False Ceiling', '420 Border x 101.6 Drop', '2692.4 finished AFF', 'Gypsum + 3000K Warm LED Cove', 'Continuous perimeter throughout living and dining']
-  ];
-  const csvContent = rows.map(r => r.map(v => '"' + v.replace(/"/g, '""') + '"').join(',')).join('\r\n');
-  const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
-  const link = document.createElement('a');
-  link.href = URL.createObjectURL(blob);
-  link.download = 'living-dining-millwork-specifications-study04.csv';
-  link.click();
-});
-
-document.getElementById('btn-snapshot').addEventListener('click', () => {
-  renderer.render(scene, activeCamera);
-  const link = document.createElement('a');
-  link.download = 'living-dining-' + currentViewName + '.png';
-  link.href = canvas.toDataURL('image/png');
-  link.click();
-});
-
-// Guided Walkthrough Tour
-const tourStops = [
-  { pos: [140, 1650, DIM.mdOffsetNorth + 350], target: [4800, 1350, 1650], fov: 65, title: '1. Foyer Entry & Curved TV Console' },
-  { pos: [2400, 1400, 2300], target: [2400, 1300, 0], fov: 62, title: '2. Curved PU Capsule TV Wall & 360° LED Halo' },
-  { pos: [2400, 1450, 800], target: [2400, 1400, DIM.width], fov: 64, title: '3. Sculptural Botanical Leaf Relief Art & Track Lights' },
-  { pos: [2000, 1350, 1700], target: [2300, 900, DIM.width - 920], fov: 64, title: '4. Curved Modular Sofa & Round Marble Table' },
-  { pos: [4900, 1550, 2300], target: [7000, 1100, 1450], fov: 64, title: '5. Quartz Dining Table & Open Kitchen Flow' },
-  { pos: [7100, 1400, 550], target: [DIM.totalL - 300, 1300, 220], fov: 60, title: '6. Sacred Mandir in North-East Ishanya Niche' },
-  { pos: [7200, 1500, 1650], target: [DIM.totalL + 750, 1100, 1650], fov: 62, title: '7. Sitout Balcony & UPVC Glass Doors' }
-];
-
-let tourIndex = 0;
-let tourTimer = null;
-const btnTour = document.getElementById('btn-tour');
-btnTour.addEventListener('click', () => {
-  state.touring = !state.touring;
-  btnTour.setAttribute('aria-pressed', state.touring);
-  btnTour.textContent = state.touring ? '⏸️ Pause Tour' : '🚶 Walkthrough';
-
-  if (state.touring) {
-    runTourStep();
-  } else {
-    clearTimeout(tourTimer);
+  document.querySelectorAll('[data-view]').forEach(btn => btn.addEventListener('click', () => setView(btn.dataset.view)));
+  for (const id of ['dimensions', 'shell', 'sleeper-left', 'sleeper-right', 'headrests', 'tv-storage', 'pooja-gates', 'pooja-pullouts', 'dining-chairs', 'sitout-slider', 'ceiling']) {
+    document.getElementById(id).addEventListener('change', () => {
+      stopTour();
+      setStates();
+      renderer.render(scene, activeCamera);
+    });
   }
-});
 
-function runTourStep() {
-  if (!state.touring) return;
-  const stop = tourStops[tourIndex];
-  activeCamera = camera;
-  camera.up.set(0, 1, 0);
-  camera.fov = stop.fov || 64;
-  camera.updateProjectionMatrix();
-  camera.position.set(...stop.pos);
-  controls.target.set(...stop.target);
-  controls.update();
+  document.getElementById('reset').addEventListener('click', () => {
+    for (const id of ['sleeper-left', 'sleeper-right', 'headrests', 'tv-storage', 'pooja-gates', 'pooja-pullouts', 'dining-chairs', 'sitout-slider']) {
+      document.getElementById(id).checked = false;
+    }
+    document.getElementById('ceiling').checked = true;
+    setStates(true);
+    setView('overview');
+  });
 
-  document.getElementById('badge-title').textContent = 'Cinematic Walkthrough';
-  document.getElementById('badge-desc').innerHTML = stop.title;
+  document.getElementById('download').addEventListener('click', () => {
+    renderer.render(scene, activeCamera);
+    const a = document.createElement('a');
+    a.download = 'living-dining-study12-' + currentView + '.png';
+    a.href = renderer.domElement.toDataURL('image/png');
+    a.click();
+  });
+  document.getElementById('print').addEventListener('click', () => print());
+  new ResizeObserver(resize).observe(viewport);
 
-  syncWallCutaways();
-  tourIndex = (tourIndex + 1) % tourStops.length;
-  tourTimer = setTimeout(runTourStep, 4500);
-}
+  // --- 14. AUTOMATED GEOMETRY & CLEARANCE VERIFICATION ---
+  function meshBounds(group) {
+    scene.updateMatrixWorld(true);
+    const b = new THREE.Box3();
+    group.traverse(c => {
+      if (c.isMesh) {
+        c.geometry.computeBoundingBox();
+        b.union(c.geometry.boundingBox.clone().applyMatrix4(c.matrixWorld));
+      }
+    });
+    return b;
+  }
 
-// Lerp helpers for smooth hardware transitions
-let currentBedZ = 0;
-let currentBedY = 130;
-let currentMandirTrayZ = 30;
-let currentMandirTableZ = 20;
-let currentStorageX = 0;
-let currentDoorRot = 0;
-let currentBalconyZ = 0;
+  const checks = {
+    combinedWidth: spec.livingWidth + spec.diningWidth === 8975,
+    tvFitsNorthWall: spec.tv.waveX + spec.tv.waveW <= 5185,
+    sofaFitsSouthWall: spec.sofa.startX + spec.sofa.width <= 5170,
+    fs0136Clearance: (spec.sofa.bayWidth - spec.sofa.mechWidth) / 2 === 13,
+    extendedBedClearsCredenza: (3300 - spec.sofa.extendedDepth) - spec.tv.conD === 695,
+    poojaFits600Wall: spec.pooja.depth <= 600 && spec.pooja.endX === 8975,
+    leafCount: leafWallParts.filter(p => p.id.startsWith('DXF-LEAF')).length === 6
+  };
+  checks.pass = Object.values(checks).every(Boolean);
+  document.getElementById('checks').textContent = checks.pass
+    ? 'STUDY 12 FIT PASS / North 4,150 Wavy 3D HDHMR TV Wall & 3,950 Curved Credenza; South 3,823 Dual-Sleeper (695mm bed-to-TV aisle) & 6 DXF Leaves; East 600mm Wall 850x580 White CNC Pooja Mandir.'
+    : 'CHECK WARNING / Verify dimensions.';
 
-function animate() {
-  requestAnimationFrame(animate);
+  // --- 15. FACTORY COMPONENT REGISTER & 3D PART INSPECTOR ---
+  const componentRecords = [];
+  const numberText = v => Number(v.toFixed(1)).toString();
+  function addRecord(id, name, module, mesh, finish, qty = 1) {
+    const size = mesh.geometry.type === 'BoxGeometry'
+      ? new THREE.Vector3(mesh.geometry.parameters.width, mesh.geometry.parameters.height, mesh.geometry.parameters.depth)
+      : meshBounds(mesh).getSize(new THREE.Vector3());
+    const dims = [size.x, size.y, size.z];
+    const panel = [...dims].sort((a, b) => b - a).map(numberText).join(' x ');
+    componentRecords.push({ id, name, module, source: mesh, dims, panel, finish, qty });
+  }
 
-  // Smooth Bed Extension
-  const targetBedZ = state.bedExpanded ? -760 : 0;
-  const targetBedY = state.bedExpanded ? 240 : 130;
-  currentBedZ += (targetBedZ - currentBedZ) * 0.08;
-  currentBedY += (targetBedY - currentBedY) * 0.08;
-  bedMechanismGroup.position.z = currentBedZ;
-  leftMattress.position.y = currentBedY;
-  rightMattress.position.y = currentBedY;
+  for (const p of tvParts) addRecord(p.id, p.name, p.module, p.mesh, p.finish, p.qty || 1);
+  for (const p of poojaParts) addRecord(p.id, p.name, p.module, p.mesh, p.finish, p.qty || 1);
+  for (const p of sofaParts) addRecord(p.id, p.name, p.module, p.mesh, p.finish, p.qty || 1);
+  for (const p of leafWallParts) addRecord(p.id, p.name, p.module, p.mesh, p.finish, 1);
+  for (const p of diningParts) addRecord(p.id, p.name, p.module, p.mesh, p.finish, p.qty || 1);
+  addRecord('CT-1', 'Round White Oak & Walnut Drum Coffee Table (Ø980 x 328)', 'Living Center', ctTop, '48mm White Oak Veneer Top + Walnut Drum Base', 1);
+  addRecord('AC-1', 'Swivel Barrel Bouclé Accent Chair (840 x 760 x 820)', 'Living Center', acSeat, '360° Swivel Steel Base + Terracotta Rose Bouclé Upholstery', 1);
 
-  // Smooth Mandir Trays
-  const targetTrayZ = state.mandirPulled ? 300 : 30;
-  const targetTableZ = state.mandirPulled ? 380 : 20;
-  currentMandirTrayZ += (targetTrayZ - currentMandirTrayZ) * 0.08;
-  currentMandirTableZ += (targetTableZ - currentMandirTableZ) * 0.08;
-  mandirServingTray.position.z = currentMandirTrayZ;
-  mandirHiddenTable.position.z = currentMandirTableZ;
+  const partSelect = document.getElementById('part-select');
+  const partRows = document.getElementById('part-rows');
+  for (const rec of componentRecords) {
+    const opt = document.createElement('option');
+    opt.value = rec.id;
+    opt.textContent = `${rec.id} / ${rec.module} / ${rec.name} (${rec.dims.map(numberText).join(' x ')} mm)`;
+    partSelect.append(opt);
 
-  // Smooth TV drawers & tall cabinet doors
-  const targetDrawerZ = state.storageOpen ? 250 : 0;
-  const targetDoorRot = state.storageOpen ? Math.PI * 0.45 : 0;
-  currentStorageX += (targetDrawerZ - currentStorageX) * 0.08;
-  currentDoorRot += (targetDoorRot - currentDoorRot) * 0.08;
-  tvDrawers.forEach(d => { d.position.z = 300 + currentStorageX; });
-  tallDoorL.rotation.y = -currentDoorRot;
-  tallDoorR.rotation.y = currentDoorRot;
+    const tr = document.createElement('tr');
+    for (const val of [`${rec.id} / ${rec.module} / ${rec.name}`, rec.qty, rec.dims.map(numberText).join(' x '), rec.panel, rec.finish]) {
+      const td = document.createElement('td');
+      td.textContent = val;
+      tr.append(td);
+    }
+    partRows.append(tr);
+  }
+  document.getElementById('part-size').textContent = `${componentRecords.length} registered assemblies & CNC components across North Wavy HDHMR TV Wall, 600mm-Wall White CNC Pooja Mandir, South Dual-Sleeper Sofa (Rev 3.2), DXF 6-Leaf Mural & Dining Zone.`;
+  document.getElementById('factory-checks').textContent = 'REGISTER PASS / All Wavy HDHMR TV panels, R=190 Curved Credenza, 4-Tier Pooja Mandir pull-outs, Dual-Sleeper FS0136 / ST-180 parts, and 6 DXF leaf panels verified.';
 
-  // Smooth Balcony sliding door
-  const targetBalconyZ = state.balconyOpen ? DIM.sldWidth * 0.44 : 0;
-  currentBalconyZ += (targetBalconyZ - currentBalconyZ) * 0.08;
-  slidingDoorPanel.position.z = currentBalconyZ;
+  function inspectComponent(id) {
+    const rec = componentRecords.find(r => r.id === id) || componentRecords[0];
+    partSelect.value = rec.id;
+    groups.component.clear();
+    dimensionGroups.component.clear();
+    const clone = rec.source.clone(true);
+    clone.visible = true;
+    clone.position.set(0, 0, 0);
+    clone.rotation.set(0, 0, 0);
+    groups.component.add(clone);
+    const sz = new THREE.Vector3(...rec.dims);
+    const ext = Math.max(sz.x, sz.y, sz.z), off = ext * 0.24, tSize = Math.max(55, ext * 0.07);
+    const hx = sz.x / 2, hy = sz.y / 2, hz = sz.z / 2;
+    dimension(dimensionGroups.component, [-hx, -hy, hz], [hx, -hy, hz], 'W ' + numberText(sz.x), [0, -off, off], tSize);
+    dimension(dimensionGroups.component, [hx, -hy, -hz], [hx, -hy, hz], 'D ' + numberText(sz.z), [off, -off, 0], tSize);
+    dimension(dimensionGroups.component, [-hx, -hy, -hz], [-hx, hy, -hz], 'H ' + numberText(sz.y), [-off, 0, -off], tSize);
+    viewSettings.component.position = [ext * 1.4, ext * 0.95, ext * 1.7];
+    setView('component');
+    document.getElementById('view-label').textContent = `${rec.id} / ${rec.dims.map(numberText).join(' x ')} mm`;
+    document.getElementById('part-size').textContent = `${rec.id} — ${rec.name}: ${rec.dims.map(numberText).join(' x ')} mm. ${rec.finish}`;
+  }
 
-  controls.update();
-  syncWallCutaways();
-  renderer.render(scene, activeCamera);
-}
+  document.getElementById('inspect-part').addEventListener('click', () => {
+    inspectComponent(partSelect.value);
+    viewport.scrollIntoView({ block: 'start' });
+  });
+  partSelect.addEventListener('change', () => inspectComponent(partSelect.value));
 
-function onResize() {
-  const w = container.clientWidth;
-  const h = container.clientHeight;
-  if (!w || !h) return;
-  camera.aspect = w / h;
-  camera.updateProjectionMatrix();
+  document.getElementById('parts-csv').addEventListener('click', () => {
+    const rows = [
+      ['Study', 'Mark', 'Module', 'Component Name', 'Qty', 'W mm', 'H mm', 'D mm', 'Panel L x B x T mm', 'Specification'],
+      ...componentRecords.map(r => ['12', r.id, r.module, r.name, r.qty, ...r.dims.map(numberText), r.panel, r.finish])
+    ];
+    const csv = rows.map(r => r.map(v => `"${String(v).replaceAll('"', '""')}"`).join(',')).join('\r\n');
+    const url = URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8' }));
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'living-dining-study12-component-register.csv';
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
 
-  const aspect = w / h;
-  const s = 7000;
-  ortho.left = -s * aspect * 0.5;
-  ortho.right = s * aspect * 0.5;
-  ortho.top = s * 0.5;
-  ortho.bottom = -s * 0.5;
-  ortho.updateProjectionMatrix();
+  function pixelCheck() {
+    renderer.render(scene, activeCamera);
+    document.getElementById('render-status').textContent = `3D WebGL active / ${renderer.domElement.width} x ${renderer.domElement.height} px`;
+  }
 
-  renderer.setSize(w, h);
-}
-window.addEventListener('resize', onResize);
+  window.livingDining = { spec, checks, setView, setStates, startTour, stopTour, inspectComponent, componentRecords };
 
-animate();
-setTimeout(() => {
-  if (loader) loader.hidden = true;
-  onResize();
+  setStates(true);
   setView('overview');
-}, 600);
+  loading.hidden = true;
+  pixelCheck();
+
+  renderer.setAnimationLoop(time => {
+    const delta = Math.min((time - lastTime) / 1000, 0.1);
+    lastTime = time;
+    setStates();
+    if (touring) {
+      tourTime += delta;
+      const first = tourStops[tourIndex], second = tourStops[(tourIndex + 1) % tourStops.length];
+      const f = Math.min(tourTime / 5.5, 1), s = f * f * (3 - 2 * f);
+      camera.position.lerpVectors(new THREE.Vector3(...first.position), new THREE.Vector3(...second.position), s);
+      camera.lookAt(new THREE.Vector3(...first.target).lerp(new THREE.Vector3(...second.target), s));
+      if (f >= 1) setTourView(tourIndex + 1);
+    } else {
+      controls.update();
+    }
+    renderer.render(scene, activeCamera);
+  });
+} catch (error) {
+  loading.hidden = false;
+  loading.textContent = 'The 3D Living & Dining model could not load: ' + error.message;
+  console.error(error);
+}
 </script>
 </body>
 </html>
