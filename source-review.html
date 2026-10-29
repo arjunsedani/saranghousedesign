@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Bedroom Source Review</title><style>
+*{box-sizing:border-box}body{margin:0;background:#dfe3df;color:#263c35;font:13px Verdana,sans-serif}header{position:sticky;top:0;z-index:2;background:#fafbf8;padding:12px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;border-bottom:1px solid #bdc9c1}input,select,button{font:inherit;padding:6px;max-width:100%}#page{width:65px}#status{padding:10px 16px;background:#fff}main{overflow:auto;height:calc(100vh - 120px);padding:20px}canvas{display:block;background:white;margin:auto;box-shadow:0 2px 8px #0002}details{padding:16px;background:white}pre{white-space:pre-wrap;line-height:1.6}a{color:#315c46}
+</style></head><body><header><strong>BEDROOM / SOURCE REVIEW</strong><input id="files" type="file" accept="application/pdf" multiple aria-label="Local PDF files"><select id="document" aria-label="Document"></select><label>Page <input id="page" type="number" min="1" value="1"></label><label>Zoom <select id="zoom"><option value="1">100%</option><option value="1.5">150%</option><option value="2" selected>200%</option><option value="3">300%</option></select></label><button id="capture">Download Page PNG</button></header><div id="status">Local PDFs only. Files stay in this browser.</div><main id="drawing"><canvas id="canvas"></canvas></main><details><summary>Extracted Page Text</summary><pre id="text"></pre></details><script type="module">
+import * as pdfjs from 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.mjs';
+pdfjs.GlobalWorkerOptions.workerSrc='https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/build/pdf.worker.mjs';
+const documents=[], canvas=document.getElementById('canvas'), context=canvas.getContext('2d');
+let renderTask=null;
+async function show(documentIndex=0,pageNumber=1,scale=2){
+ if(renderTask){renderTask.cancel();try{await renderTask.promise;}catch{}renderTask=null;}
+ const source=documents[documentIndex];if(!source)return;
+ const page=await source.pdf.getPage(pageNumber);const viewport=page.getViewport({scale});canvas.width=Math.ceil(viewport.width);canvas.height=Math.ceil(viewport.height);
+ document.getElementById('document').value=documentIndex;document.getElementById('page').value=pageNumber;document.getElementById('page').max=source.pdf.numPages;document.getElementById('zoom').value=scale;
+ renderTask=page.render({canvasContext:context,viewport});await renderTask.promise;renderTask=null;
+ const content=await page.getTextContent();document.getElementById('text').textContent=content.items.map(item=>item.str).join('\n');
+ document.getElementById('status').textContent=source.name+' | '+pageNumber+' / '+source.pdf.numPages+' | '+Math.round(scale*100)+'%';
+ window.pdfReview.current={documentIndex,pageNumber,scale,width:canvas.width,height:canvas.height};return window.pdfReview.current;
+}
+document.getElementById('files').addEventListener('change',async event=>{try{documents.length=0;document.getElementById('document').replaceChildren();for(const file of event.target.files){const pdf=await pdfjs.getDocument({data:new Uint8Array(await file.arrayBuffer())}).promise;documents.push({name:file.name,pdf});const option=document.createElement('option');option.value=documents.length-1;option.textContent=file.name;document.getElementById('document').append(option);}await show();}catch(error){document.getElementById('status').textContent=error.message;}});
+for(const id of ['document','page','zoom'])document.getElementById(id).addEventListener('change',()=>show(Number(document.getElementById('document').value),Number(document.getElementById('page').value),Number(document.getElementById('zoom').value)).catch(error=>document.getElementById('status').textContent=error.message));
+document.getElementById('capture').addEventListener('click',()=>{const anchor=document.createElement('a');anchor.download='source-page-'+window.pdfReview.current.pageNumber+'.png';anchor.href=canvas.toDataURL();anchor.click();});
+window.pdfReview={documents,show,current:null,async text(documentIndex){const source=documents[documentIndex];const pages=[];for(let pageNumber=1;pageNumber<=source.pdf.numPages;pageNumber++){const page=await source.pdf.getPage(pageNumber);const content=await page.getTextContent();pages.push({page:pageNumber,items:content.items.map(item=>({text:item.str,x:Math.round(item.transform[4]),y:Math.round(item.transform[5])}))});}return pages;}};
+</script></body></html>

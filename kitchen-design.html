@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parallel Kitchen | Hardware Coordination 04</title>
+<style>
+:root{font-family:Georgia,serif;color:#27342f;background:#eef0ec;font-synthesis:none}*{box-sizing:border-box}body{margin:0}header{padding:18px 24px;background:#fafbf8;border-bottom:1px solid #cbd3cc;display:flex;align-items:center;justify-content:space-between;gap:14px}h1{font-size:23px;font-weight:normal;margin:0}header p{font:12px Verdana,sans-serif;margin:6px 0 0;color:#52675b}.status{font:11px Verdana,sans-serif;padding:7px 10px;border:1px solid #acbfb0;color:#355744}main{display:grid;grid-template-columns:minmax(0,1fr) 300px;min-height:calc(100vh - 90px)}.scene-area{position:relative;min-width:0;background:#e2e8e4}#viewport{height:calc(100vh - 148px);min-height:480px;position:relative;overflow:hidden}canvas{display:block;width:100%;height:100%;touch-action:none}.toolbar{display:flex;flex-wrap:wrap;gap:5px;padding:10px 14px;background:#f8faf7;border-bottom:1px solid #cbd3cc}button,select{font:12px Verdana,sans-serif;border:1px solid #bdc9c0;background:#fff;color:#2d4d3c;padding:8px 10px;border-radius:3px;cursor:pointer}button.active{background:#315c46;color:white;border-color:#315c46}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #c78d50;outline-offset:2px}.view-label{position:absolute;left:20px;top:17px;font:11px Verdana,sans-serif;letter-spacing:0;background:#ffffffdf;padding:9px 12px;pointer-events:none}.load{position:absolute;inset:0;display:grid;place-items:center;padding:30px;background:#e2e8e4;font:14px Verdana,sans-serif}.load[hidden]{display:none}aside{background:#fafbf8;border-left:1px solid #cbd3cc;padding:22px 20px;font:12px/1.65 Verdana,sans-serif}h2{font:20px Georgia,serif;margin:0 0 12px}h3{font:15px Georgia,serif;margin:23px 0 9px}dl{margin:0}dl div{display:flex;justify-content:space-between;border-bottom:1px solid #e1e6e0;padding:7px 0;gap:12px}dt{color:#59695e}dd{margin:0;text-align:right;font-weight:bold}label.toggle{display:flex;gap:9px;align-items:center;padding:6px 0}input{accent-color:#315c46}small{font-size:11px;color:#637166}.note{border-left:3px solid #bd8650;padding-left:12px;color:#65523c}.legend{display:flex;gap:7px;align-items:center;margin:8px 0}.swatch{width:12px;height:12px;display:inline-block;background:#CFDED0;border:1px solid #b2c5b3}.swatch.sage{background:#CFDED0;border-color:#b2c5b3}.swatch.beige{background:#d8c6aa;border-color:#bfab8d}.swatch.green{background:#648c79}.swatch.brown{background:#d8c6aa}a{color:#315c46}.sheet{background:white;padding:32px 5%;border-top:1px solid #cbd3cc}.sheet h2{font-size:25px}table{width:100%;border-collapse:collapse;font:12px/1.6 Verdana,sans-serif}th,td{text-align:left;padding:10px;border-bottom:1px solid #dfe5df;vertical-align:top}th{background:#f0f3ef;font-weight:normal}.sheet p{font:12px/1.7 Verdana,sans-serif;max-width:980px}.references{display:grid;grid-template-columns:1fr 1fr;gap:16px;max-width:760px}.references img{width:100%;height:310px;object-fit:contain;background:#f0f2ec}.references figure{margin:0}.references figcaption{font:11px Verdana,sans-serif;margin-top:8px}.sheet-scroll{overflow-x:auto}@media(max-width:760px){header{padding:14px;align-items:flex-start}h1{font-size:20px}.status{max-width:105px}main{grid-template-columns:1fr}#viewport{height:65vh;min-height:410px}aside{border-left:0;border-top:1px solid #cbd3cc;padding:20px}aside .specs{display:grid;grid-template-columns:1fr 1fr;gap:22px}.toolbar{padding:8px;gap:4px}button{padding:8px;font-size:11px}.sheet{padding:25px 16px}.references img{height:240px}}@media print{header,.toolbar,aside,.references{display:none}main{display:block}#viewport{height:170mm;min-height:0}.sheet{break-before:page;padding:0}.view-label{background:white}body{background:white}.sheet-scroll{overflow:visible}}
+</style>
+<style>
+.factory-controls{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}.factory-controls select{flex:1;min-width:0;max-width:800px}.factory-controls button{white-space:nowrap}.factory-link{align-self:center;padding:8px;color:#315c46;font:12px Verdana,sans-serif}#part-size{overflow-wrap:anywhere}#factory .table-scroll{overflow:auto}#factory td:first-child{min-width:210px}#factory th,#factory td{vertical-align:top}#factory-checks{font:12px/1.6 Verdana,sans-serif;color:#315c46}@media print{.factory-controls,.factory-link{display:none}#factory{break-before:page}#factory .table-scroll{overflow:visible}}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
+</head>
+<body>
+<header><div><h1>Parallel Kitchen / 04</h1><p>2,630 x 3,525 x 2,794 mm &nbsp; / &nbsp; Rear-wall pull-downs</p><nav style="margin-top:6px;font:11px Verdana,sans-serif;display:flex;gap:8px;"><a href="living-dining.html" style="color:#315c46;text-decoration:none;">Living &amp; Dining</a> &bull; <a href="master-bedroom.html" style="color:#315c46;text-decoration:none;">Master Bedroom</a> &bull; <a href="bedroom-1.html" style="color:#315c46;text-decoration:none;">Bedroom 1</a> &bull; <a href="bedroom-2.html" style="color:#315c46;text-decoration:none;">Bedroom 2</a></nav></div><span class="status">FACTORY REVIEW<br>Not a cutting list</span></header>
+<main>
+<section class="scene-area" aria-label="Kitchen model">
+<nav class="toolbar" aria-label="Drawing views"><button class="active" data-view="axon">3D overview</button><button data-view="entry">Entrance</button><button data-view="plan">Plan</button><button data-view="dry">Storage elevation</button><button data-view="wet">Wet elevation</button><button data-view="rear">Rear elevation</button><button data-view="section">Section A-A</button><button id="download" title="Download current view as PNG" aria-label="Download current view as PNG">&#8595; PNG</button></nav>
+<div id="viewport"><div class="view-label" id="view-label">01 / AXONOMETRIC</div><div class="load" id="load">Loading 3D drawing...</div></div>
+</section>
+<aside><h2>Cabinet Schedule</h2><div class="specs"><div><dl><div><dt>Tandem banks</dt><dd>5 / 15 drawers</dd></div><div><dt>Drawer depth</dt><dd>600 mm nominal</dd></div><div><dt>Metal sides</dt><dd>4 / 6 / 8 / 10 in</dd></div><div><dt>B1 outer width</dt><dd>300 mm</dd></div><div><dt>Rear P1 / P2</dt><dd>900 + 600 mm*</dd></div><div><dt>G1 / G2 groceries</dt><dd>2 x 900 mm</dd></div><div><dt>Shelf clear height</dt><dd>174 mm nominal</dd></div><div><dt>A1 outer width</dt><dd>600 mm</dd></div><div><dt>Oven O1</dt><dd>Bosch 600-class*</dd></div><div><dt>Fridge bay F1*</dt><dd>660 mm</dd></div><div><dt>Dishwasher</dt><dd>Outside kitchen</dd></div></dl></div><div><h3>Display</h3><label class="toggle"><input id="dimensions" type="checkbox" checked>Dimensions</label><label class="toggle"><input id="lofts" type="checkbox" checked>Deep upper lofts</label><label class="toggle"><input id="upper" type="checkbox" checked>Shallow wall cabinets</label><label class="toggle"><input id="drawers" type="checkbox">Open drawers / accessories</label><label class="toggle"><input id="groceries" type="checkbox">Open grocery doors</label><label class="toggle"><input id="shell" type="checkbox" checked>Room shell</label><h3>Finish Palette</h3><div class="legend"><span class="swatch sage"></span>Sage (#CFDED0) cabinets &amp; drawers</div><div class="legend"><span class="swatch beige"></span>Beige stone counter</div><div class="legend"><span class="swatch green"></span>Green dimension lines</div></div></div><h3>Working Dimensions</h3><dl><div><dt>Counter height*</dt><dd>950 mm</dd></div><div><dt>Counter D / thickness</dt><dd>700 / 30 mm</dd></div><div><dt>Main aisle</dt><dd>1,230 mm</dd></div><div><dt>Entry at C1</dt><dd>1,130 mm</dd></div><div><dt>Ceiling maximum</dt><dd>2,794 mm</dd></div><div><dt>Lower / upper depth</dt><dd>380 / 600 mm</dd></div><div><dt>Upper loft height</dt><dd>474 mm</dd></div></dl><p class="note">*P2 is a 600 mm cabinet with a provisional smaller mechanism, not the original 864 mm hardware. Confirm SKU dimensions. Tower and fridge/crockery allocation unchanged. Trial the 950 mm worktop height; 600 mm drawers are not exact 24 in (609.6 mm).</p><small id="check-status">Geometry check pending.</small></aside>
+</main>
+<section class="sheet"><h2>Factory Coordination / Revision 04</h2><p>All dimensions in millimetres, W x D x H. Datum: finished floor = 0; side-run positions measured from rear wall toward entrance; rear-wall positions measured from dry-side wall toward wet-side wall. PDF room: 2630 x 3525; ceiling maximum: 2794. P1 retains the supplied hardware envelope; the new smaller P2 envelope is an assumption, not a confirmed product. No wall, utility-door, oven/tower or fridge relocation. Board: 18; doors/fronts: 20; countertop: 30. This is a coordination sheet, <strong>not an approved cutting, drilling or stone-template list</strong>.</p><div class="sheet-scroll"><table><thead><tr><th>Mark / Quantity</th><th>Hardware / internal envelope</th><th>Proposed external cabinet W x D x H</th><th>Run position / floor levels / fabrication hold</th></tr></thead><tbody>
+<tr><td>T2 / T3: 2 banks</td><td>600 nominal runners; cabinet internal width 714, clear box depth 632 before runner-specific allowances</td><td>750 x 650 x 770 carcass; +20 front; +20 rear service space</td><td>875-1625 / 1625-2375. Base 150, top 920. Three drawers each. Actual drawer-bottom width, back length and drilling from selected runner chart, not cabinet width alone.</td></tr>
+<tr><td>T5 / T6: 2 banks</td><td>600 nominal runners; internal width 514; clear depth 632</td><td>550 x 650 x 770 carcass; +20 front; +20 rear service space</td><td>2375-2925 / 2925-3475; 50 end allowance to wall datum 3525. Narrower banks for utensils, daily containers and provisions.</td></tr>
+<tr><td>T4: hob bank</td><td>600 nominal runners; internal width 664; top 4 in metal side conditional</td><td>700 x 650 x 770 carcass; +20 front; +20 rear service space</td><td>25-725, wet side. Hold top-drawer depth/height until hob body, gas line, heat shield and ventilation are checked. Do not cut a full-depth top box without that check.</td></tr>
+<tr><td>B1: bottle pull-out</td><td><strong>240 x 500 x 490</strong> user hardware; cabinet internal width 264</td><td>300 x 650 x 770 carcass; +20 front</td><td>725-1025. Mechanism floor levels 180-670; lower front allocation 550 high (150-700); separate upper 220-high storage compartment (700-920). Mounting spacers approximately 12 each side, subject to supplier.</td></tr>
+<tr><td>S1: sink cabinet</td><td>Internal width 664; sink and plumbing not selected</td><td>700 x 650 x 770 carcass; +20 fronts</td><td>1025-1725; wet counter continues to 1775. Reduced from 800 to 700 to accommodate B1 without moving the utility door. Confirm sink rim/cut-out and trap clearance.</td></tr>
+<tr><td>A1: roller shutter</td><td><strong>564 x 330 x 1320</strong> user hardware; clear cabinet width 564, depth 342, height 1320</td><td><strong>600 x 380 x 1356</strong>, including 20 front/track zone</td><td>200-800, centred over 750-wide oven bay with 75 each side. Base 950; top 2306; hardware 968-2288. Winding drum, guide clearances and whether 1320 is overall or opening height must be confirmed. No additional drum clearance is claimed.</td></tr>
+<tr><td>P1: rear glass elevator</td><td><strong>864 x 330 x 750</strong> supplied hardware; clear cabinet width 864, depth 342, height 750</td><td><strong>900 x 380 x 786</strong>, including 20 front</td><td>Rear wall, 500-1400 from dry-side wall; depth 0-380. Levels 1450-2236. Tower remains fixed, with 120 lateral gap. Supplier approval required for exact-width opening, door swing and moving envelope.</td></tr>
+<tr><td>P2: smaller rear elevator</td><td><strong>564 x 330 x 750 provisional</strong>; actual smaller hardware SKU not supplied</td><td><strong>600 x 380 x 786</strong>, including 20 front</td><td>Rear wall, 1400-2000, nearest hob; same levels as P1. Hood starts at 2130, leaving 130 nominal lateral gap. This is geometric clearance, not certified thermal clearance. Original 864-wide hardware cannot fit this unit.</td></tr>
+<tr><td>G1 / G2: handleless grocery cabinets</td><td>Two 423-wide shelf bays per cabinet, 330-deep shelves, 174 nominal clear height per tier</td><td><strong>900 x 380 x 786 each</strong></td><td>Former P1/P2 locations on dry wall: 925-1825 / 1825-2725. Levels 1450-2236. Push-to-open doors, central 18 divider, three adjustable 18-thick shelves per bay: four short tiers, eight compartments per cabinet.</td></tr>
+<tr><td>W1: shallow wall cabinet</td><td>Internal nominal width 714</td><td>750 x 380 x 786</td><td>2725-3475; levels 1450-2236. Same depth as elevator cabinets.</td></tr>
+<tr><td>O1: Bosch oven</td><td>600-class placeholder, model not selected</td><td>750 x 650 x 770 base allocation</td><td>125-875 below A1; oven front nominal 600 high from level 150 to 750, 170 upper infill to level 920. Niche, ventilation, thermal barrier, outlet and isolator strictly to the selected Bosch manual.</td></tr>
+<tr><td>F1: fridge</td><td>600-wide appliance placeholder</td><td>660 along wall x 750 deep x 2000 high reservation</td><td>Utility side, 2585-3245. Ventilation, full opening, hinge clearance and corner obstruction remain unresolved. No larger appliance assumed to fit.</td></tr>
+<tr><td>C1: crockery screen</td><td>Shallow cup / small-dish storage</td><td>800 across room x 250 along wall x 2300 high</td><td>3255-3505; front trims reach 3509. Passage opposite 700-deep counter: 1130. Not a full dinner-plate-depth unit.</td></tr>
+<tr><td>L1 / L2 / L3: upper lofts</td><td>600 overall depth; 580 box + 20 doors; 474 overall height</td><td>Dry run 3400 / rear 1430 / hob run 700 x 600 x 474</td><td>Levels <strong>2306-2780</strong>, leaving 14 nominal scribe below 2794 ceiling. Dry: five 680 modules. Rear: two 715 modules between side lofts. Hob: one 700 module. Shallower cabinets below are 380 deep. Wall strength, door load, hinges and hood duct need design approval.</td></tr>
+</tbody></table></div>
+<h3>Tandem Drawer and Front Schedule</h3><p>Listed top to bottom. Metal-side height is not drawer-front height or usable storage height. Each front has a nominal 2 mm margin on all four sides; factory must adjust reveals, edgebanding and runner drilling. Front thickness 20. Cabinet top/bottom/side thickness 18. Drawer bottoms shown as 12 only for visual coordination; use the runner manufacturer's approved material and thickness.</p>
+<div class="sheet-scroll"><table><thead><tr><th>Bank / storage</th><th>Metal sides top / middle / bottom</th><th>Vertical allocations</th><th>Provisional front W x H, top / middle / bottom</th></tr></thead><tbody>
+<tr><td>T2: cutlery / plates / cookware</td><td>4 / 8 / 10 in = 101.6 / 203.2 / 254</td><td>180 / 260 / 330 = 770</td><td>746 x 176 / 746 x 256 / 746 x 326</td></tr>
+<tr><td>T3: daily utensils / containers / pots</td><td>6 / 6 / 10 in = 152.4 / 152.4 / 254</td><td>220 / 220 / 330 = 770</td><td>746 x 216 / 746 x 216 / 746 x 326</td></tr>
+<tr><td>T4: hob tools / pans / cookware</td><td>4 / 8 / 10 in; top drawer conditional</td><td>180 / 260 / 330 = 770</td><td>696 x 176 / 696 x 256 / 696 x 326</td></tr>
+<tr><td>T5: utensils / containers / provisions</td><td>6 / 6 / 10 in</td><td>220 / 220 / 330 = 770</td><td>546 x 216 / 546 x 216 / 546 x 326</td></tr>
+<tr><td>T6: small items / jars / provisions</td><td>4 / 8 / 10 in</td><td>180 / 260 / 330 = 770</td><td>546 x 176 / 546 x 256 / 546 x 326</td></tr>
+</tbody></table></div>
+<h3>Countertops, Doors and Vertical Levels</h3><p><strong>Countertops:</strong> dry side 3400 long x 700 deep x 30 thick, from 125 to 3525; wet side 1750 long x 700 deep x 30 thick, from 25 to 1775. Finished top 950; underside 920. Sink/hob openings, seams and overhangs require final appliance templates and site measurement.<br><strong>Depth stack:</strong> 20 rear service allowance + 650 carcass + 20 front + 10 overhang = 700. Internal depth before runner deductions is 650 - 18 back = 632. Nominal 600 runners, not exact 24 in (609.6). Full extension of opposite banks leaves only about 50 mm between projecting handles: open one side at a time; it is not a passage.<br><strong>Vertical stack:</strong> 150 plinth + 770 base + 30 worktop = 950. P1/P2/W1: 1450-2236; 70 gap to loft. A1: 950-2306. Lofts: 2306-2780, height 474; ceiling maximum 2794; nominal scribe 14. Lower depth 380; upper loft depth 600. Deep lofts are for occasional storage and require safe step access.</p>
+<div class="sheet-scroll"><table><thead><tr><th>Front / shutter</th><th>Provisional leaf sizes W x H x thickness</th><th>Hold point</th></tr></thead><tbody>
+<tr><td>B1 lower / upper</td><td>296 x 546 x 20 / 296 x 216 x 20</td><td>Lower connected to pull-out; upper separate door, not a tandem drawer.</td></tr>
+<tr><td>S1 doors</td><td>2 leaves, each 346 x 766 x 20</td><td>Hinge position to clear plumbing.</td></tr>
+<tr><td>P1 / P2 glass fronts</td><td>P1: 2 x (446 x 782 x 20); P2: 2 x (296 x 782 x 20)</td><td>20 is assembly depth, not glass thickness. Verify hinges, glass, door sweep and hot-zone clearances. Doors omitted during schematic pull-down motion; actual mechanism travel remains unverified.</td></tr>
+<tr><td>G1 / G2 handleless doors and shelves</td><td>Each cabinet: 2 doors 446 x 782 x 20; 6 shelves 423 x 330 x 18</td><td>Push-to-open catches and compatible hinges. Shelf centres at 1651, 1843, 2035 above floor; nominal clear gaps 174. Adjustable support drilling only after hinge/door coordination. Upper tiers may require lowering jars or a safe step.</td></tr>
+<tr><td>W1 doors</td><td>2 leaves, each 371 x 782 x 20</td><td>Final hinge and edge-clearance confirmation.</td></tr>
+<tr><td>A1 shutter assembly</td><td>564 x 330 x 1320 supplied envelope</td><td>Do not order a 1320 clear-opening shutter without confirming overall height, guide and drum allowances.</td></tr>
+<tr><td>Loft leaves L1 / L2 / L3</td><td>5 x (676 x 470 x 20) / 2 x (711 x 470 x 20) / 1 x (696 x 470 x 20)</td><td>Nominal one leaf per module. Check hinge load and wide-leaf sweep; factory may split leaves while retaining module size. These are review dimensions, not cut sizes.</td></tr>
+</tbody></table></div>
+<h3>Set-Out and Release Conditions</h3><p><strong>Dry side:</strong> 125 filler + 750 O1 bay (600 A1 centred above) + 750 T2 + 750 T3 + 550 T5 + 550 T6 + 50 end allowance = 3525.<br><strong>Wet side:</strong> 25 filler + 700 T4 + 300 B1 + 700 S1 + 50 end allowance = 1775; then 40 clearance + 750 door + 20 clearance + 660 F1 + 10 separation + 250 C1 + 20 end allowance = 3525.<br><strong>Aisle:</strong> 700 + 1230 + 700 = 2630. At entrance: 700 counter + 1130 passage + 800 crockery width = 2630.</p>
+<p><strong>Rear pull-down allocation:</strong> tower projects 380 from dry wall + 120 gap + 900 P1 + 600 P2 + 130 gap + 500 hood projection = 2630. Pair total 1500; cabinet height 786 and depth 380. Modelled lowered hardware bottom 1048, front projection 690 from rear wall; keep the adjacent countertop free of items during operation. Mechanism travel is schematic and must be checked against the selected products. Confirm manufacturer heat/splash restrictions near the hob before installation. G1/G2 replace the old dry-side elevators without moving the tower or oven. Fridge bay and crockery depth remain unchanged because 250 litres does not determine fridge dimensions.</p>
+<p class="note"><strong>Factory release is on hold:</strong> confirm exact hardware SKU diagrams, whether supplied dimensions are body or installation sizes, drawer load ratings, Bosch oven manual, hob/sink cut-outs, fridge model and door swing, wall thickness and anchor capacity, services and ceiling levels at multiple points. A1 and P1/P2 have exact-width nominal openings with no surplus lateral tolerance. The 700-deep worktop may make the assumed window harder to reach. 950 height must be trialled against your standing elbow height (work surface commonly about 100-150 below elbow), including sink-bowl depth. Height alone cannot guarantee no bending. Window and utility-door geometry is still provisional: 900 window at 700-1600, 750 door at 1815-2565, sill 1050, lintel 2250. Verify the 960 utility-side front corner has no shaft/column. Do not manufacture from this model until these items are signed off.</p>
+<h3>Reference Renders</h3><div class="references"><figure><img src="Gemini_Generated_Image_h3ueiwh3ueiwh3ue.png" alt="Original entrance crockery and finish reference"><figcaption>Original finish reference, not current set-out</figcaption></figure><figure><img src="Gemini_Generated_Image_o2w6ato2w6ato2w6.png" alt="Original accessory and loft reference"><figcaption>Original accessory reference, not current dimensions</figcaption></figure></div><p><a href="floor%20plan%20measurement.pdf">Source measurement PDF</a> &nbsp; | &nbsp; Three.js requires internet access. Reference images remain local.</p></section>
+<section class="sheet" id="factory"><h2>Component Dimensions / Factory Review</h2><p><strong>All dimensions in mm, W x H x D. MODEL DIMENSIONS ONLY / NOT RELEASED FOR CUTTING.</strong> Width follows each cabinet front: along the run for side cabinets and across the room for rear cabinets. Identical parts are grouped with their IDs and quantity. Assemblies and their constituent parts must not be added together.</p><div class="factory-controls"><select id="part-select" aria-label="Kitchen component"></select><button id="inspect-part">Inspect component</button><button id="parts-csv">Dimensions CSV</button></div><p id="part-size" role="status">Component register loading...</p><p id="factory-checks" role="status">Checks pending</p><div class="table-scroll"><table><thead><tr><th>ID / module / component</th><th>Type / quantity</th><th>Model W x H x D</th><th>Panel L x B x T</th><th>Finish / release</th></tr></thead><tbody id="part-rows"></tbody></table></div><h3>Factory Release Requirements</h3><p>Panel L x B x T sorts the model dimensions; it is not grain direction or an approved raw blank. Solid cabinet-body blocks are labelled envelopes and must be developed into actual carcass panels. Metal sides, roller parts, glass, pull-downs and appliances are reference envelopes, not fabrication instructions.</p><p>Approve exact hardware SKUs, drawer-bottom grooves, runner drilling, joints, exposed-edge bands, laminate codes and balancing, pressing allowances, glass rebates and safety specifications. Countertop dimensions exclude approved sink/hob cutouts. Oven ventilation, refrigerator clearances and the provisional P2 mechanism remain on hold. Furniture geometry and layout are unchanged by this register.</p></section>
+<script type="module">
+const loading = document.getElementById('load');
+try {
+const THREE = await import('three');
+const { OrbitControls } = await import('three/addons/controls/OrbitControls.js');
+const viewport = document.getElementById('viewport');
+const scene = new THREE.Scene();
+scene.background = new THREE.Color('#e2e8e4');
+const renderer = new THREE.WebGLRenderer({antialias:true,preserveDrawingBuffer:true});
+renderer.setPixelRatio(Math.min(devicePixelRatio,2));
+renderer.shadowMap.enabled = true;
+renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+renderer.outputColorSpace = THREE.SRGBColorSpace;
+renderer.toneMapping = THREE.ACESFilmicToneMapping;
+renderer.toneMappingExposure = 1;
+viewport.prepend(renderer.domElement);
+renderer.domElement.setAttribute('aria-label','Dimensioned parallel kitchen three-dimensional model');
+const camera = new THREE.PerspectiveCamera(43,1,10,30000);
+const ortho = new THREE.OrthographicCamera(-2500,2500,2500,-2500,1,25000);
+let activeCamera = camera;
+let controls = new OrbitControls(activeCamera,renderer.domElement);
+controls.enableDamping = true;
+controls.target.set(1315,1100,1700);
+controls.maxDistance = 15000;
+const groups = {};
+for (const name of ['floor','shell','dry','wet','rear','upper','lofts','dimensions','labels','section','component']) { groups[name] = new THREE.Group(); scene.add(groups[name]); }
+const material = (color,extra={}) => new THREE.MeshStandardMaterial({color,roughness:.65,...extra});
+const sage = material('#CFDED0'), ivory = sage, side = material('#cdbfa9'), stone = material('#d8c6aa',{roughness:.36}), dark = material('#353c39',{metalness:.4}), steel = material('#a4aaa5',{metalness:.7,roughness:.24}), wall = material('#f4eee0'), green = material('#416550');
+const glass = material('#8daca4',{transparent:true,opacity:.26,metalness:.1,roughness:.08,depthWrite:false});
+const moveParts = [], rackParts = [], dimensionSets = {}, selectable = [];
+const layout={width:2630,length:3525,ceiling:2794,counterHeight:950,counterDepth:700,counterThickness:30,plinth:150,baseHeight:770,carcassDepth:650,rearService:20,board:18,front:20,runner:600,lowerDepth:380,loftDepth:600,loftBottom:2306,loftTop:2780};
+const hardware={shutter:{width:564,depth:330,height:1320},bottle:{width:240,depth:500,height:490},elevator:{width:864,depth:330,height:750},smallElevator:{width:564,depth:330,height:750,provisional:true}};
+const drawerPatterns={T2:{fronts:[330,260,180],metal:[254,203.2,101.6]},T3:{fronts:[330,220,220],metal:[254,152.4,152.4]},T4:{fronts:[330,260,180],metal:[254,203.2,101.6]},T5:{fronts:[330,220,220],metal:[254,152.4,152.4]},T6:{fronts:[330,260,180],metal:[254,203.2,101.6]}};
+const hardwareMeshes={}, cabinetModules=[], elevatorDoors=[], groceryDoors=[];
+const modelMeshes=[];
+function box(parent,width,height,depth,centerX,centerY,centerZ,mat,outline=false){const mesh=new THREE.Mesh(new THREE.BoxGeometry(width,height,depth),mat);mesh.position.set(centerX,centerY,centerZ);mesh.castShadow=true;mesh.receiveShadow=true;parent.add(mesh);modelMeshes.push(mesh);if(outline){const edge=new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry),new THREE.LineBasicMaterial({color:'#706b5f',transparent:true,opacity:.35}));mesh.add(edge);}return mesh;}
+function line(parent,points,color='#436e55',dashed=false){const geometry=new THREE.BufferGeometry().setFromPoints(points.map(point=>new THREE.Vector3(...point)));const mat=dashed?new THREE.LineDashedMaterial({color,dashSize:40,gapSize:25}):new THREE.LineBasicMaterial({color});const result=new THREE.Line(geometry,mat);result.computeLineDistances();parent.add(result);return result;}
+function text(parent,label,position,size=65,color='#254d37'){const canvas=document.createElement('canvas');canvas.width=1024;canvas.height=128;const context=canvas.getContext('2d');context.font='66px Georgia';const width=Math.min(1000,context.measureText(label).width+35);context.fillStyle='rgba(255,255,248,.96)';context.fillRect((1024-width)/2,4,width,115);context.fillStyle=color;context.textAlign='center';context.textBaseline='middle';context.fillText(label,512,64);const texture=new THREE.CanvasTexture(canvas);const sprite=new THREE.Sprite(new THREE.SpriteMaterial({map:texture,depthTest:false,transparent:true,toneMapped:false}));sprite.position.set(...position);sprite.scale.set(size*16,size*2,1);sprite.renderOrder=10;parent.add(sprite);return sprite;}
+function dimension(parent,start,end,label,offset=[0,0,0]){const first=start.map((value,index)=>value+offset[index]),last=end.map((value,index)=>value+offset[index]);line(parent,[start,first]);line(parent,[end,last]);line(parent,[first,last]);for(const point of [first,last])line(parent,[[point[0]-22,point[1]-22,point[2]-22],[point[0]+22,point[1]+22,point[2]+22]]);text(parent,label,first.map((value,index)=>(value+last[index])/2),75);}
+function cylinder(parent,radius,height,position,mat){const mesh=new THREE.Mesh(new THREE.CylinderGeometry(radius,radius,height,32),mat);mesh.position.set(...position);mesh.castShadow=true;parent.add(mesh);return mesh;}
+const floor=box(groups.floor,2630,70,3525,1315,-35,1762.5,material('#e4dfd1'));
+for(let seam=600;seam<3525;seam+=600)line(groups.floor,[[0,1,seam],[2630,1,seam]],'#c5c6b8');
+for(let seam=600;seam<2630;seam+=600)line(groups.floor,[[seam,1,0],[seam,1,3525]],'#c5c6b8');
+box(groups.shell,120,layout.ceiling,3645,-60,layout.ceiling/2,1762.5,wall);
+box(groups.shell,2630,layout.ceiling,120,1315,layout.ceiling/2,-60,wall);
+box(groups.shell,120,layout.ceiling,700,2690,layout.ceiling/2,350,wall);
+box(groups.shell,120,1050,900,2690,525,1150,wall);
+box(groups.shell,120,layout.ceiling-2250,900,2690,(2250+layout.ceiling)/2,1150,wall);
+box(groups.shell,120,layout.ceiling,215,2690,layout.ceiling/2,1707.5,wall);
+box(groups.shell,120,layout.ceiling-2250,750,2690,(2250+layout.ceiling)/2,2190,wall);
+box(groups.shell,120,layout.ceiling,960,2690,layout.ceiling/2,3045,wall);
+box(groups.shell,20,1200,900,2635,1650,1150,glass);
+for(const windowZ of [700,1150,1600])box(groups.shell,45,1200,25,2635,1650,windowZ,steel);
+for(const windowY of [1050,2250])box(groups.shell,45,25,925,2635,windowY,1150,steel);
+box(groups.shell,45,2250,35,2635,1125,1815,side);box(groups.shell,45,2250,35,2635,1125,2565,side);
+line(groups.labels,[[2630,15,1815],[3380,15,1815]],'#a96d49',true);
+const doorArc=[];for(let step=0;step<=24;step++){const angle=step*Math.PI/48;doorArc.push([2630+750*Math.sin(angle),15,1815+750*Math.cos(angle)]);}line(groups.labels,doorArc,'#a96d49',true);
+text(groups.labels,'UTILITY ACCESS*',[3000,70,2190],65,'#8a4c29');
+function carcass(parent,runStart,width,wet=false,id='BASE-'+runStart){const container=new THREE.Group();container.userData.module=id;parent.add(container);parent=container;const centerX=wet?2285:345;box(parent,550,150,width-8,wet?2335:295,75,runStart+width/2,dark);for(const sideZ of [runStart+9,runStart+width-9])box(parent,650,770,18,centerX,535,sideZ,side);for(const level of [159,911])box(parent,650,18,width-36,centerX,level,runStart+width/2,side);box(parent,18,734,width-36,wet?2601:29,535,runStart+width/2,side);box(parent,700,30,width,wet?2280:350,935,runStart+width/2,stone);}
+function bank(parent,runStart,width,id,wet=false){carcass(parent,runStart,width,wet,id);const direction=wet?-1:1,faceX=wet?1950:680;let bottom=150;const pattern=drawerPatterns[id];pattern.fronts.forEach((height,index)=>{const drawer=new THREE.Group();drawer.userData={module:id,partId:id+'-D'+(index+1)};parent.add(drawer);box(drawer,20,height-4,width-4,faceX,bottom+height/2,runStart+width/2,ivory,true);const drawerCenter=faceX-direction*310;box(drawer,600,12,width-90,drawerCenter,bottom+18,runStart+width/2,side);for(const sideZ of [runStart+39,runStart+width-39])box(drawer,600,pattern.metal[index],12,drawerCenter,bottom+24+pattern.metal[index]/2,sideZ,steel);box(drawer,12,10,width-80,faceX+direction*14,bottom+height-24,runStart+width/2,dark);drawer.children.forEach((mesh,partIndex)=>{mesh.name=['Drawer front','Drawer bottom','Metal drawer side','Metal drawer side','Drawer grip'][partIndex];mesh.userData.partId=drawer.userData.partId+'-P'+(partIndex+1);});moveParts.push({group:drawer,direction,travel:600,id,metalHeight:pattern.metal[index]});bottom+=height;});text(parent,id+' / '+width,[wet?1875:755,610,runStart+width/2],58);selectable.push({id,start:runStart,width,side:wet?'wet':'dry',depth:650,runner:600});}
+bank(groups.dry,875,750,'T2');bank(groups.dry,1625,750,'T3');bank(groups.wet,25,700,'T4',true);
+bank(groups.dry,2375,550,'T5');bank(groups.dry,2925,550,'T6');
+box(groups.dry,650,770,50,345,535,3500,side);
+box(groups.dry,700,30,50,350,935,3500,stone);
+const ovenBay={start:125,width:750,top:750}, fridgeBay={start:2585,end:3245,depth:750}, crockeryBay={start:3255,end:3505,depth:800};
+box(groups.dry,550,150,746,295,75,500,dark);
+box(groups.dry,650,770,72,345,535,161,side);box(groups.dry,650,770,72,345,535,839,side);
+box(groups.dry,650,170,600,345,835,500,ivory,true);
+box(groups.dry,700,30,750,350,935,500,stone);
+box(groups.dry,550,600,596,395,450,500,dark,true);
+box(groups.dry,20,596,596,680,450,500,dark,true);
+box(groups.dry,6,390,500,693,390,500,material('#1e2d30',{metalness:.3,roughness:.18}));
+box(groups.dry,8,90,580,694,695,500,steel);box(groups.dry,20,18,490,710,610,500,steel);
+text(groups.dry,'O1 / BOSCH*',[755,440,500],55);
+carcass(groups.wet,725,300,true,'B1');const bottle=new THREE.Group();bottle.userData.module='B1';groups.wet.add(bottle);
+box(bottle,20,546,296,1950,425,875,ivory,true);
+const bottleHardware=new THREE.Group();bottle.add(bottleHardware);hardwareMeshes.B1=bottleHardware;
+for(const railX of [1966,2454])for(const railZ of [761,989])box(bottleHardware,12,490,12,railX,425,railZ,steel);
+for(const shelfY of [186,406,664])box(bottleHardware,500,12,240,2210,shelfY,875,steel);
+for(const bottleZ of [820,930])cylinder(bottleHardware,24,120,[2120,472,bottleZ],material('#6d8050'));
+box(groups.wet,20,216,296,1950,810,875,ivory,true);box(groups.wet,600,18,264,2285,709,875,side);
+moveParts.push({group:bottle,direction:-1,travel:500,id:'B1'});text(groups.wet,'B1 / 300',[1870,1090,875],52);
+carcass(groups.wet,1025,700,true,'S1');for(const centerZ of [1200,1550])box(groups.wet,20,766,346,1950,535,centerZ,ivory,true);
+box(groups.wet,700,30,50,2280,935,1750,stone);
+box(groups.wet,470,8,580,2280,954,1375,steel);box(groups.wet,390,9,500,2280,960,1375,dark);box(groups.wet,340,9,450,2280,965,1375,material('#697871',{metalness:.8}));
+const tapCurve=new THREE.CatmullRomCurve3([new THREE.Vector3(2520,960,1375),new THREE.Vector3(2520,1240,1375),new THREE.Vector3(2400,1270,1375),new THREE.Vector3(2380,1180,1375)]);groups.wet.add(new THREE.Mesh(new THREE.TubeGeometry(tapCurve,32,12,12,false),steel));text(groups.wet,'S1 / 700',[1875,690,1375],58);
+box(groups.wet,480,20,580,2280,965,375,dark);for(const burnerX of [2150,2410])for(const burnerZ of [220,515]){cylinder(groups.wet,67,12,[burnerX,983,burnerZ],steel);cylinder(groups.wet,43,15,[burnerX,992,burnerZ],dark);}
+const hood=new THREE.Group();hood.position.x=2380;hood.userData.module='H1';groups.upper.add(hood);
+box(hood,500,120,650,0,1710,375,steel);box(hood,250,536,260,125,2038,375,steel);
+const fridge=new THREE.Group();groups.wet.add(fridge);fridge.userData.module='F1';
+box(fridge,680,1800,600,2265,900,2915,steel,true);box(fridge,22,1210,580,1914,1170,2915,material('#68766d',{metalness:.55}),true);box(fridge,22,535,580,1914,285,2915,steel,true);box(fridge,22,600,15,1890,1300,3180,dark);text(fridge,'F1 / 660 BAY*',[1770,1950,2915],65);
+const crockery=new THREE.Group();groups.wet.add(crockery);crockery.userData.module='C1';
+box(crockery,800,2300,18,2230,1150,3264,side);
+for(const sideX of [1839,2621])box(crockery,18,2300,250,sideX,1150,3380,side);
+for(const capY of [9,2291])box(crockery,800,18,250,2230,capY,3380,side);
+for(const shelfY of [180,570,960,1350,1740,2130]){box(crockery,760,12,215,2230,shelfY,3380,glass);for(const plateX of [2010,2400]){for(let plate=0;plate<4;plate++)cylinder(crockery,65,10,[plateX,shelfY+12+plate*12,3380],ivory);}}
+box(crockery,760,2240,10,2230,1150,3500,glass);for(const stileX of [1845,2230,2615])box(crockery,18,2280,18,stileX,1150,3500,dark);for(const railY of [15,2285])box(crockery,800,18,18,2230,railY,3500,dark);text(crockery,'C1 / 250 DEEP',[2230,2390,3500],65);
+const tower=new THREE.Group();groups.dry.add(tower);tower.userData.module='A1';
+box(tower,18,1356,600,9,1628,500,side);
+for(const towerSideZ of [209,791])box(tower,360,1356,18,180,1628,towerSideZ,side);
+for(const shelfY of [959,2297])box(tower,360,18,564,180,shelfY,500,side);
+const shutter=new THREE.Group();tower.add(shutter);hardwareMeshes.A1=shutter;
+for(const shutterZ of [222,778])box(shutter,330,1320,8,185,1628,shutterZ,steel);
+for(let shutterY=978;shutterY<2288;shutterY+=24)box(shutter,15,20,564,342.5,shutterY,500,steel);
+box(tower,20,1320,18,370,1628,209,ivory);box(tower,20,1320,18,370,1628,791,ivory);
+box(tower,20,15,420,370,982,500,dark);text(tower,'A1 / 600 x 380',[450,2120,500],55);
+for(const [id,startX,width] of [['P1',500,900],['P2',1400,600]]){
+ const cabinet=new THREE.Group();cabinet.position.x=startX;groups.rear.add(cabinet);cabinet.userData={module:id,side:'rear',width};cabinetModules.push(cabinet);
+ box(cabinet,width,786,18,width/2,1843,9,side);
+ for(const sideX of [9,width-9])box(cabinet,18,786,360,sideX,1843,180,side);
+ for(const shelfY of [1459,2227])box(cabinet,width-36,18,360,width/2,shelfY,180,side);
+ for(const leafX of [width/4,width*3/4])elevatorDoors.push(box(cabinet,width/2-4,782,20,leafX,1843,370,glass,true));
+ const rack=new THREE.Group();cabinet.add(rack);hardwareMeshes[id]=rack;
+ for(const armX of [24,width-24])box(rack,12,750,330,armX,1843,185,steel);
+ for(const shelfY of [1474,1810,2170]){box(rack,width-60,12,330,width/2,shelfY,185,glass);box(rack,width-60,48,12,width/2,shelfY+24,344,steel);}
+ rackParts.push(rack);text(cabinet,id+' / '+width+(id==='P2'?'*':''),[width/2,2280,420],55);
+}
+for(const [id,runStart] of [['G1',925],['G2',1825]]){
+ const cabinet=new THREE.Group();cabinet.position.z=runStart;groups.upper.add(cabinet);cabinet.userData={module:id,side:'dry',shelfClearance:174};cabinetModules.push(cabinet);
+ box(cabinet,18,786,900,9,1843,450,side);
+ for(const sideZ of [9,891])box(cabinet,360,786,18,180,1843,sideZ,side);
+ for(const shelfY of [1459,2227])box(cabinet,360,18,864,180,shelfY,450,side);
+ box(cabinet,330,750,18,185,1843,450,side);
+ for(const shelfY of [1651,1843,2035])for(const bayZ of [229.5,670.5])box(cabinet,330,18,423,185,shelfY,bayZ,ivory,true);
+ for(const baseY of [1468,1660,1852,2044])for(const jarZ of [160,330,570,740]){cylinder(cabinet,30,100,[220,baseY+50,jarZ],material('#a9ad87'));cylinder(cabinet,32,8,[220,baseY+104,jarZ],dark);}
+ for(const [hingeZ,leafZ,direction] of [[2,223,1],[898,-223,-1]]){const pivot=new THREE.Group();pivot.position.set(360,0,hingeZ);cabinet.add(pivot);box(pivot,20,782,446,10,1843,leafZ,ivory,true);groceryDoors.push({pivot,direction});}
+ text(cabinet,id+' / HANDLELESS',[440,2320,450],52);
+}
+box(groups.upper,360,786,750,180,1843,3100,side);for(const leafZ of [2912.5,3287.5])box(groups.upper,20,782,371,370,1843,leafZ,ivory,true);
+for(let index=0;index<5;index++){const runWidth=680,centerZ=125+index*runWidth+runWidth/2;box(groups.lofts,580,474,runWidth,290,2543,centerZ,side);box(groups.lofts,20,470,runWidth-4,590,2543,centerZ,ivory,true);}
+for(const centerX of [957.5,1672.5]){box(groups.lofts,715,474,580,centerX,2543,290,side);box(groups.lofts,711,470,20,centerX,2543,590,ivory,true);}
+box(groups.lofts,580,474,700,2340,2543,375,side);box(groups.lofts,20,470,696,2040,2543,375,ivory,true);
+for(const setName of ['axon','plan','dry','wet','rear','section','entry']){dimensionSets[setName]=new THREE.Group();groups.dimensions.add(dimensionSets[setName]);}
+for(const setName of ['axon','plan']){const parent=dimensionSets[setName];dimension(parent,[0,20,3525],[2630,20,3525],'2630',[0,0,360]);dimension(parent,[0,20,0],[0,20,3525],'3525',[-420,0,0]);dimension(parent,[700,980,1200],[1930,980,1200],'1230 CLEAR');}
+dimension(dimensionSets.entry,[700,980,1700],[1930,980,1700],'1230 CLEAR');
+const drySegments=[125,750,750,750,550,550,50];let chain=0;for(const width of drySegments){if(width>=300)dimension(dimensionSets.dry,[650,0,chain],[650,0,chain+width],String(width),[0,-230,0]);chain+=width;}dimension(dimensionSets.dry,[650,0,0],[650,0,3525],'3525',[0,-450,0]);
+dimension(dimensionSets.dry,[700,950,125],[700,2306,125],'1356 / A1',[0,0,-200]);
+for(const runStart of [925,1825])dimension(dimensionSets.dry,[430,2236,runStart],[430,2236,runStart+900],'900',[0,100,0]);
+dimension(dimensionSets.dry,[700,0,3525],[700,950,3525],'950',[0,0,200]);
+for(const entry of [{start:fridgeBay.start,end:fridgeBay.end,label:'660 F1*'},{start:crockeryBay.start,end:crockeryBay.end,label:'250 C1'}])dimension(dimensionSets.wet,[1800,0,entry.start],[1800,0,entry.end],entry.label,[0,-200,0]);
+dimension(dimensionSets.plan,[700,20,3380],[1830,20,3380],'1130 ENTRY');
+for(const entry of [{start:25,width:700},{start:725,width:300},{start:1025,width:700}])dimension(dimensionSets.wet,[1870,0,entry.start],[1870,0,entry.start+entry.width],String(entry.width),[0,-200,0]);dimension(dimensionSets.wet,[1870,0,1815],[1870,0,2565],'750 DOOR*',[0,-200,0]);dimension(dimensionSets.wet,[1870,0,0],[1870,0,3525],'3525',[0,-450,0]);dimension(dimensionSets.wet,[1870,1050,700],[1870,1050,1600],'900 WINDOW*',[0,1300,0]);
+dimension(dimensionSets.rear,[0,0,650],[2630,0,650],'2630',[0,-250,0]);dimension(dimensionSets.rear,[600,2306,650],[2030,2306,650],'1430 LOFT',[0,-180,0]);
+for(const [startX,width,label] of [[500,900,'P1 / 900'],[1400,600,'P2 / 600*']])dimension(dimensionSets.rear,[startX,1450,450],[startX+width,1450,450],label,[0,-180,0]);
+dimension(dimensionSets.rear,[500,1450,450],[2000,1450,450],'1500 TOTAL',[0,-400,0]);
+const section=groups.section;
+box(section,2630,60,30,1315,-30,1200,side);
+for(const sectionX of [345,2285]){const isDry=sectionX===345;box(section,550,150,30,isDry?295:2335,75,1200,dark);box(section,650,770,30,sectionX,535,1200,side,true);box(section,20,766,30,isDry?680:1950,535,1200,ivory);box(section,700,30,35,isDry?350:2280,935,1200,stone);}
+box(section,380,786,30,190,1843,1200,ivory,true);box(section,600,474,30,300,2543,1200,ivory,true);line(section,[[0,2794,1200],[2630,2794,1200]],'#8f988f',true);
+dimension(dimensionSets.section,[0,0,1200],[2630,0,1200],'2630',[0,-220,0]);dimension(dimensionSets.section,[700,950,1200],[1930,950,1200],'1230 CLEAR',[0,120,0]);dimension(dimensionSets.section,[2630,0,1200],[2630,950,1200],'950',[230,0,0]);dimension(dimensionSets.section,[0,0,1200],[0,2794,1200],'2794 MAX',[-330,0,0]);dimension(dimensionSets.section,[0,950,1200],[700,950,1200],'700 D',[0,260,0]);dimension(dimensionSets.section,[0,1450,1200],[380,1450,1200],'380 D',[0,-100,0]);dimension(dimensionSets.section,[0,2306,1200],[600,2306,1200],'600 D',[0,-40,0]);dimension(dimensionSets.section,[600,2306,1200],[600,2780,1200],'474 H',[250,0,0]);text(section,'SECTION A-A / 1200 FROM REAR',[1315,3020,1200],80);
+scene.add(new THREE.HemisphereLight('#fff8e9','#728174',1.6));const sunlight=new THREE.DirectionalLight('#fff2d6',2);sunlight.position.set(3800,6000,4800);sunlight.castShadow=true;sunlight.shadow.mapSize.set(2048,2048);Object.assign(sunlight.shadow.camera,{left:-5000,right:5000,top:5000,bottom:-5000,near:100,far:14000});sunlight.shadow.bias=-.0003;sunlight.shadow.normalBias=3;scene.add(sunlight);scene.add(new THREE.AmbientLight('#ffffff',.4));
+let currentView='axon', currentSpan=5000;
+const viewSettings={axon:{position:[6500,5600,8200],target:[1300,1050,1700],name:'01 / AXONOMETRIC'},entry:{position:[1450,1680,5700],target:[1330,1400,1100],name:'02 / ENTRANCE'},plan:{position:[1315,9500,1762],target:[1315,0,1762.5],span:4700,name:'03 / PLAN'},dry:{position:[9000,1350,1762.5],target:[0,1350,1762.5],span:4600,name:'04 / DRY-SIDE ELEVATION'},wet:{position:[-7000,1350,1762.5],target:[2630,1350,1762.5],span:4600,name:'05 / WET-SIDE ELEVATION'},rear:{position:[1315,1400,9000],target:[1315,1400,0],span:3900,name:'06 / REAR ELEVATION'},section:{position:[1315,1400,9000],target:[1315,1400,1200],span:4000,name:'07 / SECTION A-A'}};
+function resize(){const width=viewport.clientWidth,height=viewport.clientHeight,aspect=width/height;renderer.setSize(width,height);camera.aspect=aspect;camera.fov=THREE.MathUtils.radToDeg(2*Math.atan(Math.tan(THREE.MathUtils.degToRad(43)/2)*Math.max(1,1.32/aspect)));camera.updateProjectionMatrix();const visibleHeight=Math.max(currentSpan*.78,currentSpan/aspect);ortho.left=-visibleHeight*aspect/2;ortho.right=visibleHeight*aspect/2;ortho.top=visibleHeight/2;ortho.bottom=-visibleHeight/2;ortho.updateProjectionMatrix();}
+function visibility(){groups.component.visible=currentView==='component';if(currentView==='component'){for(const [name,group]of Object.entries(groups))if(name!=='component'&&name!=='dimensions')group.visible=false;groups.dimensions.visible=document.getElementById('dimensions').checked;for(const [name,group]of Object.entries(dimensionSets))group.visible=name==='component';document.getElementById('shell').disabled=true;return;}const isSection=currentView==='section';groups.section.visible=isSection;groups.floor.visible=!isSection;groups.dry.visible=!isSection&&!['wet','rear'].includes(currentView);groups.wet.visible=!isSection&&!['dry','rear'].includes(currentView);groups.rear.visible=!isSection&&!['dry','wet','plan'].includes(currentView);groups.upper.visible=document.getElementById('upper').checked&&!isSection&&!['plan','rear'].includes(currentView);groups.lofts.visible=document.getElementById('lofts').checked&&!isSection&&currentView!=='plan';groups.shell.visible=document.getElementById('shell').checked&&['axon','entry','wet'].includes(currentView);groups.shell.children.forEach(child=>{child.visible=currentView==='axon'?child.position.x<2000:currentView==='wet'?child.position.x>2000:true;});document.getElementById('shell').disabled=!['axon','entry','wet'].includes(currentView);groups.labels.visible=['axon','plan'].includes(currentView);groups.dimensions.visible=document.getElementById('dimensions').checked;for(const [name,group]of Object.entries(dimensionSets))group.visible=name===currentView;groups.upper.children.forEach(child=>{child.visible=!(currentView==='dry'&&child.position.x>1500)&&!(currentView==='wet'&&child.position.x<1500);});groups.lofts.children.forEach(child=>{child.visible=!(currentView==='dry'&&child.position.x>600)&&!(currentView==='wet'&&child.position.x<2000);});}
+function setView(name){currentView=name;const setting=viewSettings[name];activeCamera=setting.span?ortho:camera;currentSpan=setting.span||5200;activeCamera.up.set(0,1,0);if(name==='plan')activeCamera.up.set(0,0,-1);activeCamera.position.set(...setting.position);controls.dispose();controls=new OrbitControls(activeCamera,renderer.domElement);controls.target.set(...setting.target);controls.enableDamping=true;controls.enableRotate=!setting.span;controls.maxDistance=16000;activeCamera.lookAt(...setting.target);document.getElementById('view-label').textContent=setting.name+' / mm';document.querySelectorAll('[data-view]').forEach(button=>button.classList.toggle('active',button.dataset.view===name));visibility();resize();controls.update();}
+document.querySelectorAll('[data-view]').forEach(button=>button.addEventListener('click',()=>setView(button.dataset.view)));
+for(const id of ['dimensions','lofts','upper','shell'])document.getElementById(id).addEventListener('change',visibility);
+let expansion=0;
+document.getElementById('download').addEventListener('click',()=>{renderer.render(scene,activeCamera);const anchor=document.createElement('a');anchor.download='kitchen-'+currentView+'.png';anchor.href=renderer.domElement.toDataURL('image/png');anchor.click();});
+new ResizeObserver(resize).observe(viewport);
+const dryBanks=selectable.filter(item=>item.side==='dry').sort((first,second)=>first.start-second.start);
+function meshBounds(group){scene.updateMatrixWorld(true);const bounds=new THREE.Box3();group.traverse(child=>{if(child.isMesh){child.geometry.computeBoundingBox();bounds.union(child.geometry.boundingBox.clone().applyMatrix4(child.matrixWorld));}});return bounds;}
+const measuredHardware=Object.fromEntries(Object.entries(hardwareMeshes).map(([id,group])=>{const size=meshBounds(group).getSize(new THREE.Vector3());const rearFacing=id==='P1'||id==='P2';return [id,{width:rearFacing?size.x:size.z,depth:rearFacing?size.z:size.x,height:size.y}];}));
+const hardwareFit=Object.entries(measuredHardware).every(([id,size])=>{const expected=id==='A1'?hardware.shutter:id==='B1'?hardware.bottle:id==='P2'?hardware.smallElevator:hardware.elevator;return ['width','depth','height'].every(axis=>Math.abs(size[axis]-expected[axis])<.01);});
+const checks={roomWidth:layout.width,roomLength:layout.length,ceiling:layout.ceiling,bankCount:selectable.length,drawerCount:moveParts.length-1,dryChain:drySegments.reduce((sum,value)=>sum+value,0),mainAisle:layout.width-2*layout.counterDepth,entryAisle:layout.width-layout.counterDepth-crockeryBay.depth,wetRunEnd:1775,assumedDoorStart:1815,assumedDoorEnd:2565,fridgeBayStart:fridgeBay.start,fridgeBayEnd:fridgeBay.end,crockeryStart:crockeryBay.start,crockeryEnd:crockeryBay.end,towerTop:meshBounds(tower).max.y,loftBottom:meshBounds(groups.lofts).min.y,loftTop:meshBounds(groups.lofts).max.y,runnerDepth:layout.runner,hardwareFit,measuredHardware};
+const rearElevators=cabinetModules.filter(module=>module.userData.side==='rear');
+checks.rearPairWidth=rearElevators.reduce((sum,module)=>sum+module.userData.width,0);
+checks.towerGap=meshBounds(rearElevators[0]).min.x-meshBounds(tower).max.x;
+checks.hoodGap=meshBounds(hood).min.x-meshBounds(rearElevators[1]).max.x;
+checks.pass=checks.bankCount===5&&checks.drawerCount===15&&checks.dryChain===checks.roomLength&&checks.wetRunEnd<checks.assumedDoorStart&&checks.fridgeBayStart>checks.assumedDoorEnd&&checks.fridgeBayEnd<checks.crockeryStart&&checks.crockeryEnd<=checks.roomLength&&checks.towerTop===checks.loftBottom&&checks.loftTop<checks.ceiling&&hardwareFit&&checks.rearPairWidth===1500&&checks.towerGap>0&&checks.hoodGap>0&&Object.values(drawerPatterns).every(pattern=>pattern.fronts.reduce((sum,value)=>sum+value,0)===layout.baseHeight)&&dryBanks.every((item,index)=>item.start>=ovenBay.start+ovenBay.width&&item.start+item.width<=3475&&(index===0||dryBanks[index-1].start+dryBanks[index-1].width<=item.start));
+document.getElementById('check-status').textContent=checks.pass?'Nominal geometry passes: 120 mm tower gap / 130 mm hood gap. P2 hardware, thermal clearance and door swings remain unverified.':'Geometry check failed: do not use for fabrication.';
+function setExpansion(value){expansion=Math.max(0,Math.min(1,value));for(const part of moveParts)part.group.position.x=part.direction*part.travel*expansion;for(const rack of rackParts){rack.position.y=-420*expansion;rack.position.z=340*expansion;}for(const door of elevatorDoors)door.visible=expansion<.01;}
+function setGroceryDoors(open){for(const door of groceryDoors)door.pivot.rotation.y=open?door.direction*Math.PI/2:0;}
+document.getElementById('groceries').addEventListener('change',event=>setGroceryDoors(event.target.checked));
+const componentRecords=[],partGroups=new Map(),partSequences=new Map();
+const numberText=value=>Number(value.toFixed(1)).toString();
+const finishNames=new Map([[sage,'Sage green (#CFDED0) / laminate code HOLD'],[side,'Carcass finish / substrate HOLD'],[stone,'Beige stone countertop / cutouts HOLD'],[steel,'Supplier metal hardware'],[glass,'Glazing / safety and rebates HOLD'],[dark,'Metal / plinth finish HOLD']]);
+function registerPart(id,module,name,source,axis='z',kind='MODEL PANEL'){
+ const snapshot=source.clone(true);snapshot.position.set(0,0,0);
+ const annotations=[];snapshot.traverse(child=>{if(child.isSprite)annotations.push(child);});for(const annotation of annotations)annotation.removeFromParent();snapshot.updateMatrixWorld(true);
+ const size=new THREE.Box3().setFromObject(snapshot).getSize(new THREE.Vector3());
+ const dims=axis==='z'?[size.z,size.y,size.x]:[size.x,size.y,size.z];
+ const finish=source===crockery?'250 mm carcass + 4 mm frame projection / HOLD':finishNames.get(source.material)||'Assembly / supplier specification HOLD';
+ const key=[module,name,kind,finish,...dims.map(numberText)].join('|');
+ let record=partGroups.get(key);
+ if(!record){record={id,ids:[],module,name,axis,kind,dims,finish,snapshot,panel:kind==='MODEL PANEL'?[...dims].sort((first,second)=>second-first).map(numberText).join(' x '):'Not a board blank'};partGroups.set(key,record);componentRecords.push(record);}
+ record.ids.push(id);
+}
+for(const part of moveParts)registerPart(part.group.userData.partId||'B1-ASSEMBLY',part.id,part.id==='B1'?'Bottle pull-out assembly':'Tandem drawer assembly',part.group,'z','ASSEMBLY');
+for(const [module,source]of Object.entries(hardwareMeshes))registerPart(module+'-HARDWARE',module,'Supplier mechanism envelope',source,module.startsWith('P')?'x':'z','HARDWARE ENVELOPE');
+for(const [module,source,axis]of [['C1',crockery,'x'],['A1',tower,'z'],...cabinetModules.map(source=>[source.userData.module,source,source.userData.side==='rear'?'x':'z'])])registerPart(module+'-ASSEMBLY',module,'Cabinet assembly envelope',source,axis,'ASSEMBLY');
+for(const [module,source]of [['F1',fridge],['H1',hood]])registerPart(module+'-REFERENCE',module,'Appliance reference envelope',source,'z','APPLIANCE REFERENCE');
+for(const mesh of modelMeshes){
+ let ancestor=mesh.parent,owner=null,root=null;
+ while(ancestor&&ancestor!==scene){if(!owner&&ancestor.userData.module)owner=ancestor.userData.module;if(Object.values(groups).includes(ancestor))root=ancestor;ancestor=ancestor.parent;}
+ if(![groups.dry,groups.wet,groups.rear,groups.upper,groups.lofts].includes(root)||['F1','H1'].includes(owner)||!finishNames.has(mesh.material))continue;
+ if(!owner&&[steel,dark].includes(mesh.material))continue;
+ let module=owner,axis='z';
+ if(!module){if(root===groups.lofts){const index=Math.floor(groups.lofts.children.indexOf(mesh)/2);module='L'+(index+1);axis=index===5||index===6?'x':'z';}else if(root===groups.dry)module=mesh.position.z>=3475?'DRY-FILLER':'O1';else if(root===groups.wet)module=mesh.position.z<1025?'B1':mesh.material===stone&&mesh.position.z>1725?'WET-FILLER':'S1';else module='U1';}
+ else if(module.startsWith('P')||module==='C1')axis='x';
+ const parameters=mesh.geometry.parameters,dimensions=[parameters.width,parameters.height,parameters.depth];
+ let kind='MODEL PANEL',name=mesh.name;
+ if(mesh.material===steel||mesh.material===dark){kind='HARDWARE ENVELOPE';name=name||'Metal / plinth envelope';}
+ else if(mesh.material===glass){kind='GLAZING ENVELOPE';name=name||'Glass shelf / door envelope';}
+ else if(mesh.material===stone){kind='COUNTERTOP ENVELOPE';name='Countertop slab';}
+ else if(Math.min(...dimensions)>40){kind='CABINET ENVELOPE';name='Simplified cabinet body / block';}
+ else if(!name)name=mesh.material===ivory&&(parameters.width===20||parameters.depth===20)?'Door / front panel':parameters.height<=30?'Shelf / horizontal panel':'Carcass / vertical panel';
+ const sequence=(partSequences.get(module)||0)+1;partSequences.set(module,sequence);
+ registerPart(mesh.userData.partId||module+'-P'+String(sequence).padStart(3,'0'),module,name,mesh,axis,kind);
+}
+const partSelect=document.getElementById('part-select'),partRows=document.getElementById('part-rows');
+const renderStatus=document.createElement('p');renderStatus.id='render-status';document.getElementById('factory-checks').after(renderStatus);
+for(const record of componentRecords){const option=document.createElement('option');option.value=record.id;option.textContent=record.id+' / '+record.module+' / '+record.name+' / '+record.dims.map(numberText).join(' x ');partSelect.append(option);const row=document.createElement('tr');for(const value of [record.ids.join(', ')+' / '+record.module+' / '+record.name,record.kind+' / '+record.ids.length,record.dims.map(numberText).join(' x '),record.panel,record.finish+' / HOLD']){const cell=document.createElement('td');cell.textContent=value;row.append(cell);}partRows.append(row);}
+dimensionSets.component=new THREE.Group();groups.dimensions.add(dimensionSets.component);
+viewSettings.component={position:[2000,1500,2500],target:[0,0,0],name:'08 / COMPONENT DIMENSIONS'};
+function inspectComponent(id){
+ const record=componentRecords.find(item=>item.ids.includes(id))||componentRecords[0];partSelect.value=record.id;
+ groups.component.clear();dimensionSets.component.traverse(child=>{child.geometry?.dispose();child.material?.map?.dispose();child.material?.dispose();});dimensionSets.component.clear();
+ const clone=record.snapshot.clone(true);clone.traverse(child=>{child.visible=true;});groups.component.add(clone);
+ const bounds=new THREE.Box3().setFromObject(clone),size=bounds.getSize(new THREE.Vector3());clone.position.sub(bounds.getCenter(new THREE.Vector3()));
+ const extent=Math.max(size.x,size.y,size.z,300),offset=extent*.2,halfX=size.x/2,halfY=size.y/2,halfZ=size.z/2;
+ dimension(dimensionSets.component,[-halfX,-halfY,halfZ],[halfX,-halfY,halfZ],(record.axis==='z'?'D ':'W ')+numberText(size.x),[0,-offset,offset]);
+ dimension(dimensionSets.component,[halfX,-halfY,-halfZ],[halfX,-halfY,halfZ],(record.axis==='z'?'W ':'D ')+numberText(size.z),[offset,-offset,0]);
+ dimension(dimensionSets.component,[-halfX,-halfY,-halfZ],[-halfX,halfY,-halfZ],'H '+numberText(size.y),[-offset,0,-offset]);
+ dimensionSets.component.traverse(child=>{if(child.isSprite)child.scale.set(extent*.7,extent*.0875,1);});
+ viewSettings.component.position=[extent*1.7,extent*1.15,extent*2];setView('component');
+ document.getElementById('view-label').textContent=record.id+' / W '+numberText(record.dims[0])+' x H '+numberText(record.dims[1])+' x D '+numberText(record.dims[2])+' mm / MODEL ONLY';
+ document.getElementById('part-size').textContent=record.ids.join(' / ')+' / '+record.name+' / '+record.dims.map(numberText).join(' x ')+' mm (W x H x D). '+record.kind+'. Cutting release: HOLD.';
+ pixelCheck();return record;
+}
+function pixelCheck(){renderer.render(scene,activeCamera);try{const sample=document.createElement('canvas');sample.width=48;sample.height=48;const context=sample.getContext('2d');context.drawImage(renderer.domElement,0,0,48,48);const values=context.getImageData(0,0,48,48).data,colors=new Set();for(let index=0;index<values.length;index+=4)colors.add(values[index]+','+values[index+1]+','+values[index+2]);renderStatus.textContent='3D rendered / '+renderer.domElement.width+' x '+renderer.domElement.height+' / '+colors.size+' sampled colors';return colors.size;}catch{renderStatus.textContent='Canvas pixel check unavailable';return 0;}}
+document.getElementById('inspect-part').addEventListener('click',()=>{inspectComponent(partSelect.value);viewport.scrollIntoView({block:'start'});});partSelect.addEventListener('change',()=>inspectComponent(partSelect.value));
+document.getElementById('parts-csv').addEventListener('click',()=>{const rows=[['Model revision','IDs','Module','Component','Type','Quantity','Model W mm','Model H mm','Model D mm','Panel L x B x T mm','Finish','Raw cut','Edging / pressing'],...componentRecords.map(record=>['04',record.ids.join(' / '),record.module,record.name,record.kind,record.ids.length,...record.dims.map(numberText),record.panel,record.finish,'HOLD - model only','HOLD - joints, edge bands, laminates and pressing unapproved'])];const csv=rows.map(row=>row.map(value=>'"'+String(value).replaceAll('"','""')+'"').join(',')).join('\r\n');const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8'}));const anchor=document.createElement('a');anchor.href=url;anchor.download='kitchen-r04-model-dimensions-NOT-FOR-CUTTING.csv';anchor.click();setTimeout(()=>URL.revokeObjectURL(url),1000);});
+const factoryLink=document.createElement('a');factoryLink.href='#factory';factoryLink.className='factory-link';factoryLink.textContent='Component register';document.querySelector('[aria-label="Drawing views"]').append(factoryLink);
+checks.componentDimensions=componentRecords.every(record=>record.dims.every(value=>Number.isFinite(value)&&value>0));
+checks.registerDrawerAssemblies=componentRecords.filter(record=>record.name==='Tandem drawer assembly').reduce((total,record)=>total+record.ids.length,0);
+checks.registerDrawerFronts=componentRecords.filter(record=>record.name==='Drawer front').reduce((total,record)=>total+record.ids.length,0);
+checks.uniquePartIds=new Set(componentRecords.flatMap(record=>record.ids)).size===componentRecords.reduce((total,record)=>total+record.ids.length,0);
+checks.registerCabinetEnvelopes=Object.entries({'P1-ASSEMBLY':[900,786,380],'P2-ASSEMBLY':[600,786,380],'C1-ASSEMBLY':[800,2300,254],'A1-ASSEMBLY':[600,1356,380]}).every(([id,dims])=>componentRecords.find(record=>record.id===id)?.dims.every((value,index)=>Math.abs(value-dims[index])<.01));
+checks.registerPass=checks.componentDimensions&&checks.registerDrawerAssemblies===15&&checks.registerDrawerFronts===15&&checks.uniquePartIds&&checks.registerCabinetEnvelopes;
+if(!checks.registerPass){checks.pass=false;document.getElementById('check-status').textContent='Component register check failed: do not use for fabrication.';}
+document.getElementById('factory-checks').textContent=checks.registerPass?'REGISTER PASS / 15 tandem assemblies, 15 fronts, unique IDs, valid dimensions and 4 cabinet-envelope checks. Geometry checks: '+(checks.pass?'PASS.':'FAILED.'):'REGISTER CHECK FAILED / do not use for fabrication.';
+document.getElementById('part-size').textContent=componentRecords.length+' component groups. Supplier mechanisms and solid cabinet bodies are envelopes, not board blanks.';
+window.kitchenModel={checks,layout,hardware,drawerPatterns,measuredHardware,setView,setExpansion,setGroceryDoors,componentRecords,inspectComponent,renderer,scene,meshBounds,modules:{fridge,crockery,tower,hood,...Object.fromEntries(cabinetModules.map(module=>[module.userData.module,module]))},get camera(){return activeCamera;},get expansion(){return expansion;}};
+const requested=new URLSearchParams(location.search);if(requested.has('part')||requested.get('view')==='component')inspectComponent(requested.get('part'));else setView(viewSettings[requested.get('view')]?requested.get('view'):'axon');loading.hidden=true;pixelCheck();
+renderer.setAnimationLoop(()=>{const target=document.getElementById('drawers').checked?1:0;setExpansion(expansion+(target-expansion)*.09);controls.update();renderer.render(scene,activeCamera);});
+} catch(error){loading.hidden=false;loading.textContent='3D model could not load. Internet access to cdn.jsdelivr.net and WebGL are required. '+error.message;console.error(error);}
+</script>
+</body>
+</html>
