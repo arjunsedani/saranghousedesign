@@ -55,3 +55,4 @@ All HTML files are self-contained and run directly in modern web browsers:
 1. Double-click or open `index.html` in Chrome, Edge, Safari, or Firefox.
 2. WebGL 2.0 with hardware acceleration is recommended for optimal rendering.
 3. Use the navigation links at the top of every room to move between spaces seamlessly.
+
