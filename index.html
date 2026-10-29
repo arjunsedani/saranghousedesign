@@ -1,0 +1,573 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sarang House Design / 3BHK Interactive 3D Interior Portal</title>
+<style>
+:root{
+  --ink:#1a2b24;
+  --bg:#edf1ed;
+  --panel:#fafbf9;
+  --line:#cbd5cd;
+  --line-light:#e2e8e3;
+  --accent:#27523c;
+  --accent-hover:#1c3c2c;
+  --accent-light:#e8f0eb;
+  --gold:#b88849;
+  --gold-light:#fff8ed;
+  --terracotta:#b8654a;
+  --text-muted:#556b60;
+  --shadow:0 8px 24px rgba(0,0,0,0.06);
+  --shadow-hover:0 12px 32px rgba(0,0,0,0.12);
+  font-family:Georgia,serif;
+  color:var(--ink);
+  background:var(--bg);
+}
+*{box-sizing:border-box}
+body{margin:0;overflow-x:hidden;font-family:Georgia,serif}
+header.page-header{
+  padding:20px 32px;
+  background:var(--panel);
+  border-bottom:1px solid var(--line);
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:18px;
+  flex-wrap:wrap;
+}
+.header-titles h1{
+  font-size:26px;
+  font-weight:normal;
+  margin:0;
+  letter-spacing:-0.2px;
+  color:var(--accent);
+}
+.header-titles p{
+  font:12px/1.5 Verdana,sans-serif;
+  margin:5px 0 0;
+  color:var(--text-muted);
+}
+.stamp{
+  font:10px/1.6 Verdana,sans-serif;
+  padding:7px 14px;
+  background:#f0f6f2;
+  border:1px solid #b2c5b6;
+  color:var(--accent);
+  border-radius:3px;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  font-weight:bold;
+}
+nav.rooms-nav{
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  background:#f4f7f4;
+  padding:12px 32px;
+  border-bottom:1px solid var(--line);
+}
+nav.rooms-nav a{
+  font:12px Verdana,sans-serif;
+  padding:8px 14px;
+  border:1px solid var(--line);
+  background:#fff;
+  color:var(--ink);
+  text-decoration:none;
+  border-radius:3px;
+  transition:all .15s ease;
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+}
+nav.rooms-nav a:hover{
+  border-color:var(--accent);
+  color:var(--accent);
+  background:#fdfefd;
+}
+nav.rooms-nav a.active,nav.rooms-nav a[aria-current="page"]{
+  background:var(--accent);
+  border-color:var(--accent);
+  color:#fff;
+  font-weight:bold;
+}
+main.portal-layout{
+  max-width:1240px;
+  margin:0 auto;
+  padding:36px 24px 60px;
+}
+.hero-banner{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:32px;
+  margin-bottom:36px;
+  box-shadow:var(--shadow);
+}
+.hero-banner h2{
+  font:28px Georgia,serif;
+  margin:0 0 12px;
+  font-weight:normal;
+  color:var(--accent);
+}
+.hero-banner p{
+  font:13px/1.8 Verdana,sans-serif;
+  color:#3a4e44;
+  margin:0 0 16px;
+  max-width:1050px;
+}
+.hero-stats{
+  display:flex;
+  flex-wrap:wrap;
+  gap:24px;
+  margin-top:20px;
+  padding-top:20px;
+  border-top:1px solid var(--line-light);
+}
+.hero-stats div{
+  min-width:140px;
+}
+.hero-stats strong{
+  display:block;
+  font:24px Georgia,serif;
+  color:var(--accent);
+}
+.hero-stats span{
+  font:11px Verdana,sans-serif;
+  color:var(--text-muted);
+}
+.section-title{
+  font:22px Georgia,serif;
+  font-weight:normal;
+  color:var(--accent);
+  margin:0 0 20px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.room-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill, minmax(360px, 1fr));
+  gap:24px;
+  margin-bottom:44px;
+}
+.room-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:6px;
+  overflow:hidden;
+  box-shadow:var(--shadow);
+  display:flex;
+  flex-direction:column;
+  transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.room-card:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--shadow-hover);
+  border-color:var(--accent);
+}
+.room-card-header{
+  padding:20px 22px 14px;
+  border-bottom:1px solid var(--line-light);
+  background:#fafbf9;
+}
+.room-card-badge{
+  font:10px/1.4 Verdana,sans-serif;
+  text-transform:uppercase;
+  letter-spacing:0.5px;
+  padding:3px 8px;
+  border-radius:3px;
+  font-weight:bold;
+  display:inline-block;
+  margin-bottom:8px;
+}
+.badge-living{background:#e8f0eb;color:var(--accent);border:1px solid #b2c5b6}
+.badge-kitchen{background:#fdf2eb;color:#c05830;border:1px solid #eecabb}
+.badge-master{background:#fbf0f2;color:#9b4255;border:1px solid #ecc9d1}
+.badge-bed1{background:#eef4ee;color:#3e6b4d;border:1px solid #c2d8c9}
+.badge-bed2{background:#eff3f5;color:#3b6474;border:1px solid #c0d4dc}
+.badge-doc{background:#fdf8ee;color:#8f6526;border:1px solid #eedbbb}
+.room-card-header h3{
+  font:21px Georgia,serif;
+  font-weight:normal;
+  margin:0 0 6px;
+  color:var(--ink);
+}
+.room-dims{
+  font:11px Verdana,sans-serif;
+  color:var(--text-muted);
+}
+.room-card-body{
+  padding:20px 22px;
+  flex:1;
+  display:flex;
+  flex-direction:column;
+  font:12px/1.7 Verdana,sans-serif;
+}
+.room-card-body p{
+  margin:0 0 16px;
+  color:#3b4e44;
+}
+.feature-list{
+  margin:0 0 20px;
+  padding-left:18px;
+  font-size:11px;
+  line-height:1.75;
+  color:#4f6458;
+}
+.card-actions{
+  margin-top:auto;
+  padding-top:16px;
+  border-top:1px solid var(--line-light);
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+.btn-launch{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:var(--accent);
+  color:#fff;
+  font:12px Verdana,sans-serif;
+  font-weight:bold;
+  text-decoration:none;
+  padding:9px 16px;
+  border-radius:3px;
+  transition:background .15s ease;
+}
+.btn-launch:hover{
+  background:var(--accent-hover);
+}
+.btn-secondary{
+  display:inline-flex;
+  align-items:center;
+  gap:5px;
+  background:#fff;
+  color:var(--ink);
+  border:1px solid var(--line);
+  font:11px Verdana,sans-serif;
+  text-decoration:none;
+  padding:8px 12px;
+  border-radius:3px;
+  transition:all .15s ease;
+}
+.btn-secondary:hover{
+  border-color:var(--accent);
+  color:var(--accent);
+}
+.specs-table-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:6px;
+  padding:28px;
+  margin-bottom:36px;
+  box-shadow:var(--shadow);
+}
+.table-wrap{
+  overflow-x:auto;
+  margin-top:14px;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  font:11px/1.65 Verdana,sans-serif;
+  min-width:680px;
+}
+th,td{
+  text-align:left;
+  padding:10px 14px;
+  border-bottom:1px solid var(--line-light);
+  vertical-align:top;
+}
+th{
+  background:#f3f6f3;
+  font-weight:normal;
+  color:var(--accent);
+  border-bottom:1px solid var(--line);
+}
+tr:hover td{background:#fafcfb}
+footer.portal-footer{
+  background:var(--panel);
+  border-top:1px solid var(--line);
+  padding:24px 32px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:16px;
+  font:11px/1.6 Verdana,sans-serif;
+  color:var(--text-muted);
+}
+footer.portal-footer a{color:var(--accent);text-decoration:none}
+footer.portal-footer a:hover{text-decoration:underline}
+@media(max-width:768px){
+  header.page-header{padding:16px 20px}
+  nav.rooms-nav{padding:10px 18px}
+  main.portal-layout{padding:24px 16px}
+  .room-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header class="page-header">
+  <div class="header-titles">
+    <h1>Sarang House Design &bull; 3BHK Interactive 3D Portal</h1>
+    <p>Official CAD Architectural Dimensions &bull; Three.js Interactive WebGL Coordination &bull; Factory Review Schedules</p>
+  </div>
+  <span class="stamp">GitHub Pages Deployment</span>
+</header>
+
+<nav class="rooms-nav" aria-label="Room 3D models">
+  <a href="index.html" class="active" aria-current="page">&#127963;&#65039; All Rooms Portal</a>
+  <a href="living-dining.html">&#128715;&#65039; Living &amp; Dining Hall</a>
+  <a href="kitchen-design.html">&#127869;&#65039; Parallel Kitchen</a>
+  <a href="master-bedroom.html">&#128716; Master Bedroom</a>
+  <a href="bedroom-1.html">&#129490; Bedroom 1 (Kids)</a>
+  <a href="bedroom-2.html">&#128716; Bedroom 2 (Guest)</a>
+  <a href="source-review.html">&#128196; Source PDF Review</a>
+</nav>
+
+<main class="portal-layout">
+
+  <section class="hero-banner">
+    <h2>Complete 3BHK Digital Twin &amp; Millwork Coordination</h2>
+    <p>
+      Welcome to the <strong>Sarang House Design</strong> interactive 3D portal. Every room has been modeled in full Three.js WebGL directly from the official <strong>floor plan measurement.pdf</strong>, client reference imagery, and detailed factory millwork dockets. Click any room card below to launch the full 3D interactive viewer with multiple camera presets, animated cabinetry mechanisms, dynamic cutaway walls, and exportable factory CSV schedules.
+    </p>
+    <div class="hero-stats">
+      <div><strong>8,975 mm</strong><span>Combined Hall Span</span></div>
+      <div><strong>2,794 mm</strong><span>Floor-to-Slab Height</span></div>
+      <div><strong>5 Rooms</strong><span>Interactive 3D WebGL</span></div>
+      <div><strong>100%</strong><span>CAD-Accurate Millwork</span></div>
+      <div><strong>10+</strong><span>Animated Mechanisms</span></div>
+    </div>
+  </section>
+
+  <h2 class="section-title">Explore Interactive 3D Rooms</h2>
+
+  <div class="room-grid">
+
+    <!-- Living & Dining Card -->
+    <article class="room-card">
+      <div class="room-card-header">
+        <span class="room-card-badge badge-living">Study 04 &bull; Site-Matched</span>
+        <h3>Living &amp; Dining Hall</h3>
+        <div class="room-dims">8,975 mm Total Span &bull; 4,440 x 3,300 Living + 4,535 x 3,300 Dining</div>
+      </div>
+      <div class="room-card-body">
+        <p>
+          Curved PU capsule TV panel with 360&deg; LED halo glow, fluted bronze vitrine, sculptural leaf wall relief, modular terracotta sofa-cum-bed, 6-seater Calacatta quartz dining table, multi-arm chandelier, and sacred 600 mm Mandir sanctum.
+        </p>
+        <ul class="feature-list">
+          <li><strong>2,100 mm (7.0 ft)</strong> clear central lounge corridor</li>
+          <li><strong>WIN-STAR Scissor Bed:</strong> Interactive pull-out metal mechanism</li>
+          <li><strong>Sacred Mandir:</strong> Telescopic Aarti tray &amp; hidden pull-out table</li>
+          <li><strong>Entrance Console:</strong> 1 ft depth with 300 mm curved start</li>
+          <li><strong>Site-Matched:</strong> Warm beige plaster, cream marble tiles &amp; skirting</li>
+        </ul>
+        <div class="card-actions">
+          <a href="living-dining.html" class="btn-launch">&#128065;&#65039; Launch 3D Living Room</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Parallel Kitchen Card -->
+    <article class="room-card">
+      <div class="room-card-header">
+        <span class="room-card-badge badge-kitchen">Hardware Coordination 04</span>
+        <h3>Parallel Kitchen</h3>
+        <div class="room-dims">2,630 mm Width x 3,525 mm Length x 2,794 mm Height</div>
+      </div>
+      <div class="room-card-body">
+        <p>
+          Parallel layout with 1,230 mm clear cooking corridor, 700 mm deep sage marble worktops, 15 tandem Blum runner drawers, Bosch oven tower, roller shutter garage (A1), and rear-wall pull-down elevator glass cabinets.
+        </p>
+        <ul class="feature-list">
+          <li><strong>Working Height:</strong> 950 mm ergonomic standing worktop</li>
+          <li><strong>Dry Side:</strong> 5 tandem drawer banks, grocery pantry &amp; lofts</li>
+          <li><strong>Wet Side:</strong> 700 mm hob bank, 300 mm bottle pull-out, 700 mm sink</li>
+          <li><strong>Rear Wall:</strong> Pull-down elevator glass cabinets (P1 &amp; P2)</li>
+          <li><strong>Interactive:</strong> Animated drawer extension, lofts &amp; lofts toggle</li>
+        </ul>
+        <div class="card-actions">
+          <a href="kitchen-design.html" class="btn-launch">&#128065;&#65039; Launch 3D Kitchen</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Master Bedroom Card -->
+    <article class="room-card">
+      <div class="room-card-header">
+        <span class="room-card-badge badge-master">Study 10 &bull; Revision Refined</span>
+        <h3>Master Bedroom</h3>
+        <div class="room-dims">4,150 mm Width x 4,350 mm Length &bull; Usable East Wall 3,400 mm</div>
+      </div>
+      <div class="room-card-body">
+        <p>
+          4-inch cushioned stadium-arch bed rest, 3 equal 320x480 mm arched niches, 4 stacked bedside niches, 2,600 mm tall rectangular mirror/glass dresser in Light Pink Merino laminate with sleek copper handles, and 3,048 mm 4-bay wardrobe.
+        </p>
+        <ul class="feature-list">
+          <li><strong>Bed Rest:</strong> 4-inch build-up with LED halo &amp; greige upholstery</li>
+          <li><strong>7 Arched Niches:</strong> CNC-routed ply with candle trays &amp; 1W LED spots</li>
+          <li><strong>Dresser M1:</strong> 2,600 mm tall Light Pink Merino with copper bar pulls</li>
+          <li><strong>Wardrobe:</strong> 4 bays, 18 internal drawers, 4 upper 1-ft lofts</li>
+          <li><strong>Interactive:</strong> Wardrobe doors, drawers, bed lift, and dresser storage</li>
+        </ul>
+        <div class="card-actions">
+          <a href="master-bedroom.html" class="btn-launch">&#128065;&#65039; Launch 3D Master Bedroom</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Bedroom 1 (Kids Room) Card -->
+    <article class="room-card">
+      <div class="room-card-header">
+        <span class="room-card-badge badge-bed1">Study 03 &bull; Kids Suite</span>
+        <h3>Bedroom 1 (Kids Room)</h3>
+        <div class="room-dims">3,630 mm Width x 3,560 mm Length x 2,794 mm Height</div>
+      </div>
+      <div class="room-card-body">
+        <p>
+          Fitted kids room featuring adult-operated Murphy wall-bed cabinet, integrated study desk with upper tinted storage, window daybed with deep drawers, concealed mirror storage, and 2-door W1-style fitted wardrobe.
+        </p>
+        <ul class="feature-list">
+          <li><strong>Murphy Wall Bed:</strong> 1,472 x 2,100 mm fold-away counterbalanced bed</li>
+          <li><strong>Window Seat:</strong> 1,800 mm bench with storage overlooking east</li>
+          <li><strong>Study Station:</strong> 780 mm desk with ergonomic 700 mm knee clearance</li>
+          <li><strong>Full Lofts:</strong> Continuous 304.8 mm storage lofts across window run</li>
+          <li><strong>Interactive:</strong> Murphy bed fold toggle, window seat &amp; mirror drawers</li>
+        </ul>
+        <div class="card-actions">
+          <a href="bedroom-1.html" class="btn-launch">&#128065;&#65039; Launch 3D Bedroom 1</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Bedroom 2 (Guest Room) Card -->
+    <article class="room-card">
+      <div class="room-card-header">
+        <span class="room-card-badge badge-bed2">Study 03 &bull; Guest Suite</span>
+        <h3>Bedroom 2 (Guest Room)</h3>
+        <div class="room-dims">3,300 mm Width x 3,560 mm Length &bull; 5,185 mm Overall Lower Span</div>
+      </div>
+      <div class="room-card-body">
+        <p>
+          Dedicated guest room with full-depth 7-ft (2,133.6 mm) 3-bay fitted wardrobe along south wall, entrance-facing used-clothes side storage, queen hydraulic storage bed, and north-facing window framing.
+        </p>
+        <ul class="feature-list">
+          <li><strong>7-ft Wardrobe:</strong> 3 bays with 4 / 5 / 4 drawer configuration</li>
+          <li><strong>Side Access:</strong> Hidden used-clothes sorting cabinet facing entrance</li>
+          <li><strong>Storage Bed:</strong> 1,630 x 2,100 mm frame with 890 mm aisle to wardrobe</li>
+          <li><strong>En-Suite:</strong> Coordinates directly with adjacent 1,875 x 2,855 mm toilet</li>
+          <li><strong>Interactive:</strong> Wardrobe doors &amp; drawers, bed storage lift</li>
+        </ul>
+        <div class="card-actions">
+          <a href="bedroom-2.html" class="btn-launch">&#128065;&#65039; Launch 3D Bedroom 2</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Source Review Card -->
+    <article class="room-card">
+      <div class="room-card-header">
+        <span class="room-card-badge badge-doc">CAD Documentation</span>
+        <h3>Source CAD &amp; PDF Reviewer</h3>
+        <div class="room-dims">In-browser Vector PDF Viewer with High-Res Extraction</div>
+      </div>
+      <div class="room-card-body">
+        <p>
+          Client-side PDF inspection tool using PDF.js to verify all millimeter floor plan callouts, architectural grids, door swings, and manufacturing cut-lists directly from the source engineering blueprints.
+        </p>
+        <ul class="feature-list">
+          <li><strong>Client-Side:</strong> Private in-browser rendering with zero server uploads</li>
+          <li><strong>High Zoom:</strong> Up to 300% crisp vector rasterization</li>
+          <li><strong>Text Extraction:</strong> Inspect embedded CAD dimension text</li>
+          <li><strong>Download:</strong> Export full-resolution page PNGs</li>
+          <li><strong>Source:</strong> floor plan measurement.pdf</li>
+        </ul>
+        <div class="card-actions">
+          <a href="source-review.html" class="btn-launch">&#128196; Open PDF Viewer</a>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+  <section class="specs-table-card">
+    <h2 class="section-title" style="margin-top:0">Official Floor Plan Dimension Schedule</h2>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Room / Space</th>
+            <th>CAD Dimensions (mm)</th>
+            <th>Finished Ceiling (mm)</th>
+            <th>Primary Clearances &amp; Key Furniture</th>
+            <th>Interactive 3D Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Living &amp; Dining Hall</strong></td>
+            <td>8,975 x 3,300 mm<br>(Living: 4,440 x 3,300 | Dining: 4,535 x 3,300)</td>
+            <td>2,692.4 mm (Slab 2,794)</td>
+            <td>2,100 mm clear central aisle; 1,150 mm foyer swing; 1,450 mm dining circulation. TV capsule, fluted vitrine, sofa-cum-bed, 600 mm mandir, sitout balcony.</td>
+            <td><strong style="color:var(--accent)">Verified Study 04</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Parallel Kitchen</strong></td>
+            <td>2,630 x 3,525 mm</td>
+            <td>2,692.4 mm (Slab 2,794)</td>
+            <td>1,230 mm clear cooking corridor; 700 mm counter depth; 15 tandem drawers; Bosch oven tower; A1 shutter; P1/P2 rear elevator cabinets.</td>
+            <td><strong style="color:var(--accent)">Verified Revision 04</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Master Bedroom</strong></td>
+            <td>4,150 x 4,350 mm</td>
+            <td>2,692.4 mm (Slab 2,794)</td>
+            <td>3,400 mm usable East wall; 640 mm wardrobe-to-bed aisle. 4-inch stadium bed rest, 7 arched niches, 2,600 mm Pink Merino dresser, 4-bay wardrobe.</td>
+            <td><strong style="color:var(--accent)">Verified Revision 10</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Bedroom 1 (Kids)</strong></td>
+            <td>3,630 x 3,560 mm</td>
+            <td>2,794 mm (Cabinet top)</td>
+            <td>Murphy fold-away bed, 1,800 mm east window seat with drawers, 780 mm study desk with overhead tinted storage, 2-bay fitted wardrobe.</td>
+            <td><strong style="color:var(--accent)">Verified Study 03</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Bedroom 2 (Guest)</strong></td>
+            <td>3,300 x 3,560 mm<br>(5,185 mm lower corridor)</td>
+            <td>2,794 mm (Cabinet top)</td>
+            <td>890 mm aisle between queen storage bed and wardrobe; 2,133.6 mm (7-ft) 3-bay wardrobe with entrance-facing used-clothes cabinet.</td>
+            <td><strong style="color:var(--accent)">Verified Study 03</strong></td>
+          </tr>
+          <tr>
+            <td><strong>Sitout Balcony</strong></td>
+            <td>1,525 x 3,300 mm</td>
+            <td>2,794 mm Slab</td>
+            <td>SLD1 2,400 x 2,100 mm sliding glass doors, 1,100 mm glass &amp; metal safety parapet railing, teak decking, sheer drapes.</td>
+            <td><strong style="color:var(--accent)">Integrated in Living</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+</main>
+
+<footer class="portal-footer">
+  <div>
+    <strong>Sarang House Design</strong> &bull; Complete 3BHK Digital Twin Coordination
+  </div>
+  <div>
+    <a href="https://github.com/arjunsedani/saranghousedesign" target="_blank" rel="noopener">GitHub Repository</a> &bull;
+    <a href="floor%20plan%20measurement.pdf">Source Floor Plan PDF</a> &bull;
+    <a href="complete_3bhk_master_manufacturing_docket-wardrobe-bed-baywindow-etc.pdf">Manufacturing Docket</a>
+  </div>
+</footer>
+
+</body>
+</html>
