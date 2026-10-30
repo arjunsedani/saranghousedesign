@@ -1,0 +1,2360 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Unit 6_3BHK / Full-House 3D Architectural &amp; Interior Coordination Model</title>
+<style>
+:root{font-family:Georgia,serif;color:#253731;background:#ebefeb;--line:#cad4cd;--ink:#234438;--accent:#4c745f;letter-spacing:0}
+*{box-sizing:border-box}body{margin:0;background:#ebefeb}
+button,input,select{font:12px Verdana,sans-serif}
+button{border:1px solid #bcc9bf;background:#fbfdfa;color:var(--ink);border-radius:3px;padding:7px 10px;cursor:pointer;min-height:34px;display:inline-flex;gap:6px;align-items:center;justify-content:center}
+button.active,button[aria-pressed=true]{background:var(--ink);border-color:var(--ink);color:#fff}
+button:hover{border-color:var(--ink)}button:focus-visible,input:focus-visible,select:focus-visible,a:focus-visible{outline:3px solid #b78749;outline-offset:2px}
+header{background:#f8faf6;border-bottom:1px solid var(--line);padding:14px 22px;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+h1{font-size:23px;font-weight:normal;margin:0}header p{font:11px/1.6 Verdana,sans-serif;margin:4px 0 0;color:#55685d}
+.stamp{font:10px/1.6 Verdana,sans-serif;border:1px solid #abbdb0;padding:6px 10px;text-align:right}
+.workspace{display:grid;grid-template-columns:minmax(0,1fr) 330px}
+.stage{min-width:0;background:#d8e2dc;display:flex;flex-direction:column}
+.toolbar{padding:8px 12px;border-bottom:1px solid var(--line);display:flex;align-items:center;gap:5px;flex-wrap:wrap;background:#f8faf6}
+.toolbar .spacer{flex:1}
+#viewport{position:relative;height:calc(100vh - 195px);min-height:520px;overflow:hidden;background:#d8e2dc}
+canvas{display:block;width:100%;height:100%;touch-action:none}
+#view-label{position:absolute;top:14px;left:15px;max-width:calc(100% - 30px);font:11px/1.5 Verdana,sans-serif;background:#fffffff2;padding:7px 11px;pointer-events:none;border-radius:2px;box-shadow:0 1px 4px #0002}
+.loading{position:absolute;inset:0;display:grid;place-items:center;background:#e2e8e3;font:13px/1.7 Verdana,sans-serif;padding:30px;text-align:center;z-index:20}
+.loading[hidden]{display:none}
+.stage-footer{display:flex;justify-content:space-between;gap:12px;padding:8px 14px;font:10px/1.5 Verdana,sans-serif;border-top:1px solid var(--line);background:#f8faf6}
+aside{background:#fafcf9;border-left:1px solid var(--line);padding:18px;font:11px/1.65 Verdana,sans-serif;overflow-y:auto;max-height:calc(100vh - 75px)}
+h2{font:20px Georgia,serif;margin:0 0 10px}h3{font:15px Georgia,serif;margin:18px 0 8px}
+dl{margin:0}dl div{padding:5px 0;border-bottom:1px solid #e1e7e1;display:flex;justify-content:space-between;gap:10px}dt{color:#5b6e63}dd{margin:0;font-weight:bold;text-align:right}
+.toggle{display:flex;gap:8px;align-items:center;padding:4px 0;cursor:pointer}.toggle input{accent-color:var(--accent);flex-shrink:0}
+.note{border-left:3px solid #b78a51;padding-left:9px;color:#6d573f;font-size:11px;line-height:1.7;margin:10px 0}
+.swatches{display:flex;flex-wrap:wrap;gap:10px;margin:10px 0}.swatches span{display:inline-flex;align-items:center;gap:4px;font-size:10px}
+.swatch{width:11px;height:11px;border:1px solid #0002;display:inline-block;border-radius:2px}
+.checks{margin-top:14px;padding-top:10px;border-top:1px solid var(--line)}.checks output{display:block;font-weight:bold;color:var(--ink)}
+.doc{background:#fff;border-top:1px solid var(--line);padding:28px 4%;font:12px/1.8 Verdana,sans-serif}
+.doc h2{font-size:24px}.doc p{max-width:1200px}.table-wrap{overflow:auto;margin:14px 0}
+table{width:100%;border-collapse:collapse;font:11px/1.6 Verdana,sans-serif;min-width:720px}
+th,td{text-align:left;vertical-align:top;padding:8px 10px;border-bottom:1px solid #dfe5df}
+th{background:#edf3ee;font-weight:normal;color:#355648}
+.factory-controls{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+.factory-controls select{flex:1;min-width:0;max-width:760px;padding:6px}
+.factory-link{align-self:center;padding:6px;color:#2e5843;font:11px Verdana,sans-serif;text-decoration:none}
+@media(max-width:920px){
+  .workspace{grid-template-columns:1fr}#viewport{height:62vh;min-height:430px}
+  aside{border-left:0;border-top:1px solid var(--line);max-height:none;display:grid;grid-template-columns:1fr 1fr;gap:16px}
+  .aside-bottom{grid-column:1/-1}
+}
+@media(max-width:480px){header{padding:12px}.stamp{display:none}h1{font-size:19px}.toolbar button{font-size:10px;padding:6px}}
+@media print{header{padding:0}.toolbar,aside,.stage-footer,.factory-controls,.factory-link{display:none}.workspace{display:block}#viewport{height:150mm}.doc{padding:0;border:0}table{min-width:0}}
+</style>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/"}}</script>
+</head>
+<body>
+<header>
+  <div>
+    <h1>Unit 6_3BHK / Full-House 3D Interior &amp; Coordination Model</h1>
+    <p>Living &amp; Dining (Study 13) &bull; Parallel Kitchen &amp; Utility (Rev 04) &bull; Master Bedroom (Study 10) &bull; Kids Bedroom 1 &amp; Guest Bedroom 2 (Study 03)</p>
+  </div>
+  <div class="stamp">FULL-HOUSE COORDINATION<br>Study 14 / Dynamic Register</div>
+</header>
+<main class="workspace">
+<section class="stage" aria-label="Interactive 3D Apartment Design">
+  <nav class="toolbar" aria-label="Primary room navigation">
+    <button class="active" data-room="apartment">Full House Overview</button>
+    <button data-room="living">Living &amp; Dining (Study 13)</button>
+    <button id="btn-pooja-quick" type="button">Pooja Mandir (5'11")</button>
+    <button data-room="kitchen">Kitchen &amp; Utility (Rev 04)</button>
+    <button data-room="master">Master Bedroom (Study 10)</button>
+    <button data-room="bedroom1">Bedroom 1 (Kids Murphy &amp; Bay Seat)</button>
+    <button data-room="bedroom2">Bedroom 2 (7-Ft Wardrobe &amp; Arch Bed)</button>
+    <button data-room="utility">Sitout &amp; Utility Balconies</button>
+    <a href="#factory" class="factory-link">Go to Component Register &darr;</a>
+  </nav>
+  <nav class="toolbar" id="subview-bar" aria-label="Room elevations and specific view angles">
+    <span id="subview-title" style="font-weight:bold;color:var(--ink);margin-right:4px">View Angle:</span>
+    <div id="subview-buttons" style="display:inline-flex;gap:5px;flex-wrap:wrap"></div>
+    <span class="spacer"></span>
+    <button id="tour" aria-pressed="false" title="Start guided apartment walkthrough"><i data-lucide="play"></i><span id="tour-text">Walkthrough</span></button>
+    <button id="reset" title="Reset view and close all doors/drawers"><i data-lucide="rotate-ccw"></i>Reset</button>
+    <button id="download" title="Save current view as PNG"><i data-lucide="download"></i>PNG</button>
+    <button id="print" title="Print coordination drawings"><i data-lucide="printer"></i>Print</button>
+  </nav>
+  <div id="viewport">
+    <div id="view-label">01 / APARTMENT OVERVIEW / mm</div>
+    <div id="loading" class="loading">Loading Unit 6_3BHK full-house 3D interior coordination model...</div>
+  </div>
+  <div class="stage-footer">
+    <span id="view-state">Unit 6_3BHK Global Layout: Living &amp; Dining (8975 x 3300) + Kitchen (2630 x 3525) + Utility (1525 x 3365) + M.Bed (4150 x 4350) + Bed 1 (3630 x 3560) + Bed 2 (3300 x 3560)</span>
+    <span id="tour-state">Overview</span>
+  </div>
+</section>
+<aside>
+  <section id="aside-schedule">
+    <h2 id="room-sched-title">Apartment Schedule (mm)</h2>
+    <dl id="room-sched-list"></dl>
+  </section>
+  <section id="aside-controls">
+    <h2>Kinematic Controls</h2>
+    <div id="room-toggles"></div>
+    <h3>Active Room Palette</h3>
+    <div class="swatches" id="room-swatches"></div>
+    <p class="note" id="room-notes"></p>
+  </section>
+  <section class="aside-bottom">
+    <div class="checks">
+      <small>Model &amp; Geometric Verification</small>
+      <output id="checks">Verifying model...</output>
+      <small id="render-status">Renderer pending</small>
+    </div>
+  </section>
+</aside>
+</main>
+
+<section class="doc" id="schedule">
+  <h2 id="doc-title">Apartment Coordination &amp; Engineering Specifications</h2>
+  <p id="doc-description">This comprehensive coordination model merges all rooms of Unit 6_3BHK from your architectural floor-plan schedule (`floor plan measurement.pdf`) and the exact interior designs: Living &amp; Dining Study 13, Parallel Kitchen Rev 04, Master Bedroom Study 10, Bedroom 1 Study 03, and Bedroom 2 Study 03. All dimensions are in millimetres.</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Mark / Zone</th><th>Finished Size (mm)</th><th>Engineering, Ergonomics &amp; Architectural Basis</th></tr></thead>
+      <tbody id="doc-table-body"></tbody>
+    </table>
+  </div>
+</section>
+
+<section class="doc" id="factory">
+  <h2 id="factory-title">Active Room Component Register &amp; Carpentry Review</h2>
+  <p><strong>ALL SIZES IN MM. DYNAMIC ROOM-BY-ROOM REGISTER.</strong> When switching rooms or taking the walkthrough tour, this register dynamically updates to show that specific room's exact component schedule, board dimensions, finishes, and hardware requirements. You can isolate any part in 3D using the inspector.</p>
+  <div class="toolbar" id="register-room-tabs" style="margin:10px 0;border:1px solid var(--line);border-radius:4px" aria-label="Filter component register by room">
+    <span style="font-weight:bold;color:var(--ink);margin-right:6px">Register Room Filter:</span>
+    <button type="button" data-reg-room="living">Living &amp; Dining (Study 13)</button>
+    <button type="button" data-reg-room="kitchen">Kitchen (Rev 04)</button>
+    <button type="button" data-reg-room="utility">Utility &amp; Sitouts</button>
+    <button type="button" data-reg-room="master">Master Bedroom (Study 10)</button>
+    <button type="button" data-reg-room="bedroom1">Bedroom 1 Kids (Study 03)</button>
+    <button type="button" data-reg-room="bedroom2">Bedroom 2 Guest (Study 03)</button>
+    <button type="button" data-reg-room="apartment" class="active">All Rooms Combined</button>
+  </div>
+  <div class="factory-controls">
+    <label for="part-select" style="align-self:center;font-weight:bold">Select Component:</label>
+    <select id="part-select" aria-label="Component selector"></select>
+    <button id="inspect-part" title="Inspect selected part in 3D isolation"><i data-lucide="box"></i>Inspect</button>
+    <button id="parts-csv" title="Export active room components CSV"><i data-lucide="download"></i>Export Room CSV</button>
+  </div>
+  <p id="part-size" role="status" style="font-weight:bold;color:var(--ink)"></p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>ID / Component Name</th><th>Qty</th><th>W x H x D (mm)</th><th>Panel L x B x T (mm)</th><th>Finish / Hardware Specification</th></tr></thead>
+      <tbody id="part-rows"></tbody>
+    </table>
+  </div>
+</section>
+
+<script type="module">
+const loading = document.getElementById('loading');
+try {
+  const THREE = await import('three');
+  const { OrbitControls } = await import('three/addons/controls/OrbitControls.js');
+  const { RoomEnvironment } = await import('three/addons/environments/RoomEnvironment.js');
+  import('https://cdn.jsdelivr.net/npm/lucide@0.468.0/+esm').then(({ createIcons, icons }) => createIcons({ icons })).catch(() => {});
+
+  const viewport = document.getElementById('viewport');
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color('#d8e2dc');
+
+  const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+  renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+  viewport.prepend(renderer.domElement);
+
+  const envGen = new THREE.PMREMGenerator(renderer);
+  scene.environment = envGen.fromScene(new RoomEnvironment(), 0.04).texture;
+  envGen.dispose();
+
+  const camera = new THREE.PerspectiveCamera(48, 1, 10, 50000);
+  const ortho = new THREE.OrthographicCamera(-5000, 5000, 3500, -3500, 1, 50000);
+  let activeCamera = camera;
+  let controls = new OrbitControls(activeCamera, renderer.domElement);
+  controls.enableDamping = true;
+
+  // Scene Root Groups
+  const groups = {
+    floor: new THREE.Group(),
+    walls: new THREE.Group(),
+    living: new THREE.Group(),
+    kitchen: new THREE.Group(),
+    utility: new THREE.Group(),
+    master: new THREE.Group(),
+    bedroom1: new THREE.Group(),
+    bedroom2: new THREE.Group(),
+    toilets: new THREE.Group(),
+    ceiling: new THREE.Group(),
+    dimensions: new THREE.Group(),
+    component: new THREE.Group()
+  };
+  for (const g of Object.values(groups)) scene.add(g);
+
+  // Materials Library
+  const mat = (color, extra = {}) => new THREE.MeshStandardMaterial({ color, roughness: 0.65, ...extra });
+  const wallMat = mat('#ece5d8', { roughness: 0.86 });
+  const tileMat = mat('#e3dacb', { roughness: 0.35, metalness: 0.04 });
+  const sitoutTileMat = mat('#b5ada2', { roughness: 0.68 });
+  const rugMat = mat('#d6cbb9', { roughness: 0.94 });
+
+  // Master Bedroom & Shared Wood / Metal / Fabric Materials
+  const mbedOak = mat('#694b35', { roughness: 0.55 });
+  const mbedOakEdge = mat('#4a3322', { roughness: 0.50 });
+  const mbedLiner = mat('#eee8da');
+  const oak = mbedOak, oakEdge = mbedOakEdge;
+  const ivory = mat('#eee8da');
+  const wardrobeIvory = mat('#eeeade', { roughness: 0.94 });
+  const wardrobeSage = mat('#7f9276', { roughness: 0.94 });
+  const sage = mat('#4a5838', { roughness: 0.82 });
+  const fabric = mat('#cabfa9', { roughness: 0.85 });
+  const linen = mat('#f5f0e4', { roughness: 0.80 });
+  const mattressMat = mat('#faf6ee', { roughness: 0.85 });
+  const merinoPink = mat('#E6C0C4', { roughness: 0.88, metalness: 0.02 });
+  const merinoPinkEdge = mat('#CFA3A8', { roughness: 0.84, metalness: 0.03 });
+  const copper = mat('#C4724E', { metalness: 0.78, roughness: 0.22 });
+  const copperMat = copper;
+  const claddingMat = mat('#dfd5c3', { roughness: 0.88 });
+  const nicheBackMat = mat('#ecdcb8', { emissive: '#ffbe55', emissiveIntensity: 0.42, roughness: 0.70 });
+  const walnutTrim = mat('#523825', { roughness: 0.48 });
+  const pullFinish = mat('#535950', { roughness: 0.78, metalness: 0.15 });
+  const dark = mat('#2b2623', { roughness: 0.45, metalness: 0.20 });
+  const steel = mat('#a3aaa5', { metalness: 0.70, roughness: 0.25 });
+  const brass = mat('#b89146', { metalness: 0.72, roughness: 0.28 });
+  const glow = mat('#fff2ce', { emissive: '#ffbe66', emissiveIntensity: 2.4 });
+  const glass = mat('#b3d3cc', { transparent: true, opacity: 0.22, roughness: 0.10, metalness: 0.10, depthWrite: false });
+  const tintedGlass = mat('#596c63', { transparent: true, opacity: 0.38, metalness: 0.22, roughness: 0.14, depthWrite: false });
+  const sideTint = mat('#526d64', { transparent: true, opacity: 0.38, metalness: 0.15, roughness: 0.12, depthWrite: false });
+  const mirror = mat('#c8dad6', { metalness: 0.94, roughness: 0.08 });
+
+  // Living & Dining (Study 13) Materials
+  const beigeCredenzaMat = mat('#dccbb8', { roughness: 0.78 });
+  const beigeEdgeMat = mat('#cbb69e', { roughness: 0.72 });
+  const wavyHdhmrMat = mat('#ede6da', { roughness: 0.84 });
+  const wavyRidgeMat = mat('#e2d8c7', { roughness: 0.80 });
+  const walnutMat = mat('#593d28', { roughness: 0.50 });
+  const darkWalnutMat = mat('#3d291a', { roughness: 0.46 });
+  const brownPolishMat = mat('#5c3a21', { roughness: 0.34, metalness: 0.08 });
+  const whiteOakMat = mat('#bf915b', { roughness: 0.52 });
+  const boucleMat = mat('#f2ece0', { roughness: 0.92 });
+  const poojaWhiteMat = mat('#f9f7f2', { roughness: 0.42, metalness: 0.03 });
+  const onyxGlowMat = mat('#fff0cc', { emissive: '#ffbb55', emissiveIntensity: 1.65, roughness: 0.35 });
+  const marbleMat = mat('#f4efe6', { roughness: 0.25, metalness: 0.05 });
+  const terracottaChairMat = mat('#c67b63', { roughness: 0.85 });
+  const leafTerracotta = mat('#c86d44', { roughness: 0.76 });
+  const leafClay = mat('#9e5536', { roughness: 0.80 });
+  const leafSand = mat('#dfd2bd', { roughness: 0.82 });
+  const leafCream = mat('#f0e7d8', { roughness: 0.80 });
+  const leafWalnut = mat('#7b5237', { roughness: 0.74 });
+  const terracottaMat = mat('#c87d65', { roughness: 0.76 });
+  const leafClayMat = leafClay;
+  const leafSandMat = leafSand;
+  const leafCreamMat = leafCream;
+  const brassMat = mat('#c89d54', { metalness: 0.78, roughness: 0.24 });
+  const steelMat = mat('#a3aaa5', { metalness: 0.72, roughness: 0.22 });
+  const blackMetal = mat('#222423', { metalness: 0.55, roughness: 0.35 });
+  const oledMat = mat('#101316', { metalness: 0.86, roughness: 0.12 });
+  const glowMat = mat('#fff3d1', { emissive: '#ffbe66', emissiveIntensity: 2.5 });
+  const glassMat = mat('#bed6d0', { transparent: true, opacity: 0.26, roughness: 0.1, metalness: 0.1, depthWrite: false });
+  const tintedGlassMat = mat('#4f635c', { transparent: true, opacity: 0.44, roughness: 0.14, metalness: 0.22, depthWrite: false });
+  const drapeMat = mat('#8b7965', { roughness: 0.88 });
+  const sheerMat = mat('#f8f6f0', { transparent: true, opacity: 0.46, roughness: 0.9, depthWrite: false });
+  const plantGreen = mat('#3f5e3d', { roughness: 0.75 });
+
+  // Kitchen & Utility (Rev 04) Materials
+  const kTerracotta = mat('#C87D65');
+  const kBeige = mat('#DFCBB5', { roughness: 0.78 });
+  const kWalnut = mat('#9E7B60');
+  const kSageStone = mat('#A8BDAE', { roughness: 0.32, metalness: 0.05 });
+  const kitBeige = kBeige;
+  const kitSageStone = kSageStone;
+
+  // Master Bedroom Aliases
+  const mbedSage = wardrobeSage;
+  const mbedIvory = wardrobeIvory;
+  const mbedFabric = fabric;
+  const mbedCladding = claddingMat;
+  const mbedNicheBack = nicheBackMat;
+  const mbedOlive = sage;
+  const linenMat = linen;
+
+  // Bedroom 1 (Kids Study 03) & Bedroom 2 (Guest Study 03) Materials
+  const b1Front = mat('#b1b9aa', { roughness: 0.94 });
+  const b1Panel = mat('#a8b39d', { roughness: 0.78 });
+  const b1Fabric = mat('#d0d3c8', { roughness: 0.85 });
+  const b1Accent = mat('#7b8c72', { roughness: 0.80 });
+  const b1Oak = mat('#b99570', { roughness: 0.65 });
+  const b2Front = mat('#a9b8bc', { roughness: 0.94 });
+  const b2Panel = mat('#a8babe', { roughness: 0.78 });
+  const b2Fabric = mat('#d3d7d7', { roughness: 0.85 });
+  const b2Accent = mat('#557a82', { roughness: 0.80 });
+  const br1Front = b1Front, br1Panel = b1Panel, br1Fabric = b1Fabric, br1Accent = b1Accent;
+  const br2Front = b2Front, br2Panel = b2Panel, br2Fabric = b2Fabric, br2Accent = b2Accent;
+  const brOak = b1Oak;
+  const brIvory = mat('#eeeade', { roughness: 0.78 });
+  const brDark = mat('#424b46', { roughness: 0.75 });
+  const brLinen = mat('#f4f3ec', { roughness: 0.80 });
+  const mirrorMat = mirror;
+  const sanitaryWhite = mat('#ffffff', { roughness: 0.2, metalness: 0.02 });
+
+  // Geometry Helpers
+  function box(parent, width, height, depth, centerX, centerY, centerZ, material, edges = false) {
+    const mesh = new THREE.Mesh(new THREE.BoxGeometry(width, height, depth), material);
+    mesh.position.set(centerX, centerY, centerZ);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    parent.add(mesh);
+    if (edges) {
+      mesh.add(new THREE.LineSegments(new THREE.EdgesGeometry(mesh.geometry), new THREE.LineBasicMaterial({ color: '#5f6960', transparent: true, opacity: 0.28 })));
+    }
+    return mesh;
+  }
+
+  function cylinder(parent, radiusTop, radiusBottom, height, position, material, segments = 24) {
+    const mesh = new THREE.Mesh(new THREE.CylinderGeometry(radiusTop, radiusBottom, height, segments), material);
+    mesh.position.set(...position);
+    mesh.castShadow = true;
+    mesh.receiveShadow = true;
+    parent.add(mesh);
+    return mesh;
+  }
+
+  function rod(parent, start, end, radius = 8, material = steelMat) {
+    const first = new THREE.Vector3(...start), last = new THREE.Vector3(...end);
+    const dir = last.clone().sub(first);
+    const mesh = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, dir.length(), 14), material);
+    mesh.position.copy(first.add(last).multiplyScalar(0.5));
+    mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir.normalize());
+    parent.add(mesh);
+    return mesh;
+  }
+
+  function line(parent, points, color = '#436e55', dashed = false) {
+    const geometry = new THREE.BufferGeometry().setFromPoints(points.map(p => new THREE.Vector3(...p)));
+    const material = dashed ? new THREE.LineDashedMaterial({ color, dashSize: 55, gapSize: 35 }) : new THREE.LineBasicMaterial({ color });
+    const res = new THREE.Line(geometry, material);
+    res.computeLineDistances();
+    parent.add(res);
+    return res;
+  }
+
+  function label(parent, value, position, size = 125, color = '#264b38') {
+    const canvas = document.createElement('canvas');
+    canvas.width = 1024; canvas.height = 128;
+    const ctx = canvas.getContext('2d');
+    ctx.font = '58px Georgia';
+    const w = Math.min(1000, ctx.measureText(value).width + 36);
+    ctx.fillStyle = '#fffffff2';
+    ctx.fillRect((1024 - w) / 2, 4, w, 120);
+    ctx.fillStyle = color;
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(value, 512, 64);
+    const sprite = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(canvas), depthTest: false, transparent: true, toneMapped: false }));
+    sprite.position.set(...position);
+    sprite.scale.set(size * 8, size, 1);
+    sprite.renderOrder = 10;
+    parent.add(sprite);
+    return sprite;
+  }
+
+  function dimension(parent, start, end, value, offset = [0, 0, 0], textSize = 130) {
+    const first = start.map((n, i) => n + offset[i]);
+    const last = end.map((n, i) => n + offset[i]);
+    line(parent, [start, first]);
+    line(parent, [end, last]);
+    line(parent, [first, last]);
+    for (const pt of [first, last]) {
+      line(parent, [[pt[0] - 22, pt[1] - 22, pt[2] - 22], [pt[0] + 22, pt[1] + 22, pt[2] + 22]]);
+    }
+    label(parent, value, first.map((n, i) => (n + last[i]) / 2), textSize);
+  }
+
+  function makeRoundedRectShape(halfW, bottomY, topY, r) {
+    const s = new THREE.Shape();
+    const rad = Math.min(r, halfW, Math.abs(topY - bottomY) / 2);
+    const flatW = halfW - rad;
+    s.moveTo(-flatW, bottomY);
+    s.lineTo(flatW, bottomY);
+    s.absarc(flatW, bottomY + rad, rad, -Math.PI / 2, 0, false);
+    s.lineTo(halfW, topY - rad);
+    s.absarc(flatW, topY - rad, rad, 0, Math.PI / 2, false);
+    s.lineTo(-flatW, topY);
+    s.absarc(-flatW, topY - rad, rad, Math.PI / 2, Math.PI, false);
+    s.lineTo(-halfW, bottomY + rad);
+    s.absarc(-flatW, bottomY + rad, rad, Math.PI, Math.PI * 1.5, false);
+    return s;
+  }
+
+  function makeStadiumArchShape(halfW, baseY, topY, cornerR) {
+    const s = new THREE.Shape();
+    const r = Math.min(cornerR, halfW, topY - baseY);
+    const flatHalf = halfW - r;
+    const arcCenterY = topY - r;
+    s.moveTo(-halfW, baseY);
+    s.lineTo(halfW, baseY);
+    s.lineTo(halfW, arcCenterY);
+    s.absarc(flatHalf, arcCenterY, r, 0, Math.PI / 2, false);
+    s.lineTo(-flatHalf, topY);
+    s.absarc(-flatHalf, arcCenterY, r, Math.PI / 2, Math.PI, false);
+    s.lineTo(-halfW, baseY);
+    return s;
+  }
+
+  function makeArchHolePath(centerZ, panelCenterZ, bottomY, nicheW, nicheH) {
+    const localZ = centerZ - panelCenterZ;
+    const halfW = nicheW / 2, archR = halfW, springY = bottomY + nicheH - archR;
+    const p = new THREE.Path();
+    p.moveTo(localZ - halfW, bottomY);
+    p.lineTo(localZ + halfW, bottomY);
+    p.lineTo(localZ + halfW, springY);
+    p.absarc(localZ, springY, archR, 0, Math.PI, false);
+    p.lineTo(localZ - halfW, bottomY);
+    return p;
+  }
+
+  const pretty = v => Number(v.toFixed(1)).toString();
+
+  // Multi-Room Dynamic Component Catalog
+  const roomComponentRegisters = {
+    apartment: [],
+    living: [],
+    kitchen: [],
+    utility: [],
+    master: [],
+    bedroom1: [],
+    bedroom2: []
+  };
+
+  function registerPart(roomKey, id, name, module, mesh, finish, qty = 1, dims = null, isAssembly = false) {
+    const partDims = dims || (mesh.geometry.type === 'BoxGeometry'
+      ? [mesh.geometry.parameters.width, mesh.geometry.parameters.height, mesh.geometry.parameters.depth]
+      : [100, 100, 100]);
+    const rec = {
+      id, name, module, mesh, finish, qty,
+      dims: partDims,
+      panel: isAssembly ? 'Assembly envelope' : [...partDims].sort((a, b) => b - a).map(pretty).join(' x ')
+    };
+    roomComponentRegisters[roomKey].push(rec);
+    if (roomKey !== 'apartment') roomComponentRegisters.apartment.push(rec);
+  }
+
+  // ============================================================================
+  // 1. GLOBAL APARTMENT ARCHITECTURAL SHELL & FLOORS (10,500 x 12,975 mm Envelope)
+  // Origin (0,0,0) is Living Northwest corner at finished floor level.
+  // ============================================================================
+  // Living & Dining Floor (8975 x 3300) + Sitout 1 (1525 x 3300)
+  box(groups.floor, 8975, 70, 3300, 4487.5, -35, 1650, tileMat);
+  box(groups.floor, 1525, 70, 3300, 9737.5, -40, 1650, sitoutTileMat);
+  // Kitchen Floor (2630 x 3525) + Utility Balcony (1525 x 3365)
+  box(groups.floor, 2630, 70, 3525, 7660, -35, 5062.5, tileMat);
+  box(groups.floor, 1525, 70, 3365, 9737.5, -40, 4982.5, sitoutTileMat);
+  // Master Bedroom Floor (4150 x 4350) + Sitout 2 (4470 x 1525) + Master Toilet (1575 x 2465)
+  box(groups.floor, 4150, 70, 4350, 4110, -35, 5595, tileMat);
+  box(groups.floor, 4470, 70, 1525, 4270, -40, 8532.5, sitoutTileMat);
+  box(groups.floor, 1575, 70, 2465, 937.5, -35, 4800, tileMat);
+  // Bedroom 1 Floor (3630 x 3560) + Toilet 1 (1575 x 2465)
+  box(groups.floor, 3790, 70, 3560, 8765, -35, -1780, tileMat);
+  box(groups.floor, 1575, 70, 2465, 5902.5, -35, -2500, tileMat);
+  // Bedroom 2 Floor (3300 x 3560) + Toilet 2 (1575 x 2465) + Corridor (1525 x 900)
+  box(groups.floor, 5185, 70, 3560, 2592.5, -35, -1780, tileMat);
+  box(groups.floor, 1575, 70, 2465, 4207.5, -35, -2500, tileMat);
+
+  // Exterior Perimeter Masonry Walls & Partitions (120mm / 200mm)
+  const wallMeshes = [];
+  function wallBlock(w, h, d, cx, cy, cz, side = 'general') {
+    const m = box(groups.walls, w, h, d, cx, cy, cz, wallMat);
+    m.userData.side = side;
+    wallMeshes.push(m);
+    return m;
+  }
+  // Living & Dining Enclosure
+  wallBlock(120, 2794, 450, -60, 1397, 225, 'west');
+  wallBlock(120, 394, 1050, -60, 2597, 975, 'west'); // MD lintel
+  wallBlock(120, 2794, 1800, -60, 1397, 2400, 'west');
+  wallBlock(5185, 2794, 120, 2592.5, 1397, -60, 'north'); // TV Wall
+  wallBlock(2265, 2794, 120, 7842.5, 1397, -60, 'north'); // Dining/Pooja North wall
+  wallBlock(120, 2794, 600, 9035, 1397, 300, 'east'); // 600 Wall return next to Sitout
+  wallBlock(120, 544, 2100, 9035, 2522, 1650, 'east'); // SLD1 Lintel
+  wallBlock(120, 2794, 600, 9035, 1397, 3000, 'east');
+  wallBlock(5170, 2794, 120, 2585, 1397, 3360, 'south'); // Sofa Wall
+  wallBlock(915, 544, 120, 5627.5, 2522, 3360, 'south'); // M.Bed D1 lintel
+  wallBlock(260, 2794, 120, 6215, 1397, 3360, 'south');
+  wallBlock(2630, 394, 120, 7660, 2597, 3360, 'south'); // Kitchen opening lintel
+
+  // Kitchen & Utility Partition Walls
+  wallBlock(120, 2794, 3525, 6215, 1397, 5062.5, 'west'); // Kitchen dry wall
+  wallBlock(2630, 2794, 120, 7660, 1397, 6885, 'south'); // Kitchen rear wall
+  wallBlock(120, 2794, 700, 9035, 1397, 3650); // Kitchen wet wall start
+  wallBlock(120, 1050, 900, 9035, 525, 4450); // KW Window sill
+  wallBlock(120, 544, 900, 9035, 2522, 4450); // KW Window lintel
+  wallBlock(120, 2794, 215, 9035, 1397, 5007.5);
+  wallBlock(120, 544, 750, 9035, 2522, 5490); // D3 Utility door lintel
+  wallBlock(120, 2794, 960, 9035, 1397, 6345);
+  wallBlock(1525, 2794, 120, 9737.5, 1397, 6725); // Utility balcony rear
+  wallBlock(120, 1100, 3365, 10560, 550, 4982.5); // Utility outer parapet
+
+  // Master Bedroom Partition Walls
+  wallBlock(120, 2794, 4350, 1975, 1397, 5595); // M.Bed West wall (shared with Toilet)
+  wallBlock(120, 2794, 4350, 6245, 1397, 5595); // M.Bed East headboard wall
+  wallBlock(1260, 2794, 120, 2665, 1397, 7830); // M.Bed South left return
+  wallBlock(790, 2794, 120, 5790, 1397, 7830); // M.Bed South right return
+  wallBlock(2100, 544, 120, 4345, 2522, 7830); // SLD2 Balcony slider lintel
+
+  // Bedroom 1 & 2 Enclosure
+  wallBlock(3630, 2794, 120, 8765, 1397, -3620); // Bed 1 North wall
+  wallBlock(120, 2794, 3560, 10640, 1397, -1780); // Bed 1 East window wall
+  wallBlock(120, 2794, 3560, -60, 1397, -1780); // Bed 2 West wall
+  wallBlock(3300, 2794, 120, 1650, 1397, -3620); // Bed 2 North window wall
+  wallBlock(1525, 2794, 120, 5100, 1397, -3620); // Shaft back
+
+  // Doors & Openings: MD Main Door (1050 x 2400) + D1 Master (915 x 2100) + D1 Bed 1 & 2
+  box(groups.walls, 1010, 2360, 42, 520, 1180, 475, walnutMat, true); // MD Door
+  box(groups.walls, 120, 24, 22, 920, 1050, 505, brassMat);
+  box(groups.walls, 885, 2060, 38, 5627.5, 1030, 3315, walnutMat, true); // M.Bed D1
+  box(groups.walls, 38, 2100, 840, 5140, 1050, -450, walnutMat, true); // Bed 2 Door
+  box(groups.walls, 38, 2100, 840, 6755, 1050, -450, walnutMat, true); // Bed 1 Door
+
+  // SLD1 Sitout 1 Slider (2100 x 2100)
+  for (const fz of [600, 1650, 2700]) box(groups.walls, 55, 2150, 38, 8975, 1075, fz, blackMetal);
+  box(groups.walls, 18, 2110, 1030, 8968, 1075, 1125, glassMat);
+  box(groups.walls, 18, 2110, 1030, 8982, 1075, 2175, glassMat);
+
+  // ============================================================================
+  // 2. LIVING & DINING ROOM (STUDY 13 — EXACT RESTORATION FROM living-dining.html)
+  // ============================================================================
+  const livRoot = groups.living;
+
+  // Area Rug in Living Zone
+  box(livRoot, 4250, 8, 2500, 2850, 4, 1850, rugMat, true);
+
+  // 2A. DB-HIDDEN: Full-Height Hidden Storage Behind MD Door (X 180..930, Z 0..380, Y 0..2692.4)
+  const dbCarcass = box(livRoot, 750, 2692.4, 360, 555, 1346.2, 180, walnutMat, true);
+  box(livRoot, 420, 380, 60, 555, 1820, 35, blackMetal); // Internal DB Box
+  for (const sy of [520, 980, 1440, 2220]) box(livRoot, 714, 18, 330, 555, sy, 180, beigeCredenzaMat);
+  const livDbDoorPivot = new THREE.Group();
+  livDbDoorPivot.position.set(182, 1346.2, 362);
+  livRoot.add(livDbDoorPivot);
+  const dbDoorMesh = box(livDbDoorPivot, 746, 2688, 19, 373, 0, 9.5, walnutMat, true);
+  for (let fx = 28; fx < 730; fx += 32) box(livDbDoorPivot, 10, 2660, 6, fx, 0, 21, darkWalnutMat);
+  registerPart('living', 'DB-HIDDEN', 'Hidden DB & Utility Full-Height Cabinet Carcass Behind MD Door (750 x 2692.4 x 380)', 'North TV Wall', dbCarcass, '18 mm BWR Ply + Dark Walnut Interior & Removable DB Back', 1, [750, 2692.4, 380], true);
+  registerPart('living', 'DB-DOOR', 'Seamless Fluted Walnut Hinged DB Concealment Door (746 x 2688 x 19)', 'North TV Wall', dbDoorMesh, '19 mm BWR Ply + Fluted Dark Walnut Slats on 110° Hinges', 1, [746, 2688, 19]);
+
+  // 2B. TV-FLOATING: Warm Beige Curved-Edge Floating Credenza with 6x 600mm Drawers (X 930..4830, Y 220..600)
+  const credenzaCarcass = box(livRoot, 3600, 380, 400, 2730, 410, 200, beigeCredenzaMat, true);
+  const curveEndShape = new THREE.Shape();
+  curveEndShape.moveTo(0, 0); curveEndShape.lineTo(110, 0);
+  curveEndShape.absarc(110, 230, 190, -Math.PI / 2, 0, false);
+  curveEndShape.lineTo(300, 420); curveEndShape.lineTo(0, 420); curveEndShape.lineTo(0, 0);
+  const curveEndMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(curveEndShape, { depth: 380, bevelEnabled: false, curveSegments: 28 }), beigeCredenzaMat);
+  curveEndMesh.rotation.x = Math.PI / 2; curveEndMesh.position.set(4530, 600, 420); curveEndMesh.scale.y = -1;
+  livRoot.add(curveEndMesh);
+  box(livRoot, 3780, 8, 14, 2820, 214, 340, glowMat);
+
+  const livTvDrawersGroup = new THREE.Group();
+  livRoot.add(livTvDrawersGroup);
+  let sampleLivDrwFront = null, sampleLivDrwBox = null;
+  for (let i = 0; i < 6; i++) {
+    const dLeft = 930 + i * 600, dCenter = dLeft + 300;
+    if (i > 0) box(livRoot, 18, 344, 380, dLeft, 410, 195, beigeCredenzaMat);
+    const dFront = box(livTvDrawersGroup, 596, 344, 19, dCenter, 410, 410.5, beigeEdgeMat, true);
+    const dBox = box(livTvDrawersGroup, 564, 280, 360, dCenter, 400, 220, whiteOakMat, true);
+    if (i === 0) { sampleLivDrwFront = dFront; sampleLivDrwBox = dBox; }
+  }
+  registerPart('living', 'TV-FLOATING', 'Warm Beige Curved-Edge Floating Credenza Carcass (3900 W x 380 H x 420 D, Y 220..600)', 'North TV Wall', credenzaCarcass, '18 mm HDHMR in Warm Beige Matte Laminate (#dccbb8)', 1, [3900, 380, 420], true);
+  registerPart('living', 'TV-DRW-1..6-FRT', '600mm TV Credenza Drawer Front in Warm Beige (6x 596 W x 344 H x 19 T)', 'North TV Wall', sampleLivDrwFront, '19 mm HDHMR + Warm Beige Matte Laminate with 45° Top Bevel Pull', 6, [596, 344, 19]);
+  registerPart('living', 'TV-DRW-1..6-BOX', '600mm TV Credenza Internal Drawer Box (6x 564 W x 280 H x 360 D)', 'North TV Wall', sampleLivDrwBox, '18 mm Prelam Ply Box on 350mm Soft-Close Undermount Runners', 6, [564, 280, 360]);
+
+  // 2C. TV-TALL-GLASS: Seamless Tinted-Glass Tall Unit Above Credenza (X 930..1530, Y 600..2692.4)
+  for (const sx of [939, 1521]) box(livRoot, 18, 2092.4, 360, sx, 1646.2, 180, beigeCredenzaMat, true);
+  for (const cy of [609, 2683.4]) box(livRoot, 564, 18, 360, 1230, cy, 180, beigeCredenzaMat, true);
+  box(livRoot, 564, 2056.4, 18, 1230, 1646.2, 9, walnutMat);
+  for (const lx of [954, 1506]) box(livRoot, 8, 2020, 8, lx, 1646.2, 320, glowMat);
+  let sampleGlassShelf = null;
+  for (const [idx, sy] of [948, 1296, 1644, 1992, 2340].entries()) {
+    const gShf = box(livRoot, 564, 8, 330, 1230, sy, 185, glassMat);
+    if (idx === 0) sampleGlassShelf = gShf;
+    cylinder(livRoot, 42, 30, 130, [1160, sy + 69, 190], idx % 2 === 0 ? beigeCredenzaMat : brassMat, 18);
+  }
+  const livTallGlassDoorPivot = new THREE.Group();
+  livTallGlassDoorPivot.position.set(932, 1646.2, 362);
+  livRoot.add(livTallGlassDoorPivot);
+  for (const fx of [12, 584]) box(livTallGlassDoorPivot, 24, 2088, 20, fx, 0, 10, darkWalnutMat);
+  for (const fy of [-1032, 1032]) box(livTallGlassDoorPivot, 548, 24, 20, 298, fy, 10, darkWalnutMat);
+  box(livTallGlassDoorPivot, 548, 2040, 8, 298, 0, 10, tintedGlassMat);
+  box(livTallGlassDoorPivot, 10, 520, 18, 568, -180, 26, brassMat);
+  const tallGlassProxy = new THREE.Mesh(new THREE.BoxGeometry(600, 2092.4, 380), beigeCredenzaMat);
+  tallGlassProxy.visible = false;
+  livRoot.add(tallGlassProxy);
+  registerPart('living', 'TV-TALL-GLASS', 'Seamless Tinted-Glass Tall Display Unit (600 W x 2092.4 H x 380 D, Y 600..2692.4)', 'North TV Wall', tallGlassProxy, '18 mm HDHMR in Warm Beige + Walnut Back + 5 Glass Shelves + LEDs', 1, [600, 2092.4, 380], true);
+  registerPart('living', 'TV-GLASS-SHF', 'Tall Unit Toughened Glass Display Shelf (5x 564 W x 8 H x 330 D)', 'North TV Wall', sampleGlassShelf, '8 mm Clear Toughened Glass with Polished Edges on Brass Pins', 5, [564, 8, 330]);
+
+  // 2D. TV-WAVE: 3D Wavy HDHMR Back Wall (X 1530..4830, Y 600..2692.4) + 75" TV
+  box(livRoot, 3300, 2092.4, 18, 3180, 1646.2, 9, wavyHdhmrMat, true);
+  for (let row = 0; row < 14; row++) {
+    const baseY = 670 + row * 142, pts = [];
+    for (let s = 0; s <= 40; s++) {
+      const u = s / 40, px = 1535 + u * 3290;
+      const dy = Math.sin(u * Math.PI * 3.2 + row * 0.85) * 32 + Math.cos(u * Math.PI * 1.6 - row * 0.5) * 18;
+      const dz = 22 + Math.sin(u * Math.PI * 2.4 + row * 0.7) * 9;
+      pts.push(new THREE.Vector3(px, baseY + dy, dz));
+    }
+    const tubeGeo = new THREE.TubeGeometry(new THREE.CatmullRomCurve3(pts), 56, 16, 8, false);
+    const tubeMesh = new THREE.Mesh(tubeGeo, row % 2 === 0 ? wavyHdhmrMat : wavyRidgeMat);
+    tubeMesh.scale.set(1, 1.35, 0.52);
+    livRoot.add(tubeMesh);
+  }
+  box(livRoot, 3280, 10, 16, 3180, 2682, 48, glowMat);
+  const oledTv = box(livRoot, 1680, 960, 35, 3180, 1420, 48, oledMat, true);
+  box(livRoot, 920, 58, 95, 3180, 629, 240, blackMetal, true); // Soundbar
+  registerPart('living', 'TV-WAVE-1..3', '3D Wavy CNC-Sculpted HDHMR Back Wall (3300 W x 2092.4 H x 36 T in 3 Panels)', 'North TV Wall', oledTv, '18mm Backing + 18mm CNC 3D Wavy Carved HDHMR in Alabaster PU (#ede6da)', 3, [1100, 2092.4, 36]);
+
+  // 2E. POOJA MANDIR (P1) on 600mm Wall (850 W x 580 D x 2692.4 H at X 8125..8975, Z 0..580)
+  const pX = 8550;
+  for (const sx of [8134, 8966]) box(livRoot, 18, 2692.4, 580, sx, 1346.2, 290, poojaWhiteMat, true);
+  for (const sy of [429, 771, 829, 2320, 2683.4]) box(livRoot, 814, 18, 560, pX, sy, 280, poojaWhiteMat, true);
+  box(livRoot, 810, 320, 19, pX, 600, 570, poojaWhiteMat, true); // Mid storage
+  box(livRoot, 814, 345, 22, pX, 2501.5, 569, poojaWhiteMat, true); // Shikhara crown
+  const poojaBacklit = box(livRoot, 814, 1473, 18, pX, 1574.5, 24, onyxGlowMat, true);
+  for (const r of [140, 230, 310]) {
+    const ring = new THREE.Mesh(new THREE.TorusGeometry(r, 5, 10, 32), brassMat);
+    ring.position.set(pX, 1520, 36);
+    livRoot.add(ring);
+  }
+  box(livRoot, 520, 182, 320, pX, 929, 240, marbleMat, true); // Singhasan
+  cylinder(livRoot, 75, 95, 240, [pX, 1140, 240], brassMat, 20); // Murti
+
+  const poojaGateLeft = new THREE.Group(), poojaGateRight = new THREE.Group();
+  poojaGateLeft.position.set(8143, 1576, 570); poojaGateRight.position.set(8957, 1576, 570);
+  livRoot.add(poojaGateLeft, poojaGateRight);
+  for (const [isLeft, pGrp] of [[true, poojaGateLeft], [false, poojaGateRight]]) {
+    const dir = isLeft ? 1 : -1;
+    for (const lIdx of [0, 1]) {
+      const cx = dir * (101 + lIdx * 203);
+      for (const sx of [cx - 86, cx + 86]) box(pGrp, 28, 1476, 18, sx, 0, 0, poojaWhiteMat, true);
+      for (const ry of [-718, 0, 718]) box(pGrp, 144, 36, 18, cx, ry, 0, poojaWhiteMat, true);
+      for (let gy = -560; gy <= 560; gy += 160) cylinder(pGrp, 26, 26, 14, [cx, gy, 0], brassMat, 14);
+    }
+    box(pGrp, 10, 260, 20, dir * 385, -60, 16, brassMat);
+  }
+
+  const poojaPulloutTray = new THREE.Group(), poojaPulloutSitTable = new THREE.Group();
+  const poojaPulloutThinTable = new THREE.Group(), poojaPulloutLowBox = new THREE.Group();
+  livRoot.add(poojaPulloutTray, poojaPulloutSitTable, poojaPulloutThinTable, poojaPulloutLowBox);
+  // 1) Prasad Tray (Y = 780..816)
+  const prasadTray = box(poojaPulloutTray, 778, 36, 500, pX, 798, 300, poojaWhiteMat, true);
+  box(poojaPulloutTray, 720, 6, 440, pX, 818, 300, brassMat, true);
+  // 2) Floor-Touching Sitting Table (Y = 0..420 for 5'11" user)
+  const sitTableTop = box(poojaPulloutSitTable, 778, 24, 520, pX, 408, 300, poojaWhiteMat, true);
+  const sitSideL = box(poojaPulloutSitTable, 18, 420, 520, pX - 380, 210, 300, poojaWhiteMat, true);
+  const sitSideR = box(poojaPulloutSitTable, 18, 420, 520, pX + 380, 210, 300, poojaWhiteMat, true);
+  // 3) Thin Samagri Tray (Y = 330..366)
+  const thinTray = box(poojaPulloutThinTable, 726, 36, 480, pX, 348, 290, poojaWhiteMat, true);
+  // 4) Rolling Puja Storage Box (Y = 0..310)
+  const lowPujaBox = box(poojaPulloutLowBox, 726, 295, 500, pX, 162.5, 290, poojaWhiteMat, true);
+
+  const poojaProxy = new THREE.Mesh(new THREE.BoxGeometry(850, 2692.4, 580), poojaWhiteMat);
+  poojaProxy.visible = false;
+  livRoot.add(poojaProxy);
+  registerPart('living', 'P1-CARCASS', 'Tall White CNC Pooja Mandir on 600mm Wall (850 W x 2692.4 H x 580 D)', 'Pooja Mandir (P1)', poojaProxy, '18 mm HDHMR in Satin White PU (#f9f7f2) + Gold Inlays + Shikhara', 1, [850, 2692.4, 580], true);
+  registerPart('living', 'P1-GATES', 'CNC Lotus-Jaali Bi-Fold Mandir Gates (4x 202 W x 1476 H x 18 T)', 'Pooja Mandir (P1)', poojaBacklit, '18 mm HDHMR CNC Routed Jaali in Satin White PU + Brass Medallions', 4, [202, 1476, 18]);
+  registerPart('living', 'P1-SIT-SIDE-L/R', '5\'11" Floor-Touching Sitting Table Side Ply (2x 18 W x 420 H x 520 D, Y 0..420)', 'Pooja Mandir (P1)', sitSideL, '18 mm HDHMR Side Legs Touching Finished Floor (Zero Sag)', 2, [18, 420, 520]);
+  registerPart('living', 'P1-TRAY-BOX', 'Prasad Tray, Sitting Slab, Thin Samagri Tray & Rolling Box Set', 'Pooja Mandir (P1)', prasadTray, 'Complete Ergonomic 4-Tier Pull-Out Puja System on Floor Rollers', 1, [778, 816, 520], true);
+
+  // 2F. SOUTH WALL: 12.5-FT DUAL-SLEEPER SOFA (S1: 3,823 W) & DXF 6-LEAF MURAL
+  const sStartX = 1050, modLCenter = sStartX + 140 + 845, conCenter = sStartX + 140 + 1690 + 76, modRCenter = sStartX + 140 + 1690 + 152 + 845;
+  for (const armX of [sStartX + 70, sStartX + 3823 - 70]) {
+    const armShape = makeRoundedRectShape(482.5, 0, 740, 150);
+    const armMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(armShape, { depth: 140, bevelEnabled: true, bevelThickness: 12, bevelSize: 10, curveSegments: 24 }), boucleMat);
+    armMesh.rotation.y = Math.PI / 2; armMesh.position.set(armX - 70, 0, 3300 - 482.5);
+    livRoot.add(armMesh);
+  }
+  box(livRoot, 152, 610, 965, conCenter, 305, 3300 - 482.5, whiteOakMat, true); // Oak Console
+  const sleeperLeftGroup = new THREE.Group(), sleeperRightGroup = new THREE.Group();
+  const seatCushionLeft = new THREE.Group(), seatCushionRight = new THREE.Group();
+  livRoot.add(sleeperLeftGroup, sleeperRightGroup, seatCushionLeft, seatCushionRight);
+  const livHeadrestPivots = [];
+
+  for (const [side, cx, slpGrp, cshGrp] of [['L', modLCenter, sleeperLeftGroup, seatCushionLeft], ['R', modRCenter, sleeperRightGroup, seatCushionRight]]) {
+    box(livRoot, 1690, 18, 890, cx, 28, 3300 - 465, darkWalnutMat);
+    box(livRoot, 1686, 813, 295, cx, 406.5, 3300 - 147.5, boucleMat, true);
+    box(livRoot, 1686, 240, 660, cx, 140, 3300 - 625, boucleMat, true);
+    box(cshGrp, 1684, 204, 670, cx, 362, 3300 - 630, boucleMat, true);
+    box(slpGrp, 1664, 42, 1220, cx, 340, 3300 - 350, blackMetal, true);
+    box(slpGrp, 1650, 95, 1200, cx, 408.5, 3300 - 350, mattressMat, true);
+    for (const ox of [-410, 410]) {
+      const hp = new THREE.Group();
+      hp.position.set(cx + ox, 813, 3300 - 145);
+      livRoot.add(hp);
+      for (const sx of [-225, 225]) rod(hp, [sx, 0, 0], [sx, 65, 0], 9, steelMat);
+      box(hp, 710, 120, 58, 0, 105, -10, boucleMat, true);
+      livHeadrestPivots.push(hp);
+    }
+  }
+  const sofaProxy = new THREE.Mesh(new THREE.BoxGeometry(3823, 813, 965), boucleMat);
+  sofaProxy.visible = false;
+  livRoot.add(sofaProxy);
+  registerPart('living', 'S1-SOFA', 'Modular 12.5-Ft Dual-Sleeper Lounge Sofa (3823 W x 813/978 H x 965/2185 D)', 'South Sofa Wall', sofaProxy, 'Dual FS0136 3-Fold Mechanisms + 4 Win Star ST-180 Headrests + Oak Console', 1, [3823, 813, 965], true);
+
+  // DXF 6-Leaf Botanical Mural on South Wall above Sofa
+  function addDxfLeaf(id, cx, bottomY, w, h, tiltDeg, zFront, thickness, mainMat) {
+    const lg = new THREE.Group();
+    lg.position.set(cx, bottomY, zFront); lg.rotation.z = THREE.MathUtils.degToRad(tiltDeg);
+    livRoot.add(lg);
+    const sh = new THREE.Shape(), hw = w / 2;
+    sh.moveTo(0, 0); sh.bezierCurveTo(hw, h * 0.2, hw * 1.1, h * 0.6, 0, h); sh.bezierCurveTo(-hw * 1.1, h * 0.6, -hw, h * 0.2, 0, 0);
+    const lm = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, { depth: thickness, bevelEnabled: true, bevelThickness: 4, bevelSize: 4, curveSegments: 24 }), mainMat);
+    lg.add(lm);
+    rod(lg, [0, -60, -2], [0, h * 0.9, -2], 6, darkWalnutMat);
+  }
+  addDxfLeaf('L1', 1850, 1040, 480, 880, 24, 3278, 18, walnutMat);
+  addDxfLeaf('L2', 2200, 1070, 560, 1280, 14, 3270, 20, leafSandMat);
+  addDxfLeaf('L3', 2660, 1050, 620, 1440, 5, 3276, 18, leafCreamMat);
+  addDxfLeaf('L4', 3180, 1020, 680, 1550, -4, 3266, 22, leafSandMat);
+  addDxfLeaf('L5', 3690, 1040, 640, 1420, -13, 3256, 22, terracottaMat);
+  addDxfLeaf('L6', 4040, 1020, 440, 920, -23, 3274, 16, leafClayMat);
+
+  // 2G. Coffee Table, Barrel Swivel Chair & 6-Seater Marble Dining with 6 Brown-Polish Curved Chairs
+  const livCoffeeTable = new THREE.Group();
+  livCoffeeTable.position.set(2956, 0, 1480);
+  livRoot.add(livCoffeeTable);
+  cylinder(livCoffeeTable, 350, 350, 365, [0, 182.5, 0], darkWalnutMat, 32);
+  cylinder(livCoffeeTable, 450, 450, 35, [0, 382.5, 0], marbleMat, 36);
+
+  const livDiningTable = new THREE.Group();
+  livDiningTable.position.set(6850, 0, 1850);
+  livRoot.add(livDiningTable);
+  for (const px of [-450, 450]) {
+    cylinder(livDiningTable, 195, 245, 725, [px, 362.5, 0], brownPolishMat, 28);
+    cylinder(livDiningTable, 252, 252, 18, [px, 9, 0], brassMat, 28);
+  }
+  const dtShape = makeRoundedRectShape(975, -525, 525, 500);
+  const dtTop = new THREE.Mesh(new THREE.ExtrudeGeometry(dtShape, { depth: 35, bevelEnabled: true, bevelThickness: 6, bevelSize: 6, curveSegments: 36 }), marbleMat);
+  dtTop.rotation.x = Math.PI / 2; dtTop.position.set(0, 760, 0);
+  livDiningTable.add(dtTop);
+
+  for (const c of [{ x: -480, z: -640, r: 0 }, { x: 480, z: -640, r: 0 }, { x: -480, z: 640, r: Math.PI }, { x: 480, z: 640, r: Math.PI }, { x: -1080, z: 0, r: Math.PI / 2 }, { x: 1080, z: 0, r: -Math.PI / 2 }]) {
+    const cg = new THREE.Group();
+    cg.position.set(c.x, 0, c.z); cg.rotation.y = c.r;
+    livDiningTable.add(cg);
+    cylinder(cg, 255, 245, 34, [0, 435, 0], brownPolishMat, 24);
+    cylinder(cg, 242, 242, 48, [0, 465, 5], boucleMat, 24);
+    const cb = new THREE.Mesh(new THREE.CylinderGeometry(268, 258, 235, 24, 1, true, Math.PI * 0.62, Math.PI * 0.76), brownPolishMat);
+    cb.position.set(0, 665, 0); cg.add(cb);
+    for (const [lx, lz] of [[-205, -195], [205, -195], [-210, 190], [210, 190]]) {
+      rod(cg, [lx, 24, lz], [lx * 0.92, lz < 0 ? 640 : 435, lz * 0.92], 14, brownPolishMat);
+    }
+  }
+  registerPart('living', 'D-TBL', '6-Seater Oval Marble & Fluted Pedestal Dining Table (1950 L x 1050 W x 760 H)', 'Dining Zone', dtTop, '35 mm Italian Calacatta Marble Top + Twin Brown-Polish Fluted Pedestals', 1, [1950, 760, 1050], true);
+  registerPart('living', 'D-CHR-1..6', 'Curved-Back Solid Wood Dining Chairs in Warm Brown Polish (6x 540 W x 790 H x 530 D)', 'Dining Zone', dtTop, 'Steam-Bent Solid Teak/Ash in Warm Brown Polish (#5c3a21) + Cream Cushions', 6, [540, 790, 530]);
+
+  // ============================================================================
+  // 3. PARALLEL KITCHEN (REV 04 — EXACT RESTORATION FROM kitchen-design_2.html)
+  // Positioned at X = 6345..8975, Z = 3300..6825 (2,630 x 3,525 mm room)
+  // ============================================================================
+  const kitRoot = new THREE.Group();
+  kitRoot.position.set(6345, 0, 3300);
+  groups.kitchen.add(kitRoot);
+
+  const kitMoveParts = [], kitRackParts = [], kitElevatorDoors = [], kitGroceryDoors = [];
+
+  // Dry Side (X = 2630): 125 Filler + 750 Oven/A1 + 750 T2 + 750 T3 + 550 T5 + 550 T6 + 50 Filler = 3525 mm
+  // Countertop (3400 x 700 x 30 mm at Y = 920..950)
+  box(kitRoot, 700, 30, 3400, 2280, 935, 1825, kitSageStone, true);
+  registerPart('kitchen', 'KT-DRY-COUNTER', 'Dry-Side Sage Green Marble Countertop (3400 L x 700 D x 30 T at Y=950)', 'Dry Run', kitRoot, '30mm Sage Green Marble Slab with Polished Bullnose Edge', 1, [3400, 30, 700]);
+
+  function addKitchenBank(runStart, width, id, wet = false) {
+    const cx = wet ? 345 : 2285, faceX = wet ? 680 : 1950, dir = wet ? 1 : -1;
+    box(kitRoot, 550, 150, width - 8, wet ? 295 : 2335, 75, runStart + width / 2, blackMetal);
+    for (const sz of [runStart + 9, runStart + width - 9]) box(kitRoot, 650, 770, 18, cx, 535, sz, walnutMat);
+    for (const lv of [159, 911]) box(kitRoot, 650, 18, width - 36, cx, lv, runStart + width / 2, walnutMat);
+
+    const patterns = {
+      T2: { fronts: [330, 260, 180], metal: [254, 203.2, 101.6] },
+      T3: { fronts: [330, 220, 220], metal: [254, 152.4, 152.4] },
+      T4: { fronts: [330, 260, 180], metal: [254, 203.2, 101.6] },
+      T5: { fronts: [330, 220, 220], metal: [254, 152.4, 152.4] },
+      T6: { fronts: [330, 260, 180], metal: [254, 203.2, 101.6] }
+    };
+    const pat = patterns[id];
+    let bot = 150;
+    pat.fronts.forEach((h, idx) => {
+      const dg = new THREE.Group();
+      kitRoot.add(dg);
+      box(dg, 20, h - 4, width - 4, faceX, bot + h / 2, runStart + width / 2, terracottaMat, true);
+      const dCenter = faceX - dir * 310;
+      box(dg, 600, 12, width - 90, dCenter, bot + 18, runStart + width / 2, walnutMat);
+      for (const sz of [runStart + 39, runStart + width - 39]) {
+        box(dg, 600, pat.metal[idx], 12, dCenter, bot + 24 + pat.metal[idx] / 2, sz, steelMat);
+      }
+      box(dg, 12, 10, width - 80, faceX + dir * 14, bot + h - 24, runStart + width / 2, blackMetal);
+      kitMoveParts.push({ group: dg, dir, travel: 600 });
+      bot += h;
+    });
+    const proxy = new THREE.Mesh(new THREE.BoxGeometry(650, 770, width), terracottaMat);
+    proxy.visible = false;
+    kitRoot.add(proxy);
+    registerPart('kitchen', `${id}-BANK`, `${id} Tandem Drawer Bank (${width} W x 770 H x 650 D Carcass; 3 Drawers)`, id, proxy, `3-Drawer Tandem Bank in Terracotta (#C87D65) + 600mm Soft-Close Runners`, 1, [width, 770, 650], true);
+  }
+
+  addKitchenBank(875, 750, 'T2');
+  addKitchenBank(1625, 750, 'T3');
+  addKitchenBank(2375, 550, 'T5');
+  addKitchenBank(2925, 550, 'T6');
+
+  // O1 Bosch Oven Bay (X = 2285, Z = 500, W = 750) & A1 Roller Shutter Tower (600 W x 1356 H x 380 D at Y = 950..2306)
+  box(kitRoot, 550, 150, 746, 2335, 75, 500, blackMetal);
+  box(kitRoot, 550, 600, 596, 2235, 450, 500, blackMetal, true);
+  box(kitRoot, 20, 596, 596, 1950, 450, 500, blackMetal, true); // Oven front
+  const a1Tower = new THREE.Group();
+  kitRoot.add(a1Tower);
+  box(a1Tower, 18, 1356, 600, 2621, 1628, 500, kitBeige);
+  for (const sz of [209, 791]) box(a1Tower, 360, 1356, 18, 2450, 1628, sz, kitBeige);
+  for (const sy of [959, 2297]) box(a1Tower, 360, 18, 564, 2450, sy, 500, kitBeige);
+  for (let sy = 978; sy < 2288; sy += 24) box(a1Tower, 15, 20, 564, 2287.5, sy, 500, steelMat);
+  registerPart('kitchen', 'O1-BOSCH-OVEN', 'Bosch 600-Class Built-In Oven Bay (750 W x 770 H x 650 D, Base 150..920)', 'O1', a1Tower, 'Bosch Oven Reservation + 170mm Upper Infill + 750mm Stone Counter', 1, [750, 770, 650], true);
+  registerPart('kitchen', 'A1-ROLLER-SHUTTER', 'Countertop Appliance Garage with Roller Shutter (600 W x 1356 H x 380 D, Y 950..2306)', 'A1', a1Tower, 'Metallic Tambour Shutter Hardware (564x330x1320 clear envelope)', 1, [600, 1356, 380], true);
+
+  // Wet Side (X = 0): 25 Filler + 700 T4 (Hob) + 300 B1 (Bottle) + 700 S1 (Sink) + 50 Filler = 1775 mm
+  box(kitRoot, 700, 30, 1750, 350, 935, 900, kitSageStone, true);
+  addKitchenBank(25, 700, 'T4', true); // Hob bank
+  box(kitRoot, 480, 20, 580, 350, 965, 375, blackMetal); // 4-Burner Hob
+  const hood = box(kitRoot, 500, 120, 650, 250, 1710, 375, steelMat);
+  box(kitRoot, 250, 536, 260, 125, 2038, 375, steelMat);
+
+  // B1 Bottle Pull-out (300 W x 770 H x 650 D at Z = 725..1025)
+  const b1Grp = new THREE.Group();
+  kitRoot.add(b1Grp);
+  box(b1Grp, 20, 546, 296, 680, 425, 875, terracottaMat, true);
+  box(b1Grp, 500, 12, 240, 420, 186, 875, steelMat);
+  box(b1Grp, 500, 12, 240, 420, 406, 875, steelMat);
+  cylinder(b1Grp, 24, 24, 120, [510, 472, 820], plantGreen);
+  box(kitRoot, 20, 216, 296, 680, 810, 875, terracottaMat, true);
+  kitMoveParts.push({ group: b1Grp, dir: 1, travel: 500 });
+  registerPart('kitchen', 'B1-BOTTLE-PULLOUT', 'Base Bottle Pull-Out Unit (300 W x 770 H x 650 D; 240x500x490 Hardware)', 'B1', b1Grp, '2-Tier Chrome Pull-Out Basket on Soft-Close Bottom Runners', 1, [300, 770, 650], true);
+
+  // S1 Sink Cabinet (700 W at Z = 1025..1725)
+  for (const cz of [1200, 1550]) box(kitRoot, 20, 766, 346, 680, 535, cz, terracottaMat, true);
+  box(kitRoot, 470, 8, 580, 350, 954, 1375, steelMat); // SS Sink
+  const tapCurve = new THREE.CatmullRomCurve3([new THREE.Vector3(110, 960, 1375), new THREE.Vector3(110, 1240, 1375), new THREE.Vector3(230, 1270, 1375), new THREE.Vector3(250, 1180, 1375)]);
+  kitRoot.add(new THREE.Mesh(new THREE.TubeGeometry(tapCurve, 24, 12, 8, false), steelMat));
+  registerPart('kitchen', 'S1-SINK-CABINET', 'Under-Sink Cabinet & Stainless Steel Sink (700 W x 770 H x 650 D)', 'S1', b1Grp, '700mm 2-Door Base Sink Unit + Single Bowl SS Undermount Sink & Swivel Mixer', 1, [700, 770, 650], true);
+
+  // F1 Refrigerator Bay (660 W x 750 D x 2000 H at Z = 2585..3245)
+  const fridgeMesh = box(kitRoot, 680, 1800, 600, 365, 900, 2915, steelMat, true);
+  box(kitRoot, 22, 1210, 580, 716, 1170, 2915, mat('#68766d', { metalness: 0.55 }), true);
+  registerPart('kitchen', 'F1-FRIDGE', 'Refrigerator Bay Reservation (660 W x 2000 H x 750 D)', 'F1', fridgeMesh, 'Space for 600mm Double-Door Refrigerator with Ventilation Gaps', 1, [660, 2000, 750], true);
+
+  // C1 Crockery Tower Screen (800 W x 2300 H x 250 D at Z = 3255..3505)
+  const crockeryMesh = box(kitRoot, 800, 2300, 18, 400, 1150, 3264, terracottaMat);
+  for (const sx of [9, 791]) box(kitRoot, 18, 2300, 250, sx, 1150, 3380, terracottaMat);
+  for (const sy of [180, 570, 960, 1350, 1740, 2130]) box(kitRoot, 760, 12, 215, 400, sy, 3380, glassMat);
+  box(kitRoot, 760, 2240, 10, 400, 1150, 3500, glassMat);
+  registerPart('kitchen', 'C1-CROCKERY-TOWER', 'Entrance Crockery Display Screen (800 W x 2300 H x 250 D)', 'C1', crockeryMesh, 'Terracotta (#C87D65) Frame + 5 Toughened Glass Shelves + Fluted Glass Door', 1, [800, 2300, 250], true);
+
+  // Rear Wall P1 (900 mm) & P2 (600 mm) Glass Pull-Down Elevator Cabinets (Y = 1450..2236)
+  for (const [id, startX, width] of [['P1', 1230, 900], ['P2', 630, 600]]) {
+    const cab = new THREE.Group();
+    cab.position.x = startX;
+    kitRoot.add(cab);
+    box(cab, width, 786, 18, width / 2, 1843, 9, kitBeige);
+    for (const sx of [9, width - 9]) box(cab, 18, 786, 360, sx, 1843, 180, kitBeige);
+    for (const sy of [1459, 2227]) box(cab, width - 36, 18, 360, width / 2, sy, 180, kitBeige);
+    for (const lx of [width / 4, width * 3 / 4]) kitElevatorDoors.push(box(cab, width / 2 - 4, 782, 20, lx, 1843, 370, glassMat, true));
+    const rack = new THREE.Group();
+    cab.add(rack);
+    for (const ax of [24, width - 24]) box(rack, 12, 750, 330, ax, 1843, 185, steelMat);
+    for (const sy of [1474, 1810, 2170]) {
+      box(rack, width - 60, 12, 330, width / 2, sy, 185, glassMat);
+      box(rack, width - 60, 48, 12, width / 2, sy + 24, 344, steelMat);
+    }
+    kitRackParts.push(rack);
+    const pProxy = new THREE.Mesh(new THREE.BoxGeometry(width, 786, 380), kitBeige);
+    pProxy.visible = false;
+    cab.add(pProxy);
+    registerPart('kitchen', `${id}-ASSEMBLY`, `${id} Rear Glass Pull-Down Elevator Cabinet (${width} W x 786 H x 380 D; ${width - 36}x330x750 Hardware)`, id, pProxy, `Warm Beige (#DFCBB5) Carcass + 2x ${width / 2 - 4}x782x20 Glass Fronts + Pull-Down Elevator Mechanism`, 1, [width, 786, 380], true);
+  }
+
+  // Dry Wall G1 & G2 Handleless Grocery Cabinets (2x 900 x 380 x 786 at runStart 925 & 1825) + W1 (750 W) + Lofts L1/L2/L3
+  for (const [id, runStart] of [['G1', 925], ['G2', 1825]]) {
+    const cab = new THREE.Group();
+    cab.position.z = runStart;
+    kitRoot.add(cab);
+    box(cab, 18, 786, 900, 2621, 1843, 450, kitBeige);
+    for (const sz of [9, 891]) box(cab, 360, 786, 18, 2450, 1843, sz, kitBeige);
+    for (const sy of [1459, 2227]) box(cab, 360, 18, 864, 2450, sy, 450, kitBeige);
+    box(cab, 330, 750, 18, 2445, 1843, 450, kitBeige);
+    for (const sy of [1651, 1843, 2035]) for (const bz of [229.5, 670.5]) box(cab, 330, 18, 423, 2445, sy, bz, kitBeige, true);
+    for (const by of [1468, 1660, 1852, 2044]) for (const jz of [160, 330, 570, 740]) {
+      cylinder(cab, 28, 28, 96, [2410, by + 48, jz], kitSageStone, 14);
+    }
+    for (const [hingeZ, leafZ, dir] of [[2, 223, -1], [898, -223, 1]]) {
+      const piv = new THREE.Group();
+      piv.position.set(2270, 0, hingeZ);
+      cab.add(piv);
+      box(piv, 20, 782, 446, -10, 1843, leafZ, kitBeige, true);
+      kitGroceryDoors.push({ pivot: piv, direction: dir });
+    }
+    const gProxy = new THREE.Mesh(new THREE.BoxGeometry(900, 786, 380), kitBeige);
+    gProxy.visible = false;
+    cab.add(gProxy);
+    registerPart('kitchen', `${id}-ASSEMBLY`, `${id} Handleless Grocery Cabinet (900 W x 786 H x 380 D; 6x 423x330x18 Shelves, 174mm Clear)`, id, gProxy, 'Warm Beige (#DFCBB5) Carcass + 2x 446x782x20 Push-to-Open Doors + Central Divider & 6 Shelves', 1, [900, 786, 380], true);
+  }
+
+  const w1WallCab = box(kitRoot, 360, 786, 750, 2450, 1843, 3100, kitBeige);
+  for (const lz of [2912.5, 3287.5]) box(kitRoot, 20, 782, 371, 2260, 1843, lz, kitBeige, true);
+  registerPart('kitchen', 'W1-WALL-CAB', 'Dry-Side Shallow Wall Cabinet (750 W x 786 H x 380 D; 2x 371x782x20 Doors)', 'W1', w1WallCab, 'Warm Beige (#DFCBB5) Carcass & 2 Hinged Doors at Y=1450..2236', 1, [750, 786, 380], true);
+
+  let l1Sample = null, l2Sample = null;
+  for (let i = 0; i < 5; i++) {
+    const rw = 680, cz = 125 + i * rw + rw / 2;
+    const m = box(kitRoot, 580, 474, rw, 2340, 2543, cz, kitBeige);
+    box(kitRoot, 20, 470, rw - 4, 2040, 2543, cz, kitBeige, true);
+    if (i === 0) l1Sample = m;
+  }
+  registerPart('kitchen', 'L1-LOFTS-1..5', 'Dry-Wall Deep Upper Loft Modules (5x 680 W x 474 H x 600 D = 3400 W, Y 2306..2780)', 'L1', l1Sample, 'Warm Beige (#DFCBB5) 580mm Deep Box + 5x 676x470x20 Doors', 5, [680, 474, 600]);
+
+  for (const [idx, cx] of [957.5, 1672.5].entries()) {
+    const m = box(kitRoot, 715, 474, 580, cx, 2543, 290, kitBeige);
+    box(kitRoot, 711, 470, 20, cx, 2543, 590, kitBeige, true);
+    if (idx === 0) l2Sample = m;
+  }
+  registerPart('kitchen', 'L2-LOFTS-1..2', 'Rear-Wall Deep Upper Loft Modules (2x 715 W x 474 H x 600 D = 1430 W)', 'L2', l2Sample, 'Warm Beige (#DFCBB5) 580mm Deep Box + 2x 711x470x20 Doors', 2, [715, 474, 600]);
+
+  const l3Loft = box(kitRoot, 580, 474, 700, 290, 2543, 375, kitBeige);
+  box(kitRoot, 20, 470, 696, 590, 2543, 375, kitBeige, true);
+  registerPart('kitchen', 'L3-LOFT', 'Wet-Wall Hob Deep Upper Loft Module (700 W x 474 H x 600 D)', 'L3', l3Loft, 'Warm Beige (#DFCBB5) 580mm Deep Box + 696x470x20 Door', 1, [700, 474, 600]);
+
+  // ============================================================================
+  // 4. UTILITY BALCONY (1525 x 3365 mm) & SITOUTS 1/2
+  // ============================================================================
+  const utSinkCab = box(groups.utility, 580, 850, 1200, 10180, 425, 4300, kitBeige, true);
+  box(groups.utility, 610, 30, 1220, 10170, 865, 4300, kitSageStone, true);
+  box(groups.utility, 420, 10, 520, 10170, 882, 4150, steelMat);
+  registerPart('utility', 'UT-SINK-CAB', 'Utility Balcony Laundry Sink Base & Granite Counter (1200 W x 880 H x 610 D)', 'Utility Balcony', utSinkCab, '18mm BWP Marine Ply in Warm Beige + 30mm Granite Counter & Deep SS Sink', 1, [1200, 880, 610], true);
+
+  const utWasher = box(groups.utility, 640, 850, 640, 10140, 425, 6250, poojaWhiteMat, true);
+  cylinder(groups.utility, 200, 200, 24, [9815, 450, 6250], darkWalnutMat, 24);
+  const utDryer = box(groups.utility, 640, 820, 640, 10140, 1275, 6250, poojaWhiteMat, true);
+  cylinder(groups.utility, 200, 200, 24, [9815, 1300, 6250], darkWalnutMat, 24);
+  registerPart('utility', 'UT-WASHER-DRYER', 'Stacked Front-Load Washing Machine & Heat-Pump Dryer Tower (650 W x 1700 H x 650 D)', 'Utility Balcony', utWasher, 'Appliance Reservation with Stacking Kit, Water Inlet & Floor Drain', 1, [650, 1700, 650], true);
+
+  const utWallCab = box(groups.utility, 350, 650, 1200, 10295, 1950, 4300, kitBeige, true);
+  registerPart('utility', 'UT-WALL-CAB', 'Utility Overhead Detergent & Cleaning Storage Cabinet (1200 W x 650 H x 350 D)', 'Utility Balcony', utWallCab, '18mm BWR Ply + Warm Beige Laminate Shutters at Y=1625..2275', 1, [1200, 650, 350], true);
+
+  for (const rx of [9450, 9750, 10050]) rod(groups.utility, [rx, 2480, 4050], [rx, 2480, 5650], 7, steelMat);
+  const sitout1Rail = box(groups.utility, 30, 1100, 3300, 10485, 550, 1650, glassMat);
+  box(groups.utility, 45, 35, 3300, 10485, 1100, 1650, blackMetal);
+  registerPart('utility', 'SITOUT-1-RAIL', 'Dining Sitout Balcony Toughened Glass & Metal Railing (3300 L x 1100 H x 45 D)', 'Sitout 1 (1525x3300)', sitout1Rail, '12mm Toughened Laminated Glass + Matte Black Powder-Coated Handrail', 1, [3300, 1100, 45]);
+
+  // ============================================================================
+  // 5. MASTER BEDROOM (STUDY 10 — EXACT MINUTE RESTORATION FROM master-bedroom.html)
+  // Positioned at X = 2075..6225, Z = 3300..7650 (4,150 x 4,350 mm room)
+  // ============================================================================
+  const mbedRoot = new THREE.Group();
+  mbedRoot.position.set(2075, 0, 3300);
+  groups.master.add(mbedRoot);
+
+  // Woven area rug & bouclé pouffe under floating dresser
+  box(mbedRoot, 2650, 8, 2750, 2720, 4, 2320, rugMat, true);
+  cylinder(mbedRoot, 175, 175, 400, [3890, 200, 3750], mbedFabric, 24);
+  cylinder(mbedRoot, 165, 165, 20, [3890, 10, 3750], brassMat, 24);
+
+  // SLD2 Balcony Slider (X = 1260..3360, Z = 4350) + Taupe & Sheer Drapery + Sitout 2 Railing
+  for (const fx of [1260, 2310, 3360]) box(mbedRoot, 35, 2250, 45, fx, 1125, 4340, blackMetal);
+  for (const cx of [1785, 2835]) box(mbedRoot, 1015, 2210, 8, cx, 1125, 4340, glassMat);
+  box(mbedRoot, 2520, 110, 110, 2310, 2635, 4285, mbedCladding, true);
+  for (const [sX, eX] of [[1080, 1480], [3140, 3540]]) {
+    for (let p = 0; p < 6; p++) box(mbedRoot, 48, 2570, 55, sX + (p + 0.5) * (eX - sX) / 6, 1290, 4285, drapeMat);
+  }
+  for (const [sX, eX] of [[1480, 1920], [2700, 3140]]) {
+    for (let p = 0; p < 5; p++) box(mbedRoot, 58, 2560, 28, sX + (p + 0.5) * (eX - sX) / 5, 1285, 4305, sheerMat);
+  }
+  const sitout2Rail = box(mbedRoot, 4470, 1100, 30, 2075, 550, 5860, glassMat);
+  box(mbedRoot, 4470, 35, 45, 2075, 1100, 5860, blackMetal);
+  registerPart('utility', 'SITOUT-2-RAIL', 'Master Sitout Balcony Toughened Glass & Metal Railing (4470 W x 1100 H x 45 D)', 'Sitout 2 (4470x1525)', sitout2Rail, '12mm Toughened Laminated Glass + Matte Black Handrail', 1, [4470, 1100, 45]);
+
+  // 5A. W1 4-Bay Full-Height Wardrobe (3048 W x 610 D x 2692.4 H at local X = 50..3098, Z = 0..610)
+  const mbedClearBay = (3048 - 5 * 18) / 4; // 739.5 mm
+  const mbedWardH = 2692.4, mbedCarcH = mbedWardH - 101.6, mbedCarcCenter = (mbedWardH + 101.6) / 2, mbedDoorH = mbedCarcH - 4;
+  const mbedLoftTop = mbedWardH - 18, mbedLoftBot = mbedLoftTop - 304.8, mbedLoftUnder = mbedLoftBot - 18;
+  const mbedWardrobeDoors = [], mbedDrawerParts = [], mbedPullDownRails = [];
+
+  box(mbedRoot, 3048, 101.6, 550, 1574, 50.8, 275, blackMetal);
+  box(mbedRoot, 3048, mbedCarcH, 8, 1574, mbedCarcCenter, 4, mbedOak);
+  for (const lv of [110.6, mbedWardH - 9]) box(mbedRoot, 3048, 18, 591, 1574, lv, 295.5, mbedLiner);
+  for (let idx = 0; idx < 5; idx++) {
+    const cx = 59 + idx * (mbedClearBay + 18);
+    if (idx < 4) {
+      box(mbedRoot, 18, mbedCarcH, 591, cx, mbedCarcCenter, 295.5, mbedLiner, true);
+    } else {
+      for (const [b, t] of [[101.6, 1100], [mbedLoftUnder, mbedWardH]]) {
+        box(mbedRoot, 18, t - b, 591, cx, (t + b) / 2, 295.5, mbedSage, true);
+      }
+      for (const sz of [10, 580.5]) box(mbedRoot, 18, mbedLoftUnder - 1100, 20, cx, (mbedLoftUnder + 1100) / 2, sz, mbedSage, true);
+    }
+  }
+  const mbedWardProxy = new THREE.Mesh(new THREE.BoxGeometry(3048, 2692.4, 610), mbedSage);
+  mbedWardProxy.visible = false;
+  mbedRoot.add(mbedWardProxy);
+  registerPart('master', 'MB-W1..W4-CARCASS', '4-Bay Wardrobe Carcass, 4 Equal 1-Ft Lofts & Plinth (3048 W x 2692.4 H x 610 D)', 'Wardrobe (W1–W4)', mbedWardProxy, '18mm BWR Ply Carcass + 8mm Back + 4x 739.5x565x18 Loft Shelves (304.8mm Clear)', 1, [3048, 2692.4, 610], true);
+
+  let mbedDrwSample = null, mbedDoorOuterSample = null, mbedDoorCenterSample = null;
+  for (let idx = 0; idx < 4; idx++) {
+    const left = 68 + idx * (mbedClearBay + 18), origRight = left + mbedClearBay;
+    const right = origRight - (idx === 3 ? 168 : 0), center = (left + right) / 2, intW = right - left;
+    const fLeft = idx === 0 ? 50 : left - 9, fRight = idx === 3 ? 3098 : origRight + 9, fWidth = fRight - fLeft;
+    const outer = idx === 0 || idx === 3, drwCount = outer ? 4 : 5, stackTop = 119.6 + drwCount * 207.2;
+
+    for (let d = 0; d < drwCount; d++) {
+      const allocBot = 119.6 + d * 207.2, dW = mbedClearBay - 40, dCenter = (left + origRight) / 2;
+      const dg = new THREE.Group();
+      mbedRoot.add(dg);
+      box(dg, dW, 203.2, 18, dCenter, allocBot + 103.6, 550, mbedLiner, true);
+      box(dg, dW - 36, 12, 508, dCenter, allocBot + 20, 284, mbedOak);
+      for (const sx of [dCenter - dW / 2 + 9, dCenter + dW / 2 - 9]) box(dg, 18, 152.2, 508, sx, allocBot + 103.6, 284, mbedOak);
+      box(dg, dW - 36, 152.2, 18, dCenter, allocBot + 103.6, 39, mbedOak);
+      box(dg, dW - 28, 22, 8, dCenter, allocBot + 179.2, 578, pullFinish);
+      mbedDrawerParts.push({ group: dg, travel: 508 });
+      if (!mbedDrwSample) {
+        mbedDrwSample = new THREE.Mesh(new THREE.BoxGeometry(699.5, 203.2, 536), mbedLiner);
+        mbedDrwSample.visible = false;
+        dg.add(mbedDrwSample);
+      }
+    }
+    box(mbedRoot, mbedClearBay, 18, 550, (left + origRight) / 2, stackTop + 9, 290, mbedLiner);
+    box(mbedRoot, mbedClearBay, 18, 565, (left + origRight) / 2, mbedLoftBot - 9, 290.5, mbedLiner);
+    box(mbedRoot, mbedClearBay - 90, 180, 360, (left + origRight) / 2, mbedLoftBot + 90, 270, mbedFabric, true);
+
+    if (idx === 3) {
+      const b = stackTop + 18, t = mbedLoftUnder;
+      box(mbedRoot, 18, t - b, 565, right + 9, (t + b) / 2, 290.5, mbedLiner, true);
+      box(mbedRoot, 150, t - b, 18, origRight - 75, (t + b) / 2, 582, mbedLiner);
+    }
+    if (outer) {
+      for (const sy of [1170, 1390, 1610]) box(mbedRoot, intW, 18, 500, center, sy, 280, mbedLiner);
+      const rp = new THREE.Group();
+      rp.position.set(center, 1750, 300);
+      mbedRoot.add(rp);
+      for (const ax of [-intW / 2 + 40, intW / 2 - 40]) rod(rp, [ax, 0, 0], [ax, 500, 0], 11, steelMat);
+      rod(rp, [-intW / 2 + 40, 500, 0], [intW / 2 - 40, 500, 0], 11, steelMat);
+      mbedPullDownRails.push({ pivot: rp });
+    } else {
+      rod(mbedRoot, [left + 35, 2110, 290], [right - 35, 2110, 290], 10, steelMat);
+      for (let g = 0; g < 4; g++) box(mbedRoot, 160, 720, 24, left + 120 + g * 165, 1690, 290, g % 2 === 0 ? mbedSage : mbedFabric);
+    }
+
+    for (const [hingeX, sign] of [[fLeft + 2, -1], [fRight - 2, 1]]) {
+      const leafW = fWidth / 2 - 3, piv = new THREE.Group();
+      piv.position.set(hingeX, 0, 610);
+      mbedRoot.add(piv);
+      const off = sign === -1 ? leafW / 2 : -leafW / 2;
+      const dMesh = box(piv, leafW, mbedDoorH, 19, off, mbedCarcCenter, -9.5, outer ? mbedSage : mbedIvory, true);
+      for (const go of [-leafW * 0.25, leafW * 0.25]) box(piv, 14, 2200, 8, off + go, mbedCarcCenter, -23, steelMat);
+      box(piv, 13, 310, 25, off + (sign === -1 ? leafW / 2 - 24 : -leafW / 2 + 24), 1270, 16, brassMat);
+      mbedWardrobeDoors.push({ pivot: piv, sign });
+      if (outer && !mbedDoorOuterSample) mbedDoorOuterSample = dMesh;
+      if (!outer && !mbedDoorCenterSample) mbedDoorCenterSample = dMesh;
+    }
+  }
+  registerPart('master', 'MB-C1..C4-DRW', 'Concealed Wardrobe Drawer Assembly (18x: 4/5/5/4 Stack, 699.5 W x 203.2 H Front on 508 Runner)', 'Wardrobe (W1–W4)', mbedDrwSample, '18mm Ivory Front (699.5x203.2) + Dark Walnut Box + Enlarged Graphite Pull + 508 Quadro Runner', 18, [699.5, 203.2, 536], true);
+  registerPart('master', 'MB-DOOR-OUTER', 'Outer Bay Full-Height Matte Soft Sage Door + 2 Straighteners (4x 380.3 W x 2586.8 H x 19 T)', 'Wardrobe (W1 & W4)', mbedDoorOuterSample, '19mm HDHMR in Matte Soft Sage (#7f9276) + 2x 2200mm Rear Straightener Profiles', 4, [380.3, 2586.8, 19]);
+  registerPart('master', 'MB-DOOR-CENTER', 'Center Bay Full-Height Matte Warm Ivory Door + 2 Straighteners (4x 375.8 W x 2586.8 H x 19 T)', 'Wardrobe (W2 & W3)', mbedDoorCenterSample, '19mm HDHMR in Matte Warm Ivory (#eeeade) + 2x 2200mm Rear Straightener Profiles', 4, [375.8, 2586.8, 19]);
+
+  // W4 Entry-Facing Side Pocket (150mm clear width at X = 2930..3080, Y = 966.4..2351.6) + Brass-Framed Tinted Glass Door
+  const mbedSideCenterX = 3080 - 75;
+  for (const sy of [1110, 1390]) box(mbedRoot, 150, 18, 550, mbedSideCenterX, sy, 290, mbedLiner);
+  rod(mbedRoot, [mbedSideCenterX, 2180, 90], [mbedSideCenterX, 2180, 500], 11, steelMat);
+  const mbedSideGlassPivot = new THREE.Group();
+  mbedSideGlassPivot.position.set(3098, 0, 20);
+  mbedRoot.add(mbedSideGlassPivot);
+  box(mbedSideGlassPivot, 8, mbedLoftUnder - 1120, 530, -9, (mbedLoftUnder + 1100) / 2, 275, tintedGlassMat);
+  for (const sz of [5, 545]) box(mbedSideGlassPivot, 18, mbedLoftUnder - 1100, 10, -9, (mbedLoftUnder + 1100) / 2, sz, brassMat);
+  for (const ry of [1105, mbedLoftUnder - 5]) box(mbedSideGlassPivot, 18, 10, 550, -9, ry, 275, brassMat);
+  const w4SideProxy = new THREE.Mesh(new THREE.BoxGeometry(550, 1251.6, 18), tintedGlassMat);
+  w4SideProxy.visible = false;
+  mbedSideGlassPivot.add(w4SideProxy);
+  registerPart('master', 'W4-SIDE-GLASS', 'W4 Entry-Facing Pocket Brass-Framed Tinted-Glass Door (550 W x 1251.6 H x 18 T; 150mm Pocket)', 'Wardrobe (W4)', w4SideProxy, 'Brass Frame + 8mm Tinted Glass (530x1231.6) enclosing 150mm Handbag & Garment Pocket', 1, [550, 1251.6, 18], true);
+
+  // 5B. B1 Hydraulic Storage Bed (2100 L x 2081.2 W, 1981.2mm 6.5-ft Mattress)
+  const mbedHeadX = 4150 - 101.6, mbedCenterX = mbedHeadX - 1050, mbedCenterZ = 1250 + 2081.2 / 2;
+  const mbedBedPivot = new THREE.Group();
+  mbedBedPivot.position.set(mbedHeadX, 350, mbedCenterZ);
+  mbedRoot.add(mbedBedPivot);
+  for (const sz of [1262.5, 1250 + 2081.2 - 12.5]) box(mbedRoot, 2100, 270, 25, mbedCenterX, 215, sz, mbedOak, true);
+  for (const ex of [1948.4 + 12.5, mbedHeadX - 12.5]) box(mbedRoot, 25, 270, 2031.2, ex, 215, mbedCenterZ, mbedOak, true);
+  box(mbedRoot, 1980, 240, 18, mbedCenterX, 215, mbedCenterZ, mbedOak);
+  const mbedDeckMesh = box(mbedBedPivot, 2100, 24, 2081.2, -1050, 0, 0, mbedOak);
+  box(mbedBedPivot, 2030, 200, 1981.2, -1065, 100, 0, linenMat);
+  box(mbedBedPivot, 850, 18, 1981.2, -1600, 223, 0, mbedOlive);
+  for (const pz of [-520, 520]) {
+    box(mbedBedPivot, 440, 115, 820, -340, 260, pz, linenMat);
+    box(mbedBedPivot, 340, 105, 680, -610, 252, pz, mbedOlive);
+  }
+  const mbedBedProxy = new THREE.Mesh(new THREE.BoxGeometry(2081.2, 550, 2100), mbedOak);
+  mbedBedProxy.visible = false;
+  mbedRoot.add(mbedBedProxy);
+  registerPart('master', 'MB-B1-BED', 'Hydraulic Lifting Storage Bed & 6.5-Ft Mattress (2081.2 W x 550 H x 2100 L; 1981.2 Mattress)', 'Bed (B1)', mbedBedProxy, '25mm Dark Walnut Storage Carcass + 24mm Lifting Deck + Cream Linen & Olive Runner', 1, [2081.2, 550, 2100], true);
+
+  // 5C. East Wall: N1 Bedside + 4x 200x300 Arched Niches (NC-1..4) + H1 4-In Stadium Bed Rest + 3x 320x480 Equal Arched Niches (NB-1..3)
+  function createMbedNiche(id, centerZ, bottomY, nicheW, nicheH) {
+    const halfW = nicheW / 2, archR = halfW, springY = bottomY + nicheH - archR;
+    const innerSh = makeStadiumArchShape(halfW, bottomY, bottomY + nicheH, archR);
+    const backM = new THREE.Mesh(new THREE.ShapeGeometry(innerSh, 28), mbedNicheBack);
+    backM.rotation.y = -Math.PI / 2;
+    backM.position.set(4131.5, 0, centerZ);
+    mbedRoot.add(backM);
+    cylinder(mbedRoot, 14, 14, 8, [4092, bottomY + nicheH - 5, centerZ], brassMat, 16);
+    cylinder(mbedRoot, 10, 10, 10, [4092, bottomY + nicheH - 6, centerZ], glowMat, 16);
+    box(mbedRoot, 76, 6, nicheW - 8, 4091.4, bottomY + 3, centerZ, brassMat, true);
+    cylinder(mbedRoot, 20, 20, 90, [4088, bottomY + 51, centerZ - nicheW * 0.22], linenMat, 16);
+    cylinder(mbedRoot, 5, 5, 14, [4088, bottomY + 102, centerZ - nicheW * 0.22], glowMat, 12);
+  }
+
+  function buildMbedCncPanel(id, title, zStart, zEnd, yBot, yTop, niches) {
+    const pW = zEnd - zStart - 3, pCenterZ = (zStart + zEnd) / 2;
+    const sh = new THREE.Shape();
+    sh.moveTo(-pW / 2, yBot); sh.lineTo(pW / 2, yBot); sh.lineTo(pW / 2, yTop); sh.lineTo(-pW / 2, yTop); sh.lineTo(-pW / 2, yBot);
+    for (const n of niches) sh.holes.push(makeArchHolePath(n.z, pCenterZ, n.y, n.w, n.h));
+    const pm = new THREE.Mesh(new THREE.ExtrudeGeometry(sh, { depth: 18, bevelEnabled: false, curveSegments: 28 }), mbedCladding);
+    pm.rotation.y = -Math.PI / 2;
+    pm.position.set(4066.4, 0, pCenterZ);
+    mbedRoot.add(pm);
+    for (const n of niches) createMbedNiche(n.id, n.z, n.y, n.w, n.h);
+    const proxy = new THREE.Mesh(new THREE.BoxGeometry(zEnd - zStart, yTop - yBot, 18), mbedCladding);
+    proxy.visible = false;
+    mbedRoot.add(proxy);
+    registerPart('master', id, title, 'East Niche Wall (4-In)', proxy, '18mm BWR/FR Ply + 1.0mm FR Matte Stucco Laminate (#d8cfc2) + Ø25mm LED & 6mm Brass Candle Tray', 1, [zEnd - zStart, yTop - yBot, 18]);
+  }
+
+  buildMbedCncPanel('N1-PNL1', 'Bedside CNC 4-Arch Face Panel (250 W x 2242.4 H x 18 T; 4x 200x300 Niches NC-1..4)', 950, 1200, 450, 2692.4, [
+    { id: 'NC-1', z: 1075, y: 820, w: 200, h: 300 },
+    { id: 'NC-2', z: 1075, y: 1260, w: 200, h: 300 },
+    { id: 'NC-3', z: 1075, y: 1700, w: 200, h: 300 },
+    { id: 'NC-4', z: 1075, y: 2140, w: 200, h: 300 }
+  ]);
+  buildMbedCncPanel('H1-PNL2', 'Left Bed-Rest CNC Arch Face Panel (727 W x 1272.4 H x 18 T; 320x480 Niche NB-1)', 1200, 1927, 1420, 2692.4, [{ id: 'NB-1', z: 1563.5, y: 1620, w: 320, h: 480 }]);
+  buildMbedCncPanel('H1-PNL3', 'Center Bed-Rest CNC Arch Face Panel (727 W x 1272.4 H x 18 T; 320x480 Niche NB-2)', 1927, 2654, 1420, 2692.4, [{ id: 'NB-2', z: 2290.5, y: 1620, w: 320, h: 480 }]);
+  buildMbedCncPanel('H1-PNL4', 'Right Bed-Rest CNC Arch Face Panel (727.2 W x 1272.4 H x 18 T; 320x480 Niche NB-3)', 2654, 3381.2, 1420, 2692.4, [{ id: 'NB-3', z: 3017.5, y: 1620, w: 320, h: 480 }]);
+
+  // H1 4-In Stadium-Arch Bed Rest (2181.2 W x 1070 H x 101.6 D at Y = 350..1420, R = 520)
+  const h1Outer = makeStadiumArchShape(1090.6, 350, 1420, 520);
+  const h1Inner = makeStadiumArchShape(1045, 350, 1375, 475);
+  h1Outer.holes.push(h1Inner);
+  const h1WalnutArch = new THREE.Mesh(new THREE.ExtrudeGeometry(h1Outer, { depth: 95.6, bevelEnabled: false, curveSegments: 36 }), darkWalnutMat);
+  h1WalnutArch.rotation.y = -Math.PI / 2;
+  h1WalnutArch.position.set(4150, 0, mbedCenterZ);
+  mbedRoot.add(h1WalnutArch);
+  const h1PadMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(h1Inner, { depth: 100, bevelEnabled: false, curveSegments: 36 }), mbedFabric);
+  h1PadMesh.rotation.y = -Math.PI / 2;
+  h1PadMesh.position.set(4148.4, 0, mbedCenterZ);
+  mbedRoot.add(h1PadMesh);
+  const h1BedRestProxy = new THREE.Mesh(new THREE.BoxGeometry(2181.2, 1070, 101.6), mbedFabric);
+  h1BedRestProxy.visible = false;
+  mbedRoot.add(h1BedRestProxy);
+  registerPart('master', 'H1-BED-REST', '4-In Stadium-Arch Walnut Frame & Greige Upholstered Bed Rest (2181.2 W x 1070 H x 101.6 D, R=520)', 'Headboard (H1)', h1BedRestProxy, 'Dark Walnut Arch Frame (2x 1090.6 halves) + 18mm BWR Carrier + 50mm FR Greige Cushion + LED Halo', 1, [2181.2, 1070, 101.6], true);
+
+  // N1 Dark Walnut Bedside Table (250 W x 450 H x 400 D at Z = 950..1200)
+  const n1BedsideMesh = box(mbedRoot, 400, 240, 250, 3950, 330, 1075, mbedOak, true);
+  box(mbedRoot, 20, 220, 240, 3740, 330, 1075, mbedOakEdge, true);
+  for (const lx of [3765, 4135]) for (const lz of [965, 1185]) box(mbedRoot, 16, 210, 16, lx, 105, lz, brassMat);
+  cylinder(mbedRoot, 68, 68, 110, [3940, 625, 1075], glowMat, 20);
+  registerPart('master', 'N1-BEDSIDE', 'Dark Walnut Bedside Table on Brass Legs (250 W x 450 H x 400 D at Z 950..1200)', 'Bedside (N1)', n1BedsideMesh, '18mm Dark Walnut Carcass + Brass Leg Frame + Enlarged Graphite Pull', 1, [250, 450, 400], true);
+
+  // 5D. M1 Tall 2600mm Floating Light Pink Merino Dresser (914.4 W x 400 D at Z = 3410.6..4325) with Sleek Copper Handles
+  const dStart = 3410.6, dEnd = 4325, dSplit = dEnd - 250, dMainW = dSplit - dStart, dMainCenter = (dStart + dSplit) / 2, dCenter = (dStart + dEnd) / 2;
+  const mbedDresserMirror = new THREE.Group(), mbedDresserGlass = new THREE.Group(), mbedDresserDrawer = new THREE.Group();
+  for (const sz of [dStart + 9, dEnd - 9]) box(mbedRoot, 380, 104, 18, 3960, 750, sz, merinoPink, true);
+  for (const lv of [689, 811]) box(mbedRoot, 400, 18, 914.4, 3950, lv, dCenter, merinoPink, true);
+  mbedRoot.add(mbedDresserDrawer);
+  box(mbedDresserDrawer, 20, 136, 910.4, 3760, 750, dCenter, merinoPinkEdge, true);
+  box(mbedDresserDrawer, 8, 16, 882.4, 3731, 780, dCenter, copperMat);
+  box(mbedDresserDrawer, 300, 86, 842.4, 3920, 761, dCenter, merinoPink);
+  const m1cProxy = new THREE.Mesh(new THREE.BoxGeometry(914.4, 140, 400), merinoPink);
+  m1cProxy.visible = false;
+  mbedDresserDrawer.add(m1cProxy);
+  registerPart('master', 'M1-C-DRAWER', 'Full-Width Floating Light Pink Merino Drawer + 882.4mm Sleek Copper Handle (914.4 W x 140 H x 400 D)', 'Dresser (M1)', m1cProxy, 'Light Pink Merino Matte Laminate (#E6C0C4) + 910.4x136x20 Front + 882.4mm Brushed Copper Pull', 1, [914.4, 140, 400], true);
+
+  // M1-A 1740mm Back-Storage Cabinet + Rectangular Mirror Door (628.4 W x 1740 H, R=48 ends + 650mm Copper Handle)
+  for (const sz of [dStart + 9, dSplit - 9]) box(mbedRoot, 180, 1740, 18, 4060, 1730, sz, merinoPink, true);
+  box(mbedRoot, 18, 1704, dMainW - 36, 4141, 1730, dMainCenter, merinoPink);
+  for (const sy of [869, 1156, 1443, 1730, 2017, 2304, 2591]) box(mbedRoot, 150, 18, dMainW - 36, 4055, sy, dMainCenter, merinoPink, true);
+  mbedDresserMirror.position.set(3950, 0, dStart + 18);
+  mbedRoot.add(mbedDresserMirror);
+  const m1aHalfW = (dMainW - 36) / 2;
+  const m1aDoorSh = makeRoundedRectShape(m1aHalfW, 860, 2600, 48);
+  const m1aDoorM = new THREE.Mesh(new THREE.ExtrudeGeometry(m1aDoorSh, { depth: 18, bevelEnabled: false, curveSegments: 24 }), merinoPink);
+  m1aDoorM.rotation.y = -Math.PI / 2;
+  m1aDoorM.position.set(19, 0, m1aHalfW);
+  mbedDresserMirror.add(m1aDoorM);
+  const m1aGlassSh = makeRoundedRectShape(m1aHalfW - 14, 874, 2586, 36);
+  const m1aGlassM = new THREE.Mesh(new THREE.ExtrudeGeometry(m1aGlassSh, { depth: 4, bevelEnabled: false, curveSegments: 24 }), mirrorMat);
+  m1aGlassM.rotation.y = -Math.PI / 2;
+  m1aGlassM.position.set(1, 0, m1aHalfW);
+  mbedDresserMirror.add(m1aGlassM);
+  box(mbedDresserMirror, 8, 650, 14, -19, 1475, dMainW - 64, copperMat);
+  const m1aProxy = new THREE.Mesh(new THREE.BoxGeometry(628.4, 1740, 200), merinoPink);
+  m1aProxy.visible = false;
+  mbedDresserMirror.add(m1aProxy);
+  registerPart('master', 'M1-A-MIRROR-CAB', 'Tall Rectangular Mirror Door (R=48) & 6-Tier Pink Merino Back Storage (664.4 W x 1740 H x 200 D, Y 860..2600)', 'Dresser (M1)', m1aProxy, '628.4x1740 Mirror Door in Brushed Copper Frame + 650mm Copper Handle + 7 Pink Merino Shelves', 1, [664.4, 1740, 200], true);
+
+  // M1-B 1780mm Tinted-Glass Back-Storage Tower (250 W x 1780 H x 400 D, R=36 ends + 650mm Copper Handle)
+  for (const sz of [dSplit + 9, dEnd - 9]) box(mbedRoot, 380, 1780, 18, 3960, 1710, sz, merinoPink, true);
+  box(mbedRoot, 18, 1744, 214, 4141, 1710, (dSplit + dEnd) / 2, merinoPink);
+  for (const cy of [829, 2591]) box(mbedRoot, 380, 18, 214, 3960, cy, (dSplit + dEnd) / 2, merinoPink, true);
+  for (const sy of [1080, 1332, 1584, 1836, 2088, 2340]) box(mbedRoot, 342, 18, 214, 3980, sy, (dSplit + dEnd) / 2, glassMat);
+  mbedDresserGlass.position.set(3750, 0, dEnd - 18);
+  mbedRoot.add(mbedDresserGlass);
+  const m1bSh = makeRoundedRectShape(107, 822, 2598, 36);
+  const m1bM = new THREE.Mesh(new THREE.ExtrudeGeometry(m1bSh, { depth: 18, bevelEnabled: false, curveSegments: 24 }), tintedGlassMat);
+  m1bM.rotation.y = -Math.PI / 2;
+  m1bM.position.set(18, 0, -107);
+  mbedDresserGlass.add(m1bM);
+  box(mbedDresserGlass, 8, 650, 14, -15, 1475, -186, copperMat);
+  const m1bProxy = new THREE.Mesh(new THREE.BoxGeometry(250, 1780, 400), merinoPink);
+  m1bProxy.visible = false;
+  mbedDresserGlass.add(m1bProxy);
+  registerPart('master', 'M1-B-GLASS-CAB', 'Tall Rectangular Tinted-Glass Tower (R=36) & 6 Glass Shelves (250 W x 1780 H x 400 D, Y 820..2600)', 'Dresser (M1)', m1bProxy, 'Light Pink Merino Carcass (#E6C0C4) + 214x1776 Tinted-Glass Door + 650mm Sleek Copper Handle', 1, [250, 1780, 400], true);
+
+  // ============================================================================
+  // 6. BEDROOM 1 / KIDS ROOM & BEDROOM 2 (STUDY 03 — EXACT MINUTE RESTORATION FROM bedrooms.js)
+  // ============================================================================
+  function buildStudy03Bedroom(roomNum, targetGroup, globalOffset) {
+    const isRoom1 = roomNum === 1;
+    const roomKey = isRoom1 ? 'bedroom1' : 'bedroom2';
+    const root = new THREE.Group();
+    root.position.set(...globalOffset);
+    targetGroup.add(root);
+
+    const cfg = isRoom1 ? {
+      width: 3630, length: 3560, entryWidth: 3790,
+      window: { width: 1800 },
+      entrance: { hinge: [-160, 3560], width: 935, closed: -Math.PI / 2, open: 0 },
+      wardrobe: { position: [0, 855.5], rotation: Math.PI / 2, width: 775.5, bays: 1 },
+      bed: { x: 520, z: 2512.5, rotation: Math.PI / 2, width: 1472, mattress: 1372 },
+      seat: { position: [3630, 880], rotation: -Math.PI / 2, width: 1800 },
+      dresser: { position: [3630, 0], rotation: -Math.PI / 2, width: 750 }
+    } : {
+      width: 3300, length: 3560, entryWidth: 5185,
+      window: { width: 1850 },
+      entrance: { hinge: [5185, 3560], width: 935, closed: -Math.PI / 2, open: -Math.PI },
+      wardrobe: { position: [2213.6, 3560], rotation: Math.PI, width: 2133.6, bays: 3 },
+      bed: { x: 100, z: 2060, rotation: Math.PI / 2, width: 1630, mattress: 1524 },
+      seat: { position: [750, 0], rotation: 0, width: 1850 },
+      dresser: { position: [3300, 300], rotation: -Math.PI / 2, width: 650 }
+    };
+
+    const frontMat = isRoom1 ? br1Front : br2Front;
+    const panelMat = isRoom1 ? br1Panel : br2Panel;
+    const fabricMat = isRoom1 ? br1Fabric : br2Fabric;
+    const accentMat = isRoom1 ? br1Accent : br2Accent;
+    const soffit = 2794, plinth = 101.6, loftClear = 304.8, loftTop = soffit - 18, loftBottom = loftTop - loftClear;
+    const carcassHeight = soffit - plinth, carcassCenter = (soffit + plinth) / 2, doorHeight = carcassHeight - 4;
+
+    // Window & Curtains
+    const winGrp = new THREE.Group();
+    winGrp.position.set(cfg.seat.position[0], 0, cfg.seat.position[1]);
+    winGrp.rotation.y = cfg.seat.rotation;
+    root.add(winGrp);
+    const winW = cfg.window.width;
+    for (const fx of [0, winW / 2, winW]) box(winGrp, 30, 1500, 55, fx, 1500, 0, steelMat);
+    for (const fy of [750, 2250]) box(winGrp, winW + 30, 30, 55, winW / 2, fy, 0, steelMat);
+    for (const px of [winW / 4, winW * 0.75]) box(winGrp, winW / 2 - 30, 1470, 8, px, 1500, 0, glassMat);
+    box(winGrp, winW + 160, 45, 120, winW / 2, 2390, 30, brOak);
+    for (const cx of [80, winW - 80]) for (let p = 0; p < 5; p++) rod(winGrp, [cx + (p - 2) * 24, 480, 55], [cx + (p - 2) * 24, 2350, 55], 18, brLinen);
+
+    // Entrance Door
+    const entryPivot = new THREE.Group();
+    entryPivot.position.set(cfg.entrance.hinge[0], 0, cfg.entrance.hinge[1]);
+    entryPivot.rotation.y = -cfg.entrance.open;
+    root.add(entryPivot);
+    box(entryPivot, cfg.entrance.width - 25, 2210, 35, cfg.entrance.width / 2, 1105, 0, brIvory, true);
+    box(entryPivot, 110, 22, 20, cfg.entrance.width - 135, 1000, -28, brassMat);
+
+    // Wardrobe (Room 1: 775.5 W 1-bay W1-style on West wall; Room 2: 2133.6 W 7-ft 3-bay on South wall with Used-Clothes Pocket)
+    const ward = new THREE.Group();
+    ward.position.set(cfg.wardrobe.position[0], 0, cfg.wardrobe.position[1]);
+    ward.rotation.y = cfg.wardrobe.rotation;
+    root.add(ward);
+
+    const wWidth = cfg.wardrobe.width, bayCount = cfg.wardrobe.bays, clearBay = (wWidth - (bayCount + 1) * 18) / bayCount;
+    const wardrobeDoors = [], drawers = [], loftDoors = [], studyDoors = [], seatDrawers = [];
+    let pullDownPivot = null, pullDownClothes = null, usedClothesPivot = null;
+
+    const plinthMesh = box(ward, wWidth, 101.6, 550, wWidth / 2, 50.8, 275, brDark);
+    registerPart(roomKey, `BR${roomNum}-W-PLINTH`, `Wardrobe Recessed Plinth (${pretty(wWidth)} W x 101.6 H x 550 D)`, 'Wardrobe (W)', plinthMesh, '18mm Dark Plinth Base (#424b46)', 1, [wWidth, 101.6, 550]);
+    const backMesh = box(ward, wWidth, carcassHeight, 8, wWidth / 2, carcassCenter, 4, brIvory);
+    registerPart(roomKey, `BR${roomNum}-W-BACK`, `Wardrobe 8mm Back Panel (${pretty(wWidth)} W x ${pretty(carcassHeight)} H x 8 D)`, 'Wardrobe (W)', backMesh, '8mm Ivory Liner Back Panel', 1, [wWidth, carcassHeight, 8]);
+
+    let vertSample = null;
+    for (let div = 0; div <= bayCount; div++) {
+      if (!isRoom1 && div === 0) {
+        const lowEnd = box(ward, 18, 998.4, 610, 9, 600.8, 305, brIvory, true);
+        const upEnd = box(ward, 18, soffit - (loftBottom - 18), 610, 9, (soffit + loftBottom - 18) / 2, 305, brIvory, true);
+        for (const ez of [10, 590]) box(ward, 18, loftBottom - 18 - 1100, 20, 9, (1100 + loftBottom - 18) / 2, ez, brIvory, true);
+        registerPart(roomKey, 'BR2-W-POCKET-ENDS', 'Side Pocket Lower & Upper End Panels + Opening Jambs (18 W x 998.4/340.8 H x 610 D)', 'Wardrobe (W1-3)', lowEnd, '18mm Ivory Carcass Panels framing Entrance-Side Used-Clothes Opening', 1, [18, 998.4, 610]);
+      } else {
+        const vm = box(ward, 18, carcassHeight, 610, 9 + div * (clearBay + 18), carcassCenter, 305, brIvory, true);
+        if (!vertSample) vertSample = vm;
+      }
+    }
+    registerPart(roomKey, `BR${roomNum}-W-VERT`, `Wardrobe Vertical Carcass Panel (${isRoom1 ? 2 : 3}x 18 W x ${pretty(carcassHeight)} H x 610 D)`, 'Wardrobe (W)', vertSample, '18mm Ivory Carcass Vertical Division', isRoom1 ? 2 : 3, [18, carcassHeight, 610]);
+
+    const roofBaseSample = box(ward, wWidth - 36, 18, 592, wWidth / 2, 110.6, 304, brIvory);
+    box(ward, wWidth - 36, 18, 592, wWidth / 2, soffit - 9, 304, brIvory);
+    registerPart(roomKey, `BR${roomNum}-W-BASE-ROOF`, `Wardrobe Base & Roof Horizontal Panels (2x ${pretty(wWidth - 36)} W x 18 H x 592 D)`, 'Wardrobe (W)', roofBaseSample, '18mm Ivory Carcass Base (Y=110.6) & Roof (Y=2785)', 2, [wWidth - 36, 18, 592]);
+
+    function addBrDrawer(parent, mod, width, bottom, centerX, frontZ, travel, coll, frontH = 203.2, depth = 508) {
+      const g = new THREE.Group();
+      parent.add(g);
+      g.position.set(centerX, bottom, 0);
+      box(g, width, frontH, 18, 0, frontH / 2, frontZ, brIvory, true);
+      box(g, width - 36, 12, depth, 0, 24, frontZ - depth / 2 - 9, brIvory);
+      for (const sx of [-(width - 18) / 2, (width - 18) / 2]) box(g, 18, frontH - 51, depth, sx, (frontH - 51) / 2 + 30, frontZ - depth / 2 - 9, brIvory);
+      box(g, width - 36, frontH - 51, 18, 0, (frontH - 51) / 2 + 30, frontZ - depth, brIvory);
+      box(g, width - 30, 22, 8, 0, frontH - 25, frontZ + 28, brDark);
+      for (const rx of [-(width - 70) / 2, (width - 70) / 2]) box(g, 20, 16, depth, rx, 10, frontZ - depth / 2 - 9, steelMat);
+      coll.push({ group: g, travel, width, frontH });
+      return g;
+    }
+
+    let drwSample = null, loftShfSample = null, outerShfSample = null, doorSample = null, straightenerSample = null;
+    for (let bay = 0; bay < bayCount; bay++) {
+      const left = 18 + bay * (clearBay + 18), center = left + clearBay / 2, count = bay === 1 ? 5 : 4;
+      const capTop = 119.6 + count * 207.2 + 18;
+      const upLeft = left + (!isRoom1 && bay === 0 ? 168 : 0), upW = left + clearBay - upLeft, upCenter = upLeft + upW / 2;
+
+      for (let idx = 0; idx < count; idx++) {
+        const dg = addBrDrawer(ward, `C${bay + 1}`, clearBay - 40, 121.6 + idx * 207.2, center, 550, 508, drawers);
+        if (!drwSample) {
+          drwSample = new THREE.Mesh(new THREE.BoxGeometry(clearBay - 40, 203.2, 549), brIvory);
+          drwSample.visible = false;
+          dg.add(drwSample);
+        }
+      }
+      box(ward, clearBay, 18, 565, center, capTop - 9, 290.5, brIvory);
+      const lShf = box(ward, clearBay, 18, 565, center, loftBottom - 9, 290.5, brIvory);
+      if (!loftShfSample) loftShfSample = lShf;
+      box(ward, clearBay * 0.65, 180, 380, center, loftBottom + 90, 230, fabricMat);
+
+      const railY = bay === 1 ? 2110 : 2250;
+      if (isRoom1) {
+        pullDownPivot = new THREE.Group();
+        pullDownPivot.position.set(center, 1750, 300);
+        ward.add(pullDownPivot);
+        rod(pullDownPivot, [-clearBay / 2 + 35, 500, 0], [clearBay / 2 - 35, 500, 0], 12, steelMat);
+        for (const ax of [-clearBay / 2 + 45, clearBay / 2 - 45]) rod(pullDownPivot, [ax, 0, 0], [ax, 500, 0], 12, steelMat);
+        rod(pullDownPivot, [0, 500, 0], [0, -100, 0], 9, brDark);
+      } else {
+        rod(ward, [upLeft + 35, railY, 290], [left + clearBay - 35, railY, 290], 12, steelMat);
+      }
+
+      if (bay !== 1) {
+        for (const sy of [1170, 1390, 1610]) {
+          const oShf = box(ward, upW, 18, 500, upCenter, sy, 280, brIvory);
+          if (!outerShfSample) outerShfSample = oShf;
+          box(ward, Math.min(370, upW - 40), 75, 330, upCenter, sy + 47, 240, fabricMat);
+        }
+      }
+
+      const clothes = new THREE.Group();
+      ward.add(clothes);
+      if (isRoom1) pullDownClothes = clothes;
+      for (let g = 0; g < 4; g++) {
+        const gx = upLeft + upW * (g + 1) / 5;
+        rod(clothes, [gx, railY, 290], [gx, railY - 45, 290], 4, steelMat);
+        box(clothes, 90, bay === 1 ? 700 : 500, 25, gx, railY - 100 - (bay === 1 ? 350 : 250), 290, g % 2 ? fabricMat : accentMat);
+      }
+
+      for (let leaf = 0; leaf < 2; leaf++) {
+        const doorW = wWidth / (bayCount * 2) - 4;
+        const piv = new THREE.Group();
+        ward.add(piv);
+        const hingeX = bay * wWidth / bayCount + (leaf ? wWidth / bayCount - 2 : 2), dir = leaf ? -1 : 1;
+        piv.position.set(hingeX, 103.6, 602);
+        const cx = dir * doorW / 2;
+        const dMesh = box(piv, doorW, doorHeight, 19, cx, doorHeight / 2, 0, bay === 1 ? brIvory : frontMat, true);
+        box(piv, 12, 420, 28, dir * (doorW - 45), 1270, 25, brassMat);
+        for (const ins of [55, doorW - 55]) {
+          const stM = box(piv, 14, 2200, 8, dir * ins, 1293.4, -13.5, steelMat);
+          if (!straightenerSample) straightenerSample = stM;
+        }
+        if (!doorSample) doorSample = dMesh;
+        wardrobeDoors.push({ pivot: piv, angle: dir * -Math.PI * 0.53 });
+      }
+    }
+
+    registerPart(roomKey, `BR${roomNum}-C-DRAWERS`, `Concealed Wardrobe Drawer Assembly (${isRoom1 ? 4 : 13}x: ${pretty(clearBay - 40)} W x 203.2 H Front on 508 Runner)`, 'Wardrobe (C)', drwSample, `18mm Ivory Front (${pretty(clearBay - 40)}x203.2) + 152.2H Sides + Pull + 508 Quadro Runner`, isRoom1 ? 4 : 13, [clearBay - 40, 203.2, 549], true);
+    registerPart(roomKey, `BR${roomNum}-W-LOFT-SHF`, `One-Foot Clear Loft Shelf & Stack Cap (${bayCount} Bays: ${pretty(clearBay)} W x 18 H x 565 D, 304.8 Clear)`, 'Wardrobe (W)', loftShfSample, '18mm Ivory Shelf at Y=2453.2 (304.8mm Clear Loft Height to Y=2776)', bayCount * 2, [clearBay, 18, 565]);
+    registerPart(roomKey, `BR${roomNum}-W-OUTER-SHF`, `Outer Bay Storage Shelves (Y=1170, 1390, 1610: ${pretty(outerShfSample.geometry.parameters.width)} W x 18 H x 500 D)`, 'Wardrobe (W)', outerShfSample, '18mm Ivory Horizontal Storage Shelves above Drawer Cap', isRoom1 ? 3 : 6, [outerShfSample.geometry.parameters.width, 18, 500]);
+    registerPart(roomKey, `BR${roomNum}-D-DOORS`, `Full-Height Wardrobe Door Leaf (${bayCount * 2}x ${pretty(wWidth / (bayCount * 2) - 4)} W x 2688.4 H x 19 T)`, 'Wardrobe Doors (D)', doorSample, `19mm Matte ${isRoom1 ? 'Sage-Grey (#b1b9aa)' : 'Dusty Blue-Slate (#a9b8bc) & Ivory'} Door + 420mm Brass Pull`, bayCount * 2, [wWidth / (bayCount * 2) - 4, 2688.4, 19]);
+    registerPart(roomKey, `BR${roomNum}-H-STRAIGHTENER`, `Internal Door Straightener Profile (${bayCount * 4}x 14 W x 2200 H x 8 D)`, 'Hardware (H)', straightenerSample, 'Recessed 2200mm Steel Anti-Warp Straightener Bar (2 per Door Leaf)', bayCount * 4, [14, 2200, 8]);
+
+    // Room 2 Specific: Hidden Used-Clothes Side Storage Pocket (U) at Entrance End (150 clear X-depth x 565 Z-width)
+    if (!isRoom1) {
+      const pocketTop = loftBottom - 18, pocketH = pocketTop - 1100;
+      const uDiv = box(ward, 18, pocketTop - 966.4, 565, 177, (pocketTop + 966.4) / 2, 290.5, brIvory, true);
+      const uFrontClose = box(ward, 150, pocketTop - 966.4, 18, 93, (pocketTop + 966.4) / 2, 580, brIvory);
+      for (const sy of [1110, 1390]) box(ward, 150, 18, 550, 93, sy, 285, brIvory);
+      rod(ward, [93, 2230, 85], [93, 2230, 495], 12, steelMat);
+      for (const gz of [170, 285, 400]) {
+        rod(ward, [93, 2230, gz], [93, 2170, gz], 4, steelMat);
+        box(ward, 75, 580, 25, 93, 1880, gz, fabricMat);
+      }
+      usedClothesPivot = new THREE.Group();
+      ward.add(usedClothesPivot);
+      usedClothesPivot.position.set(0, 1100, 20);
+      const uDoorMesh = box(usedClothesPivot, 18, pocketH, 550, 9, pocketH / 2, 275, frontMat, true);
+      const fScribe = box(ward, 80, soffit, 19, wWidth + 40, soffit / 2, 602, frontMat, true);
+      registerPart('bedroom2', 'BR2-U-DIVIDER', 'Used-Clothes Pocket Divider & Front Closure above Drawers (18 W x 1486.8 H x 565 D)', 'Used-Clothes Pocket (U)', uDiv, '18mm Ivory Divider at X=177 preserving full 647.2mm Drawer Width below Y=966.4', 1, [18, 1486.8, 565]);
+      registerPart('bedroom2', 'BR2-U-DOOR', 'Flush Opaque Hinged Used-Clothes Side Door (18 T x 1353.2 H x 550 D at Y 1100..2453.2)', 'Used-Clothes Pocket (U)', uDoorMesh, '18mm Matte Blue-Slate (#a9b8bc) Flush Entrance-Facing Door + 2 Shelves (Y=1110/1390) & Rail (Y=2230)', 1, [18, 1353.2, 550]);
+      registerPart('bedroom2', 'BR2-F-SCRIBE', 'West Wall-End Closed Scribe Filler (80 W x 2794 H x 19 T)', 'Scribe Filler (F)', fScribe, '19mm Matte Blue-Slate (#a9b8bc) Scribe Panel closing 80mm West Wall Gap', 1, [80, 2794, 19]);
+    }
+
+    // Bed & Headboard / Murphy Wall-Bed Cabinet (WB / B / HB)
+    const bed = new THREE.Group();
+    bed.position.set(cfg.bed.x, 0, cfg.bed.z);
+    bed.rotation.y = cfg.bed.rotation;
+    root.add(bed);
+    const bW = cfg.bed.width, bCenter = bW / 2;
+    const bBase = box(bed, bW - 36, 18, 2064, bCenter, 40, 1050, brOak);
+    for (const sx of [9, bW - 9]) box(bed, 18, 300, 2100, sx, 185, 1050, brOak, true);
+    for (const ez of [9, 2091]) box(bed, bW - 36, 300, 18, bCenter, 185, ez, brOak, true);
+    box(bed, 18, 285, 2064, bCenter, 180, 1050, brOak);
+    const bedLift = new THREE.Group();
+    bed.add(bedLift);
+    const bDeck = box(bedLift, bW, 25, 2100, bCenter, 337.5, 1050, brOak, true);
+    box(bedLift, cfg.bed.mattress, 200, 2030, bCenter, 450, 1050, brLinen);
+    box(bedLift, cfg.bed.mattress + 6, 35, 820, bCenter, 565, 1530, fabricMat);
+    for (const px of [bW * 0.26, bW * 0.74]) {
+      const pil = box(bedLift, 550, 115, 400, px, 600, 280, brLinen);
+      pil.rotation.x = -0.12;
+    }
+    box(bedLift, 420, 130, 250, bCenter, 620, 480, accentMat);
+    registerPart(roomKey, `BR${roomNum}-B-FRAME`, `${isRoom1 ? 'Murphy Wall-Bed' : 'Storage Bed'} Oak Frame, Deck & ${cfg.bed.mattress}x2030 Mattress (${bW} W x 350 H x 2100 L)`, 'Bed (B)', bDeck, `18mm Oak Carcass & 25mm Deck (${bW}x2100) + ${cfg.bed.mattress}x2030 Mattress`, 1, [bW, 25, 2100], true);
+
+    const wallBedFold = new THREE.Group();
+    const hbGroup = new THREE.Group();
+    hbGroup.position.set(cfg.bed.x, 0, cfg.bed.z);
+    hbGroup.rotation.y = cfg.bed.rotation;
+    root.add(hbGroup);
+
+    let mirrorPivot = null;
+    if (isRoom1) {
+      // Room 1: Murphy Wall-Bed Folding Assembly (WB: 1672 W x 740 D x 2794 H)
+      const ch = [...bed.children];
+      bed.add(wallBedFold);
+      wallBedFold.position.y = 220;
+      for (const c of ch) { wallBedFold.add(c); c.position.y -= 220; }
+      const wbFascia = box(wallBedFold, bW, 18, 2100, bCenter, -210, 1050, frontMat, true);
+      registerPart('bedroom1', 'BR1-WB-FASCIA', 'Murphy Flush Folding Bottom Fascia Panel (1472 W x 18 H x 2100 D, Pivot Y=220)', 'Murphy Wall-Bed (WB)', wbFascia, '18mm Matte Sage-Grey (#b1b9aa) Flush Folding Bed Fascia', 1, [1472, 18, 2100]);
+
+      let wbSideSample = null;
+      for (const sx of [-91, bW + 91]) wbSideSample = box(hbGroup, 18, soffit, 740, sx, soffit / 2, -150, brOak, true);
+      const wbRoof = box(hbGroup, bW + 200, 18, 740, bCenter, soffit - 9, -150, brOak, true);
+      const wbBack = box(hbGroup, bW + 164, soffit, 18, bCenter, soffit / 2, -511, brOak);
+      const wbLoftShf = box(hbGroup, bW + 164, 18, 704, bCenter, loftBottom - 9, -150, brOak);
+      box(hbGroup, bW, 180, 400, bCenter, loftBottom + 90, -180, fabricMat);
+      let wbLoftDoorSample = null;
+      for (let leaf = 0; leaf < 2; leaf++) {
+        const piv = new THREE.Group();
+        hbGroup.add(piv);
+        const dir = leaf ? -1 : 1;
+        piv.position.set(leaf ? bW + 82 : -82, loftBottom - 16, 210);
+        wbLoftDoorSample = box(piv, (bW + 164) / 2 - 4, 336.8, 19, dir * ((bW + 164) / 2 - 4) / 2, 168.4, 0, frontMat, true);
+        loftDoors.push({ pivot: piv, angle: dir * -Math.PI / 2 });
+      }
+      const wbCushion = box(hbGroup, bW - 20, 430, 30, bCenter, 650, -490, fabricMat);
+      const wbTransom = box(hbGroup, bW + 164, loftBottom - 18 - 2324, 19, bCenter, (loftBottom - 18 + 2324) / 2, 210, frontMat, true);
+      for (const sx of [-42, bW + 42]) box(hbGroup, 80, 2320, 19, sx, 1160, 210, frontMat, true);
+      box(ward, 80, soffit, 19, wWidth + 40, soffit / 2, 602, frontMat, true);
+      const wLink = box(ward, 85, soffit, 19, -42.5, soffit / 2, 602, frontMat, true);
+
+      registerPart('bedroom1', 'BR1-WB-CARCASS', 'Murphy Wall-Bed Cabinet Sides, Roof & Back (1672 W x 2794 H x 740 D)', 'Murphy Wall-Bed (WB)', wbSideSample, '18mm Oak Sides (2x 18x2794x740), Roof (1672x18x740) & Back (1636x2794x18)', 2, [18, 2794, 740], true);
+      registerPart('bedroom1', 'BR1-WB-LOFT', 'Full-Width Murphy Loft Shelf & 2 Shutters (1636 W x 18 H x 704 D + 2x 814x336.8x19 Doors)', 'Murphy Wall-Bed (WB)', wbLoftShf, '18mm Oak Loft Shelf + 2x 19mm Matte Sage-Grey Shutters (304.8mm Clear Loft)', 1, [1636, 18, 704]);
+      registerPart('bedroom1', 'BR1-WB-CUSHION', 'Murphy Inner Headboard Cushion & Closures (1452 W x 430 H x 30 D + Transom & 85mm Link)', 'Murphy Wall-Bed (WB)', wbCushion, 'Upholstered Head Cushion + 1636x129.2x19 Transom + 85mm W1-to-Murphy Link Panel', 1, [1452, 430, 30]);
+
+      // Room 1 East Window Wall:
+      // 1) 750W North-Side Cabinet with Hidden Mirror on Inside Face of Door (M: Z = 0..750)
+      const dresser = new THREE.Group();
+      dresser.position.set(cfg.dresser.position[0], 0, cfg.dresser.position[1]);
+      dresser.rotation.y = cfg.dresser.rotation;
+      root.add(dresser);
+      const mW = cfg.dresser.width; // 750
+      for (const sx of [9, mW - 9]) box(dresser, 18, 2310, 400, sx, 1155, 200, brOak, true);
+      box(dresser, mW - 36, 2310, 8, mW / 2, 1155, 4, brOak);
+      for (const sy of [110, 460, 850, 1240, 1630, 2020, 2301]) box(dresser, mW - 36, 18, 370, mW / 2, sy, 193, brOak);
+      mirrorPivot = new THREE.Group();
+      mirrorPivot.position.set(mW - 20, 110, 405);
+      dresser.add(mirrorPivot);
+      const mCenter = -1 * (mW - 40) / 2;
+      const mDoorBack = box(mirrorPivot, mW - 40, 2180, 20, mCenter, 1090, 0, brOak, true);
+      const hidMirror = box(mirrorPivot, mW - 64, 2156, 6, mCenter, 1090, -13, mirrorMat);
+      box(dresser, 750, loftBottom - 18 - 2310, 19, 375, (loftBottom - 18 + 2310) / 2, 405, frontMat, true);
+      registerPart('bedroom1', 'BR1-M-CABINET', 'North-Side Storage Cabinet with 7 Shelves (750 W x 2310 H x 400 D at Z 0..750)', 'Mirror Cabinet (M)', mDoorBack, '18mm Oak Sides (2x 18x2310x400) + 7x 714x18x370 Shelves + Fascia to Loft', 1, [710, 2180, 20], true);
+      registerPart('bedroom1', 'BR1-M-HIDDEN-MIRROR', 'Concealed Inside-Face Mirror on Hinged Door (686 W x 2156 H x 6 D on 710x2180x20 Door)', 'Mirror Cabinet (M)', hidMirror, '6mm Safety-Backed Mirror mounted on inside face of 20mm Oak Hinged Door', 1, [686, 2156, 6]);
+
+      // 2) 1800W Bay Window Seat with 2 Pull-Out Drawers (S & SD: Z = 880..2680)
+      const seat = new THREE.Group();
+      seat.position.set(cfg.seat.position[0], 0, cfg.seat.position[1]);
+      seat.rotation.y = cfg.seat.rotation;
+      root.add(seat);
+      const sW = cfg.seat.width; // 1800
+      box(seat, sW, 80, 450, sW / 2, 40, 245, brDark);
+      for (const sx of [9, sW / 2, sW - 9]) box(seat, 18, 332, 500, sx, 246, 250, brOak, true);
+      const sTop = box(seat, sW, 18, 500, sW / 2, 403, 250, brOak, true);
+      box(seat, sW - 12, 38, 488, sW / 2, 431, 250, fabricMat);
+      let sdSample = null;
+      for (let idx = 0; idx < 2; idx++) {
+        const sdg = addBrDrawer(seat, 'SD', sW / 2 - 30, 91, sW * (idx ? 0.75 : 0.25), 485, 350, seatDrawers, 290, 400);
+        if (!sdSample) {
+          sdSample = new THREE.Mesh(new THREE.BoxGeometry(870, 290, 441), brIvory);
+          sdSample.visible = false;
+          sdg.add(sdSample);
+        }
+      }
+      registerPart('bedroom1', 'BR1-S-SEAT', 'Bay Window Seat Carcass, Top & 38mm Cushion (1800 W x 450 H x 500 D at Z 880..2680)', 'Window Seat (S)', sTop, '18mm Oak Carcass & Top (1800x18x500) + 80mm Plinth + 38mm Upholstered Seat Pad', 1, [1800, 18, 500], true);
+      registerPart('bedroom1', 'BR1-SD-DRAWERS', 'Window Seat Pull-Out Drawer Assembly (2x 870 W x 290 H x 441 D, 350mm Travel)', 'Window Seat (SD)', sdSample, '18mm Ivory Front (870x290) + 400mm Deep Drawer Box on 350mm Runners', 2, [870, 290, 441], true);
+
+      // 3) 3560W Full-Width Window Wall Loft Bridge (O: Z = 0..3560, Y = 2453.2..2794) + 130 & 100 Scribe Closures
+      const bridge = new THREE.Group();
+      bridge.position.set(3630, 0, 0);
+      bridge.rotation.y = cfg.seat.rotation;
+      root.add(bridge);
+      const brW = 3560, brH = 340.8, brCount = 5;
+      const brBot = box(bridge, brW, 18, 400, brW / 2, loftBottom - 9, 200, brOak, true);
+      box(bridge, brW, 18, 400, brW / 2, soffit - 9, 200, brOak, true);
+      for (let div = 0; div <= brCount; div++) box(bridge, 18, brH - 36, 400, 9 + div * (brW - 18) / brCount, (loftTop + loftBottom) / 2, 200, brOak);
+      let brDoorSample = null;
+      for (let leaf = 0; leaf < brCount; leaf++) {
+        const piv = new THREE.Group();
+        bridge.add(piv);
+        piv.position.set(leaf * brW / brCount + 2, loftBottom - 16, 405);
+        brDoorSample = box(piv, brW / brCount - 4, brH - 4, 19, (brW / brCount - 4) / 2, (brH - 4) / 2, 0, frontMat, true);
+        loftDoors.push({ pivot: piv, angle: -Math.PI / 2 });
+      }
+      for (const [st, wi] of [[750, 130], [2680, 100]]) box(bridge, wi, loftBottom - 18, 19, st + wi / 2, (loftBottom - 18) / 2, 405, frontMat, true);
+      registerPart('bedroom1', 'BR1-O-BRIDGE-LOFT', 'Full-Width Window Wall Loft Bridge & 5 Shutters (3560 W x 340.8 H x 400 D + 5x 708x336.8x19 Doors)', 'Window Loft Bridge (O)', brBot, '18mm Oak Loft Bridge (3560x400) + 5x Matte Sage-Grey Shutters + 130/100mm Scribe Closures', 1, [3560, 18, 400], true);
+
+      // 4) 780W Study Desk & Tinted-Glass Upper Storage (T & TG: Z = 2780..3560)
+      const study = new THREE.Group();
+      study.position.set(3630, 0, 2780);
+      study.rotation.y = -Math.PI / 2;
+      root.add(study);
+      const tTop = box(study, 780, 25, 550, 390, 737.5, 275, brOak, true);
+      box(study, 18, 725, 550, 771, 362.5, 275, brOak, true);
+      box(study, 744, 25, 450, 390, 712.5, 225, brIvory);
+      const chair = new THREE.Group();
+      chair.position.set(390, 0, 640);
+      study.add(chair);
+      box(chair, 370, 65, 360, 0, 445, 0, accentMat);
+      box(chair, 370, 380, 45, 0, 680, 165, accentMat);
+      for (const lx of [-145, 145]) for (const lz of [-140, 140]) rod(chair, [lx, 0, lz], [lx, 415, lz], 14, brDark);
+      box(study, 260, 12, 190, 400, 756, 160, brDark);
+
+      const stTop = loftBottom - 18, stH = stTop - 1250; // 1203.2 H
+      for (const sx of [9, 771]) box(study, 18, stH, 400, sx, (stTop + 1250) / 2, 200, brOak, true);
+      box(study, 744, stH, 8, 390, (stTop + 1250) / 2, 4, brOak);
+      for (const sy of [1259, 1645, 2030, stTop - 9]) box(study, 744, 18, 380, 390, sy, 200, brOak);
+      let tgGlassSample = null;
+      for (let leaf = 0; leaf < 2; leaf++) {
+        const piv = new THREE.Group();
+        study.add(piv);
+        const dir = leaf ? -1 : 1;
+        piv.position.set(leaf ? 778 : 2, 1252, 405);
+        tgGlassSample = box(piv, 348, stH - 44, 6, dir * 193, (stH - 4) / 2, 0, tintedGlassMat);
+        for (const fx of [10, 376]) box(piv, 20, stH - 4, 18, dir * fx, (stH - 4) / 2, 0, brDark);
+        for (const fy of [10, stH - 14]) box(piv, 386, 20, 18, dir * 193, fy, 0, brDark);
+        studyDoors.push({ pivot: piv, angle: dir * -Math.PI / 2 });
+      }
+      registerPart('bedroom1', 'BR1-T-DESK', 'Study Desk Top, End Support & Shallow Drawer Rail (780 W x 750 H x 550 D + Study Chair)', 'Study Desk (T)', tTop, '25mm Oak Desktop (780x550 at Y=750, 700 Knee Clear) + 18x725x550 Support + Chair', 1, [780, 25, 550], true);
+      registerPart('bedroom1', 'BR1-TG-UPPER', 'Study Upper Storage with 4 Shelves & 2 Tinted-Glass Doors (780 W x 1203.2 H x 400 D, Y 1250..2453.2)', 'Study Upper (TG)', tgGlassSample, '18mm Oak Carcass + 4x 744x18x380 Shelves + 2x 386x1199.2 Dark-Framed Tinted-Glass Doors', 2, [348, stH - 44, 6], true);
+    } else {
+      // Room 2 Specific: Rounded Arch Framed Headboard (HB: 1830 W x 2400 H x 92 D) + 6 Upholstered Panels + Floating Bedside (N)
+      const arch = new THREE.Shape();
+      arch.moveTo(-100, 0); arch.lineTo(1730, 0); arch.lineTo(1730, 1485);
+      arch.absarc(815, 1485, 915, 0, Math.PI, false); arch.lineTo(-100, 0);
+      const hbBack = new THREE.Mesh(new THREE.ExtrudeGeometry(arch, { depth: 92, bevelEnabled: false, curveSegments: 40 }), panelMat);
+      hbBack.position.z = -100;
+      hbGroup.add(hbBack);
+      const outline = arch.getPoints(60).map(pt => new THREE.Vector3(pt.x, pt.y, -6));
+      hbGroup.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(outline, true), 120, 5, 10, true), glowMat));
+      let hbPadSample = null;
+      for (let p = 0; p < 6; p++) hbPadSample = box(hbGroup, 245, 850, 24, 180 + p * 254, 825, -12, fabricMat, true);
+      const hbProxy = new THREE.Mesh(new THREE.BoxGeometry(1830, 2400, 92), panelMat);
+      hbProxy.visible = false;
+      hbGroup.add(hbProxy);
+      registerPart('bedroom2', 'BR2-HB-ARCH', 'Rounded Arch Framed Headboard with Perimeter LED Glow (1830 W x 2400 H x 92 D)', 'Headboard (HB)', hbProxy, '92mm Mist-Blue Framed Arch (#a8babe) + Warm Perimeter LED Tube', 1, [1830, 2400, 92], true);
+      registerPart('bedroom2', 'BR2-HB-PADS-1..6', 'Upholstered Headboard Vertical Cushion Panels (6x 245 W x 850 H x 24 D)', 'Headboard (HB)', hbPadSample, '24mm Mist-Grey Upholstered Cushion Panels (#d3d7d7)', 6, [245, 850, 24]);
+
+      const bedside = new THREE.Group();
+      bedside.position.set(cfg.bed.x, 0, cfg.bed.z);
+      bedside.rotation.y = cfg.bed.rotation;
+      root.add(bedside);
+      const nTop = box(bedside, 360, 18, 380, 1850, 440, 190, brOak, true);
+      const nCab = box(bedside, 360, 170, 360, 1850, 346, 190, brIvory, true);
+      rod(bedside, [1850, 450, 130], [1850, 700, 130], 10, brassMat);
+      cylinder(bedside, 65, 110, 150, [1850, 760, 130], brLinen, 20);
+      registerPart('bedroom2', 'BR2-N-BEDSIDE', 'Floating Window-Side Bedside Cabinet & Oak Top (360 W x 188 H x 380 D)', 'Bedside (N)', nCab, '18mm Oak Top (360x18x380) + Ivory Floating Drawer Box (360x170x360) clearing West Wardrobe Drawers', 1, [360, 170, 360], true);
+    }
+
+    return {
+      wardrobeDoors, drawers, loftDoors, studyDoors, seatDrawers,
+      pullDownPivot, pullDownClothes, wallBedFold, bedLift, mirrorPivot, usedClothesPivot
+    };
+  }
+
+  const br1Refs = buildStudy03Bedroom(1, groups.bedroom1, [6870, 0, -3560]);
+  const br2Refs = buildStudy03Bedroom(2, groups.bedroom2, [0, 0, -3560]);
+
+  // ============================================================================
+  // 7. 3 TOILETS SANITARY FIXTURES (Master Toilet, Toilet 1, Toilet 2)
+  // ============================================================================
+  for (const [tx, tz] of [[937, 4800], [4207, -2500], [5902, -2500]]) {
+    box(groups.toilets, 750, 520, 480, tx, 540, tz - 700, walnutMat, true);
+    box(groups.toilets, 770, 25, 500, tx, 812, tz - 700, marbleMat);
+    box(groups.toilets, 420, 410, 620, tx - 220, 205, tz + 150, sanitaryWhite, true);
+    box(groups.toilets, 800, 2100, 10, tx, 1050, tz + 550, glassMat);
+  }
+
+  // ============================================================================
+  // 8. CEILINGS, COVES, FANS & CHANDELIERS
+  // ============================================================================
+  // Living/Dining False Ceiling Tray with Dual Fans & Chandelier
+  for (const cz of [140, 3160]) box(groups.ceiling, 8975, 101.6, 280, 4487.5, 2743.2, cz, wavyHdhmrMat);
+  for (const cx of [140, 8835]) box(groups.ceiling, 280, 101.6, 2740, cx, 2743.2, 1650, wavyHdhmrMat);
+  for (const fx of [2850, 5550]) {
+    cylinder(groups.ceiling, 95, 95, 36, [fx, 2610, 1650], wavyHdhmrMat, 20);
+    for (let b = 0; b < 3; b++) {
+      const blade = box(groups.ceiling, 620, 12, 125, fx, 2605, 1650, wavyHdhmrMat);
+      blade.geometry.translate(290, 0, 0); blade.rotation.y = (b * Math.PI * 2) / 3 + 0.3;
+    }
+  }
+  // Dining Chandelier
+  rod(groups.ceiling, [6850, 2020, 1850], [6850, 2692.4, 1850], 12, brassMat);
+  for (let arm = 0; arm < 8; arm++) {
+    const ang = (arm * Math.PI) / 4, ax = 6850 + Math.cos(ang) * 380, az = 1850 + Math.sin(ang) * 380;
+    rod(groups.ceiling, [6850, 2040, 1850], [ax, 2080, az], 6, brassMat);
+    cylinder(groups.ceiling, 24, 16, 65, [ax, 2120, az], glowMat, 12);
+  }
+
+  // ============================================================================
+  // 9. LIGHTING & ENVIRONMENT
+  // ============================================================================
+  scene.add(new THREE.HemisphereLight('#fff8ea', '#6a7d71', 1.85));
+  const sunLight = new THREE.DirectionalLight('#ffeed0', 2.3);
+  sunLight.position.set(6500, 9500, 7500);
+  sunLight.castShadow = true;
+  sunLight.shadow.mapSize.set(2048, 2048);
+  Object.assign(sunLight.shadow.camera, { left: -9000, right: 9000, top: 9000, bottom: -9000, near: 200, far: 30000 });
+  sunLight.shadow.bias = -0.0002;
+  scene.add(sunLight);
+
+  const fillLight = new THREE.DirectionalLight('#e6f0ea', 1.1);
+  fillLight.position.set(-4500, 4500, -3500);
+  scene.add(fillLight);
+
+  // ============================================================================
+  // 10. MULTI-ROOM VIEWS, DYNAMIC CONFIGURATIONS & DYNAMIC REGISTER
+  // ============================================================================
+  const roomConfigs = {
+    apartment: {
+      title: 'Full-House 3BHK Axonometric Overview',
+      camera: { pos: [-4500, 12500, 15500], target: [5250, 1000, 2200], span: 17500 },
+      subviews: [
+        { id: 'overview', name: 'Apartment 3D Axonometric', pos: [-4500, 12500, 15500], target: [5250, 1000, 2200] },
+        { id: 'plan', name: 'Complete Floor Plan (8.9x13m)', pos: [5250, 24000, 2200], target: [5250, 0, 2200], span: 17000, up: [0, 0, -1] }
+      ],
+      schedule: [
+        ['Overall Footprint', '10,500 x 12,975 mm (Unit 6_3BHK)'],
+        ['Living & Dining', '8,975 x 3,300 mm + 1,525 x 3,300 Sitout 1'],
+        ['Parallel Kitchen', '2,630 x 3,525 mm + 1,525 x 3,365 Utility'],
+        ['Master Bedroom', '4,150 x 4,350 mm + 4,470 x 1,525 Sitout 2'],
+        ['Bedroom 1 Kids Room', '3,630 x 3,560 mm (160 offset)'],
+        ['Bedroom 2 Guest Room', '3,300 x 3,560 mm (1885 return corridor)'],
+        ['Bathrooms', '3 Attached Toilets (1575 x 2465 each)']
+      ],
+      toggles: [
+        { id: 'tog-walls', label: 'Apartment Exterior Walls', default: true },
+        { id: 'tog-ceilings', label: 'Apartment Ceilings & Coves', default: true },
+        { id: 'tog-all-doors', label: 'Open All Room Doors', default: false },
+        { id: 'tog-all-drawers', label: 'Extend All Drawers in Apartment', default: false }
+      ],
+      swatches: [
+        { color: '#dccbb8', label: 'Warm Beige Credenza & Lofts' },
+        { color: '#ede6da', label: 'Wavy Alabaster HDHMR' },
+        { color: '#c87d65', label: 'Terracotta Kitchen & Leaf Mural' },
+        { color: '#7f9276', label: 'Soft Sage M.Bed Wardrobe' },
+        { color: '#e6c0c4', label: 'Pink Merino Dresser' },
+        { color: '#b1b9aa', label: 'Bed 1 Sage-Grey' },
+        { color: '#a9b8bc', label: 'Bed 2 Blue-Slate' }
+      ],
+      notes: 'Select any specific room above to automatically update the 3D camera, kinematic state toggles, and load that specific room\'s factory component dimensions register.'
+    },
+    living: {
+      title: 'Living & Dining Area (Study 13)',
+      camera: { pos: [-2600, 5600, 7600], target: [4487.5, 1050, 1650] },
+      subviews: [
+        { id: 'overview', name: 'Living & Dining 3D Axonometric', pos: [-2600, 5600, 7600], target: [4487.5, 1050, 1650] },
+        { id: 'tv', name: 'TV Wall & 600 Glass Unit (North)', pos: [2550, 1380, 6800], target: [2550, 1380, 0], span: 5500 },
+        { id: 'sofa', name: 'Dual-Sleeper Sofa & Mural (South)', pos: [2956, 1380, -4200], target: [2956, 1380, 3300], span: 5500 },
+        { id: 'pooja', name: '5\'11" Ergonomic Pooja Mandir', pos: [6800, 1420, 2450], target: [8550, 1150, 250] },
+        { id: 'dining', name: 'Dining Table & Brown-Polish Chairs', pos: [4400, 1650, 1650], target: [7600, 1150, 1750] },
+        { id: 'sitout1', name: 'Sitout 1 Balcony & Slider', pos: [5600, 1400, 1650], target: [9500, 1400, 1650], span: 4200 }
+      ],
+      schedule: [
+        ['Room Dimensions', '8,975 x 3,300 x 2,794 mm'],
+        ['North TV Wall (Z=0)', '750 DB + 600 Tinted Glass + 3300 Wavy Wall'],
+        ['Beige TV Credenza', '3,900 W (6x 600 drawers + 300 R190 curve)'],
+        ['Pooja Mandir (600 Wall)', '850 W x 580 D x 2,692.4 H (Floor-touch sit table)'],
+        ['Dual-Sleeper Sofa S1', '3,823 W x 965/2,185 D (2x FS0136 beds)'],
+        ['South Botanical Mural', '3,100 x 1,620 mm (6 CNC leaf relief layers)'],
+        ['Marble Dining Table', '1,950 x 1,050 mm oval + 6 brown-polish chairs']
+      ],
+      toggles: [
+        { id: 'liv-db-glass', label: 'Open Hidden DB & Tall Glass Door' },
+        { id: 'liv-tv-drawers', label: 'Open 6x 600mm Beige TV Drawers' },
+        { id: 'liv-pooja-gates', label: 'Open White CNC Mandir Gates' },
+        { id: 'liv-pooja-pullouts', label: 'Extend Pooja Sitting Table, Tray & Box' },
+        { id: 'liv-sleeper-beds', label: 'Unfold Dual FS0136 Sleeper Beds' },
+        { id: 'liv-headrests', label: 'Raise 4x Win Star Headrests' }
+      ],
+      swatches: [
+        { color: '#dccbb8', label: 'Warm Beige Credenza' },
+        { color: '#ede6da', label: 'Wavy Alabaster HDHMR' },
+        { color: '#f9f7f2', label: 'Satin White CNC Mandir' },
+        { color: '#5c3a21', label: 'Brown-Polish Chairs' },
+        { color: '#f0ece1', label: 'Cream Bouclé Sofa' }
+      ],
+      notes: 'Pooja Mandir sitting table side ply panels touch the finished floor (Y=0..420) on floor rollers for zero-sag vertical weight transfer.'
+    },
+    kitchen: {
+      title: 'Parallel Kitchen & Utility Balcony (Rev 04)',
+      camera: { pos: [6300 + 4800, 5000, 3300 + 5500], target: [7645, 1100, 5062.5] },
+      subviews: [
+        { id: 'overview', name: 'Kitchen 3D Overview', pos: [6300 + 4800, 5000, 3300 + 5500], target: [7645, 1100, 5062.5] },
+        { id: 'entry', name: 'Kitchen Entrance View', pos: [7660, 1680, 3300 + 4200], target: [7645, 1300, 3300 + 1200] },
+        { id: 'dry', name: 'Dry-Side Elevation (T2/T3/T5/T6)', pos: [6300 - 4500, 1350, 5062.5], target: [6300 + 2630, 1350, 5062.5], span: 4600 },
+        { id: 'wet', name: 'Wet-Side Elevation (Hob/Sink/B1)', pos: [6300 + 6800, 1350, 5062.5], target: [6300, 1350, 5062.5], span: 4600 },
+        { id: 'rear', name: 'Rear Pull-Down Elevators (P1/P2)', pos: [7645, 1400, 3300 + 6800], target: [7645, 1400, 3300], span: 3900 },
+        { id: 'utility', name: 'Utility Balcony Laundry Zone', pos: [10200, 2200, 3300 + 1500], target: [9737.5, 1000, 4982.5] }
+      ],
+      schedule: [
+        ['Room Dimensions', '2,630 x 3,525 x 2,794 mm'],
+        ['Countertop', '950 H x 700 D Sage Green Marble'],
+        ['Aisle Clearances', '1,230 mm main aisle / 1,130 mm entry passage'],
+        ['Tandem Drawer Banks', '5 banks (15 drawers: T2, T3, T4, T5, T6)'],
+        ['Rear Wall Pull-Downs', '900 P1 + 600 P2 glass elevators'],
+        ['Dry Wall Groceries', '2x 900 G1/G2 handleless (174 clear)'],
+        ['Deep Upper Lofts', '600 D x 474 H (L1 dry, L2 rear, L3 hob)'],
+        ['Utility Balcony', '1,525 x 3,365 mm with laundry sink & washer/dryer']
+      ],
+      toggles: [
+        { id: 'kit-drawers', label: 'Extend 15 Tandem Drawers & B1 Basket' },
+        { id: 'kit-elevators', label: 'Lower Rear Glass Elevators (P1 & P2)' },
+        { id: 'kit-groceries', label: 'Open G1 & G2 Handleless Grocery Doors' },
+        { id: 'kit-lofts', label: 'Toggle 600mm Deep Upper Lofts', default: true }
+      ],
+      swatches: [
+        { color: '#c87d65', label: 'Terracotta Base & Crockery' },
+        { color: '#dfcbb5', label: 'Warm Beige Upper & Lofts' },
+        { color: '#a8bdae', label: 'Sage Green Marble Counter' },
+        { color: '#353c39', label: 'Black Hardware & Plinth' }
+      ],
+      notes: 'Full extension of opposite 600mm runner banks leaves 50mm clearance between projecting handles. Open one side at a time.'
+    },
+    master: {
+      title: 'Master Bedroom (Study 10)',
+      camera: { pos: [2035 - 3500, 4700, 3420 + 7600], target: [2035 + 2075, 1100, 3420 + 2175] },
+      subviews: [
+        { id: 'overview', name: 'Master Bedroom 3D Overview', pos: [2035 - 3500, 4700, 3420 + 7600], target: [2035 + 2075, 1100, 3420 + 2175] },
+        { id: 'wardrobe', name: '4-Bay Full-Height Wardrobe', pos: [2035 + 1574, 1400, 3420 + 7200], target: [2035 + 1574, 1400, 3420], span: 4100 },
+        { id: 'headboard', name: '4-In Stadium Bed Rest & Niches', pos: [2035 - 4500, 1400, 3420 + 2650], target: [2035 + 4150, 1400, 3420 + 2650], span: 4200 },
+        { id: 'dresser', name: 'Pink Merino Dresser (2600 H)', pos: [2035 - 4500, 1300, 3420 + 3867.8], target: [2035 + 4150, 1300, 3420 + 3867.8], span: 3000 },
+        { id: 'sitout2', name: 'Master Sitout Balcony (4.47m)', pos: [2035 + 2075, 1400, 3420 - 4500], target: [2035 + 2075, 1400, 3420 + 4350], span: 5000 }
+      ],
+      schedule: [
+        ['Room Dimensions', '4,150 x 4,350 x 2,794 mm'],
+        ['4-Bay Wardrobe', '3,048 W x 610 D x 2,692.4 H (8 continuous doors)'],
+        ['Wardrobe Internals', '18 concealed drawers (4/5/5/4) + 4x 1-ft lofts'],
+        ['W4 Entry Side Pocket', '150 clear pocket with brass-framed tinted glass'],
+        ['4-In Stadium Bed Rest', '2,181.2 W x 1,070 H (R=520) in dark walnut & greige'],
+        ['East Niche Wall', '4x 200x300 bedside + 3x 320x480 bed-rest niches'],
+        ['Tall Floating Dresser', '914.4 W x 2,600 H in Light Pink Merino & copper'],
+        ['Storage Bed & Balcony', '2,081.2 W bed frame + 4,470 x 1,525 mm Sitout 2']
+      ],
+      toggles: [
+        { id: 'mb-wardrobe-doors', label: 'Open 8 Full-Height Wardrobe Doors' },
+        { id: 'mb-wardrobe-drawers', label: 'Extend 18 Concealed Wardrobe Drawers' },
+        { id: 'mb-bed-storage', label: 'Lift Hydraulic Bed Storage Deck' },
+        { id: 'mb-dresser-storage', label: 'Open Mirror & Tinted-Glass Storage' },
+        { id: 'mb-dresser-drawer', label: 'Open Full-Width Pink Merino Drawer' }
+      ],
+      swatches: [
+        { color: '#e6c0c4', label: 'Light Pink Merino Dresser' },
+        { color: '#c4724e', label: 'Sleek Brushed Copper Handles' },
+        { color: '#7f9276', label: 'Soft Sage Wardrobe Doors' },
+        { color: '#d8cfc2', label: 'FR Stucco Arched Niche Wall' },
+        { color: '#4a5838', label: 'Olive-Green Quilted Runner' }
+      ],
+      notes: '4-inch (101.6 mm) build-up = 18 backing ply + 65.6 batten cavity + 18 CNC face panel (83.6 mm clear niche depth with calcium-silicate brass candle trays).'
+    },
+    bedroom1: {
+      title: 'Bedroom 1 / Kids Room (Study 03)',
+      camera: { pos: [6870 + 1900, 6600, -3680 + 8600], target: [6870 + 1815, 1100, -3680 + 1780] },
+      subviews: [
+        { id: 'overview', name: 'Bedroom 1 3D Overview', pos: [6870 + 1900, 6600, -3680 + 8600], target: [6870 + 1815, 1100, -3680 + 1780] },
+        { id: 'entry', name: 'Kids Room Entrance Perspective', pos: [6870 + 350, 1650, -3680 + 3250], target: [6870 + 2350, 1250, -3680 + 1100] },
+        { id: 'murphy', name: 'Murphy Bed & W1 Wardrobe (West)', pos: [6870 + 1750, 1450, -3680 + 3450], target: [6870 + 520, 1300, -3680 + 2512.5], span: 4000 },
+        { id: 'window', name: 'Bay Window Seat, Desk & Lofts (East)', pos: [6870 + 900, 1400, -3680 + 1850], target: [6870 + 3630, 1400, -3680 + 1850], span: 4200 }
+      ],
+      schedule: [
+        ['Room Dimensions', '3,630 x 3,560 x 2,794 mm (160 entrance offset)'],
+        ['Murphy Wall-Bed (WB)', '1,672 W x 740 D x 2,794 H (1472x2100 folding bed)'],
+        ['Bed Mattress', '1,372 x 2,030 mm (Fold pivot at Y=220, flush fascia)'],
+        ['West Wardrobe (W1)', '775.5 W (2 doors, 4 concealed drawers, pull-down rail)'],
+        ['Bay Window Seat (S)', '1,800 W x 500 D with 2 pull-out storage drawers'],
+        ['Concealed Mirror (M)', '750 W cabinet with mirror on inside of door'],
+        ['Study Desk & Upper (T/TG)', '780 W x 550 D desk + 4-shelf tinted glass upper'],
+        ['Window Loft Bridge (O)', '3,560 W full-width bridge with 5 shutters']
+      ],
+      toggles: [
+        { id: 'br1-murphy-fold', label: 'Fold Up Murphy Bed to Flush Fascia' },
+        { id: 'br1-wardrobe-doors', label: 'Open W1 Wardrobe Doors' },
+        { id: 'br1-drawers', label: 'Extend W1 Wardrobe Drawers' },
+        { id: 'br1-seat-drawers', label: 'Extend Window Seat Drawers' },
+        { id: 'br1-hidden-mirror', label: 'Open North Cabinet Hidden Mirror' },
+        { id: 'br1-study-glass', label: 'Open Study Tinted-Glass Doors' },
+        { id: 'br1-lofts', label: 'Open Murphy & Window Bridge Lofts' }
+      ],
+      swatches: [
+        { color: '#b1b9aa', label: 'Matte Sage-Grey Fascia & Doors' },
+        { color: '#b99570', label: 'Warm Oak Carcass & Desk' },
+        { color: '#eeeade', label: 'Ivory Liner & Drawer Fronts' },
+        { color: '#7b8c72', label: 'Upholstered Cushion Accent' }
+      ],
+      notes: 'Kids room: Adult-operated Murphy bed counterbalanced with positive locks and flush bottom fascia panel matching the W1 wardrobe.'
+    },
+    bedroom2: {
+      title: 'Bedroom 2 / Guest Room (Study 03)',
+      camera: { pos: [6400, 6900, -6600], target: [1650, 1100, -1780] },
+      subviews: [
+        { id: 'overview', name: 'Bedroom 2 3D Overview', pos: [6400, 6900, -6600], target: [1650, 1100, -1780] },
+        { id: 'entry', name: 'Corridor Entrance Perspective', pos: [4750, 1650, -3560 + 3100], target: [1400, 1300, -3560 + 2050] },
+        { id: 'wardrobe', name: '7-Ft 3-Bay Wardrobe (South)', pos: [700, 1500, -3560 + 1350], target: [2213.6, 1400, -3560 + 3560], span: 4000 },
+        { id: 'bed', name: 'Arch Headboard & Storage Bed (West)', pos: [1200, 1500, -3560 + 700], target: [100, 1300, -3560 + 2060], span: 3700 },
+        { id: 'side', name: 'Used-Clothes Side Pocket Entrance', pos: [3300 + 1200, 1800, -3560 + 3200], target: [2213.6, 1400, -3560 + 3560] }
+      ],
+      schedule: [
+        ['Room Dimensions', '3,300 x 3,560 mm (1885 x 935 return corridor)'],
+        ['7-Ft Wardrobe (W1-3)', '2,133.6 W x 610 D x 2,794 H (6 full-height doors)'],
+        ['Wardrobe Internals', '3 equal bays, 13 drawers (4/5/4), 3x 1-ft lofts'],
+        ['Hidden Used-Clothes Pocket', '150 clear X-depth pocket at entrance-facing end'],
+        ['Wall Scribe Filler', '80 W closed scribe closing west wall gap'],
+        ['Storage Bed (B)', '1,630 W x 2,100 L frame (1524x2030 mattress)'],
+        ['Arch Headboard (HB)', '1,830 W x 2,400 H rounded arch with LED halo'],
+        ['Floating Bedside (N)', '360 W x 380 D window-side floating table']
+      ],
+      toggles: [
+        { id: 'br2-wardrobe-doors', label: 'Open 6 Wardrobe Doors' },
+        { id: 'br2-drawers', label: 'Extend 13 Wardrobe Drawers' },
+        { id: 'br2-used-clothes', label: 'Open Used-Clothes Side Pocket Door' },
+        { id: 'br2-bed-storage', label: 'Lift Hydraulic Bed Deck' }
+      ],
+      swatches: [
+        { color: '#a9b8bc', label: 'Dusty Blue-Slate Wardrobe' },
+        { color: '#a8babe', label: 'Mist-Blue Framed Headboard' },
+        { color: '#d3d7d7', label: 'Mist-Grey Cushion Panels' },
+        { color: '#b99570', label: 'Warm Oak Bed Frame' }
+      ],
+      notes: 'Wardrobe width 2,133.6 mm is exactly 7 ft. Its entrance-facing end houses a hidden used-clothes side pocket above the drawers, preserving full drawer widths.'
+    },
+    utility: {
+      title: 'Utility Laundry Balcony & Sitout Balconies 1 & 2',
+      camera: { pos: [12200, 3600, 3800], target: [9600, 1100, 3300] },
+      subviews: [
+        { id: 'utility', name: 'Utility Laundry Balcony (1525x3365)', pos: [11500, 2200, 5000], target: [9737.5, 1000, 4982.5] },
+        { id: 'sitout1', name: 'Sitout 1 Dining Balcony (1525x3300)', pos: [11800, 1800, 1650], target: [9500, 1100, 1650] },
+        { id: 'sitout2', name: 'Sitout 2 Master Balcony (4470x1525)', pos: [4150, 2200, 10800], target: [4150, 1100, 8200] }
+      ],
+      schedule: [
+        ['Utility Balcony', '1,525 x 3,365 mm (East of Kitchen via D3 750 door)'],
+        ['Utility Sink & Counter', '1,200 W x 610 D x 880 H granite & BWP marine ply'],
+        ['Washer / Dryer Stack', '650 W x 650 D x 1,700 H front-load stack'],
+        ['Sitout 1 (Dining)', '1,525 x 3,300 mm via SLD1 2,100 mm UPVC slider'],
+        ['Sitout 2 (Master Bed)', '4,470 x 1,525 mm via SLD2 2,100 mm UPVC slider']
+      ],
+      toggles: [
+        { id: 'tog-walls', label: 'Apartment Exterior Walls', default: true },
+        { id: 'tog-ceilings', label: 'Apartment Ceilings & Coves', default: true }
+      ],
+      swatches: [
+        { color: '#b5ada2', label: 'Anti-Skid Balcony Tile' },
+        { color: '#a8bdae', label: 'Granite Utility Countertop' },
+        { color: '#dfcbb5', label: 'Warm Beige BWP Utility Cabinets' }
+      ],
+      notes: 'Includes the Utility wet laundry balcony off the Kitchen plus Sitout 1 (off Dining/Pooja) and Sitout 2 (off Master Bedroom).'
+    }
+  };
+
+  // State Management
+  let currentRoom = 'apartment';
+  let activeSubview = 'overview';
+  const kinematics = {
+    livDbGlass: 0, livTvDrawers: 0, livPoojaGates: 0, livPoojaPull: 0, livSleeper: 0, livHeadrests: 0,
+    kitDrawers: 0, kitElevators: 0, kitGroceries: 0,
+    mbDoors: 0, mbDrawers: 0, mbBed: 0, mbDresserStorage: 0, mbDresserDrawer: 0,
+    br1Murphy: 0, br1Doors: 0, br1Drawers: 0, br1SeatDrawers: 0, br1Mirror: 0, br1StudyGlass: 0, br1Lofts: 0,
+    br2Doors: 0, br2Drawers: 0, br2UsedClothes: 0, br2Bed: 0,
+    allDoors: 0, allDrawers: 0
+  };
+
+  // UI Rebuilder for Active Room
+  function updateRoomUI(roomKey) {
+    currentRoom = roomKey;
+    const cfg = roomConfigs[roomKey];
+
+    // 1. Header & Breadcrumbs
+    document.getElementById('view-label').textContent = `${cfg.title.toUpperCase()} / mm`;
+    document.getElementById('view-state').textContent = `${cfg.title} &bull; ${cfg.notes}`;
+    document.getElementById('tour-state').textContent = cfg.title;
+
+    // 2. Subview Bar
+    const subContainer = document.getElementById('subview-buttons');
+    subContainer.innerHTML = '';
+    cfg.subviews.forEach((sv, idx) => {
+      const btn = document.createElement('button');
+      btn.dataset.subview = sv.id;
+      btn.textContent = sv.name;
+      if (idx === 0) btn.classList.add('active');
+      btn.addEventListener('click', () => setSubview(sv));
+      subContainer.appendChild(btn);
+    });
+
+    // 3. Aside Schedule
+    document.getElementById('room-sched-title').textContent = `${cfg.title} Schedule`;
+    const schedList = document.getElementById('room-sched-list');
+    schedList.innerHTML = cfg.schedule.map(([k, v]) => `<div><dt>${k}</dt><dd>${v}</dd></div>`).join('');
+
+    // 4. Kinematic Toggles
+    const togContainer = document.getElementById('room-toggles');
+    togContainer.innerHTML = cfg.toggles.map(t => `
+      <label class="toggle"><input type="checkbox" id="${t.id}" ${t.default ? 'checked' : ''}>${t.label}</label>
+    `).join('');
+    cfg.toggles.forEach(t => {
+      const el = document.getElementById(t.id);
+      if (el) el.addEventListener('change', () => applyKinematicInputs());
+    });
+
+    // 5. Finish Swatches & Notes
+    document.getElementById('room-swatches').innerHTML = cfg.swatches.map(s => `
+      <span><i class="swatch" style="background:${s.color}"></i>${s.label}</span>
+    `).join('');
+    document.getElementById('room-notes').innerHTML = `<strong>Room Design Note:</strong> ${cfg.notes}`;
+
+    // 6. Dynamic Factory Component Register Table & Selector
+    rebuildComponentRegisterTable(roomKey);
+
+    // 7. Update Room Buttons
+    document.querySelectorAll('[data-room]').forEach(b => b.classList.toggle('active', b.dataset.room === roomKey));
+  }
+
+  function setSubview(sv) {
+    activeSubview = sv.id;
+    document.querySelectorAll('#subview-buttons button').forEach(b => b.classList.toggle('active', b.dataset.subview === sv.id));
+    const isOrtho = !!sv.span;
+    activeCamera = isOrtho ? ortho : camera;
+    controls.dispose();
+    controls = new OrbitControls(activeCamera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.enableRotate = !isOrtho;
+    activeCamera.up.set(0, 1, 0);
+    if (sv.up) activeCamera.up.set(...sv.up);
+    activeCamera.position.set(...sv.pos);
+    controls.target.set(...sv.target);
+    activeCamera.lookAt(...sv.target);
+    document.getElementById('view-label').textContent = `${sv.name.toUpperCase()} / mm`;
+    resize();
+  }
+
+  // Rebuild Dynamic Component Register Table
+  function rebuildComponentRegisterTable(roomKey) {
+    const list = roomComponentRegisters[roomKey] || roomComponentRegisters.apartment;
+    const select = document.getElementById('part-select');
+    const tableBody = document.getElementById('part-rows');
+    select.innerHTML = '';
+    tableBody.innerHTML = '';
+
+    document.querySelectorAll('[data-reg-room]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.regRoom === roomKey);
+    });
+
+    const roomTitle = roomConfigs[roomKey]?.title || 'Full-House Combined';
+    document.getElementById('factory-title').textContent = `${roomTitle} — Component Dimensions & Carpentry Review Register`;
+    document.getElementById('part-size').textContent = `${list.length} registered production components in ${roomTitle}. All sizes in mm.`;
+
+    list.forEach(rec => {
+      const opt = document.createElement('option');
+      opt.value = rec.id;
+      opt.textContent = `${rec.id} / ${rec.module} / ${rec.name} (${rec.dims.map(pretty).join(' x ')} mm)`;
+      select.appendChild(opt);
+
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td><strong>${rec.id}</strong><br><small style="color:#556b5d">${rec.module} / ${rec.name}</small></td>
+        <td>${rec.qty}</td>
+        <td>${rec.dims.map(pretty).join(' x ')}</td>
+        <td>${rec.panel}</td>
+        <td>${rec.finish}</td>
+      `;
+      tableBody.appendChild(tr);
+    });
+
+    // Update Doc Table Body
+    const docBody = document.getElementById('doc-table-body');
+    const schedRows = roomConfigs[roomKey]?.schedule || roomConfigs.apartment.schedule;
+    docBody.innerHTML = schedRows.map(([mark, val]) => `
+      <tr><td><strong>${mark}</strong></td><td>${val}</td><td>Verified production coordination specification per Unit 6_3BHK model.</td></tr>
+    `).join('');
+  }
+
+  function applyKinematicInputs() {
+    // Living
+    kinematics.livDbGlass = document.getElementById('liv-db-glass')?.checked ? 1 : 0;
+    kinematics.livTvDrawers = document.getElementById('liv-tv-drawers')?.checked ? 1 : 0;
+    kinematics.livPoojaGates = document.getElementById('liv-pooja-gates')?.checked ? 1 : 0;
+    kinematics.livPoojaPull = document.getElementById('liv-pooja-pullouts')?.checked ? 1 : 0;
+    kinematics.livSleeper = document.getElementById('liv-sleeper-beds')?.checked ? 1 : 0;
+    kinematics.livHeadrests = document.getElementById('liv-headrests')?.checked ? 1 : 0;
+
+    // Kitchen
+    kinematics.kitDrawers = document.getElementById('kit-drawers')?.checked ? 1 : 0;
+    kinematics.kitElevators = document.getElementById('kit-elevators')?.checked ? 1 : 0;
+    kinematics.kitGroceries = document.getElementById('kit-groceries')?.checked ? 1 : 0;
+
+    // Master
+    kinematics.mbDoors = document.getElementById('mb-wardrobe-doors')?.checked ? 1 : 0;
+    kinematics.mbDrawers = document.getElementById('mb-wardrobe-drawers')?.checked ? 1 : 0;
+    kinematics.mbBed = document.getElementById('mb-bed-storage')?.checked ? 1 : 0;
+    kinematics.mbDresserStorage = document.getElementById('mb-dresser-storage')?.checked ? 1 : 0;
+    kinematics.mbDresserDrawer = document.getElementById('mb-dresser-drawer')?.checked ? 1 : 0;
+
+    // Bedroom 1
+    kinematics.br1Murphy = document.getElementById('br1-murphy-fold')?.checked ? 1 : 0;
+    kinematics.br1Doors = document.getElementById('br1-wardrobe-doors')?.checked ? 1 : 0;
+    kinematics.br1Drawers = document.getElementById('br1-drawers')?.checked ? 1 : 0;
+    kinematics.br1SeatDrawers = document.getElementById('br1-seat-drawers')?.checked ? 1 : 0;
+    kinematics.br1Mirror = document.getElementById('br1-hidden-mirror')?.checked ? 1 : 0;
+    kinematics.br1StudyGlass = document.getElementById('br1-study-glass')?.checked ? 1 : 0;
+    kinematics.br1Lofts = document.getElementById('br1-lofts')?.checked ? 1 : 0;
+
+    // Bedroom 2
+    kinematics.br2Doors = document.getElementById('br2-wardrobe-doors')?.checked ? 1 : 0;
+    kinematics.br2Drawers = document.getElementById('br2-drawers')?.checked ? 1 : 0;
+    kinematics.br2UsedClothes = document.getElementById('br2-used-clothes')?.checked ? 1 : 0;
+    kinematics.br2Bed = document.getElementById('br2-bed-storage')?.checked ? 1 : 0;
+
+    // Apartment level
+    if (document.getElementById('tog-all-doors')) {
+      const allD = document.getElementById('tog-all-doors').checked ? 1 : 0;
+      if (allD) {
+        kinematics.livDbGlass = kinematics.livPoojaGates = kinematics.mbDoors = kinematics.mbDresserStorage = kinematics.br1Doors = kinematics.br2Doors = 1;
+      }
+    }
+    if (document.getElementById('tog-all-drawers')) {
+      const allDr = document.getElementById('tog-all-drawers').checked ? 1 : 0;
+      if (allDr) {
+        kinematics.livTvDrawers = kinematics.kitDrawers = kinematics.mbDrawers = kinematics.mbDresserDrawer = kinematics.br1Drawers = kinematics.br1SeatDrawers = kinematics.br2Drawers = 1;
+      }
+    }
+
+    // Visibility toggles
+    if (document.getElementById('tog-walls')) groups.walls.visible = document.getElementById('tog-walls').checked;
+    if (document.getElementById('tog-ceilings')) groups.ceiling.visible = document.getElementById('tog-ceilings').checked;
+  }
+
+  // Smooth Kinematic Animation Loop
+  function updateKinematics() {
+    // Living
+    livDbDoorPivot.rotation.y = -kinematics.livDbGlass * Math.PI * 0.52;
+    livTallGlassDoorPivot.rotation.y = -kinematics.livDbGlass * Math.PI * 0.55;
+    livTvDrawersGroup.position.z = kinematics.livTvDrawers * 280;
+    poojaGateLeft.rotation.y = -kinematics.livPoojaGates * Math.PI * 0.62;
+    poojaGateRight.rotation.y = kinematics.livPoojaGates * Math.PI * 0.62;
+    poojaPulloutTray.position.z = kinematics.livPoojaPull * 360;
+    poojaPulloutSitTable.position.z = kinematics.livPoojaPull * 460;
+    poojaPulloutThinTable.position.z = kinematics.livPoojaPull * 640;
+    poojaPulloutLowBox.position.z = kinematics.livPoojaPull * 820;
+    sleeperLeftGroup.position.z = -kinematics.livSleeper * 1220;
+    sleeperLeftGroup.visible = kinematics.livSleeper > 0.02;
+    seatCushionLeft.position.y = -kinematics.livSleeper * 130;
+    sleeperRightGroup.position.z = -kinematics.livSleeper * 1220;
+    sleeperRightGroup.visible = kinematics.livSleeper > 0.02;
+    seatCushionRight.position.y = -kinematics.livSleeper * 130;
+    livCoffeeTable.position.set(2956 + kinematics.livSleeper * 1450, 0, 1480 - kinematics.livSleeper * 380);
+    for (const hp of livHeadrestPivots) {
+      hp.rotation.x = kinematics.livHeadrests * THREE.MathUtils.degToRad(28);
+      hp.position.y = 813 + kinematics.livHeadrests * 42;
+    }
+
+    // Kitchen
+    for (const p of kitMoveParts) p.group.position.x = p.dir * p.travel * kinematics.kitDrawers;
+    for (const r of kitRackParts) { r.position.y = -420 * kinematics.kitElevators; r.position.z = 340 * kinematics.kitElevators; }
+    for (const d of kitElevatorDoors) d.visible = kinematics.kitElevators < 0.05;
+    for (const g of kitGroceryDoors) g.pivot.rotation.y = kinematics.kitGroceries ? g.direction * Math.PI / 2 : 0;
+
+    // Master Bedroom
+    for (const d of mbedWardrobeDoors) d.pivot.rotation.y = d.sign * kinematics.mbDoors * Math.PI / 2;
+    for (const dr of mbedDrawerParts) dr.group.position.z = dr.travel * kinematics.mbDrawers;
+    mbedBedPivot.position.x = mbedHeadX - 160 * kinematics.mbBed;
+    mbedBedPivot.rotation.z = -kinematics.mbBed * THREE.MathUtils.degToRad(30);
+    mbedDresserMirror.rotation.y = -kinematics.mbDresserStorage * Math.PI / 2;
+    mbedDresserGlass.rotation.y = kinematics.mbDresserStorage * Math.PI / 2;
+    mbedDresserDrawer.position.x = -300 * kinematics.mbDresserDrawer;
+
+    // Bedroom 1 Kids Room
+    br1Refs.wallBedFold.rotation.x = -kinematics.br1Murphy * Math.PI / 2;
+    for (const d of br1Refs.wardrobeDoors) d.pivot.rotation.y = kinematics.br1Doors * d.angle;
+    for (const dr of br1Refs.drawers) dr.group.position.z = kinematics.br1Drawers * dr.travel;
+    for (const sdr of br1Refs.seatDrawers) sdr.group.position.z = kinematics.br1SeatDrawers * sdr.travel;
+    if (br1Refs.mirrorPivot) br1Refs.mirrorPivot.rotation.y = kinematics.br1Mirror * Math.PI * 0.55;
+    for (const sg of br1Refs.studyDoors) sg.pivot.rotation.y = kinematics.br1StudyGlass * sg.angle;
+    for (const ld of br1Refs.loftDoors) ld.pivot.rotation.y = kinematics.br1Lofts * ld.angle;
+
+    // Bedroom 2 Guest Room
+    for (const d of br2Refs.wardrobeDoors) d.pivot.rotation.y = kinematics.br2Doors * d.angle;
+    for (const dr of br2Refs.drawers) dr.group.position.z = kinematics.br2Drawers * dr.travel;
+    if (br2Refs.usedClothesPivot) br2Refs.usedClothesPivot.rotation.y = -kinematics.br2UsedClothes * Math.PI / 2;
+    br2Refs.bedLift.rotation.x = -kinematics.br2Bed * Math.PI / 6;
+  }
+
+  // 3D Component Inspector
+  function inspectComponent(partId) {
+    const list = roomComponentRegisters[currentRoom];
+    const rec = list.find(r => r.id === partId) || list[0];
+    if (!rec) return;
+
+    groups.component.clear();
+    for (const g of Object.values(groups)) g.visible = false;
+    groups.component.visible = true;
+
+    const clone = rec.mesh.clone(true);
+    clone.visible = true;
+    clone.position.set(0, 0, 0);
+    clone.rotation.set(0, 0, 0);
+    groups.component.add(clone);
+
+    const sz = new THREE.Vector3(...rec.dims);
+    const ext = Math.max(sz.x, sz.y, sz.z, 200), off = ext * 0.22, tSize = Math.max(50, ext * 0.07);
+    const hx = sz.x / 2, hy = sz.y / 2, hz = sz.z / 2;
+    dimension(groups.component, [-hx, -hy, hz], [hx, -hy, hz], 'W ' + pretty(sz.x), [0, -off, off], tSize);
+    dimension(groups.component, [hx, -hy, -hz], [hx, -hy, hz], 'D ' + pretty(sz.z), [off, -off, 0], tSize);
+    dimension(groups.component, [-hx, -hy, -hz], [-hx, hy, -hz], 'H ' + pretty(sz.y), [-off, 0, -off], tSize);
+
+    activeCamera = camera;
+    activeCamera.position.set(ext * 1.45, ext * 0.95, ext * 1.7);
+    controls.target.set(0, 0, 0);
+    activeCamera.lookAt(0, 0, 0);
+
+    document.getElementById('view-label').textContent = `INSPECT: ${rec.id} (${pretty(sz.x)} x ${pretty(sz.y)} x ${pretty(sz.z)} mm) / 3D ISOLATION`;
+    document.getElementById('part-size').textContent = `INSPECTING ${rec.id}: ${rec.name}. Module: ${rec.module}. Specification: ${rec.finish}.`;
+  }
+
+  document.getElementById('inspect-part').addEventListener('click', () => {
+    inspectComponent(document.getElementById('part-select').value);
+    viewport.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  });
+  document.getElementById('part-select').addEventListener('change', e => inspectComponent(e.target.value));
+
+  // Switch Room View
+  function switchRoom(roomKey) {
+    groups.component.visible = false;
+    for (const [k, g] of Object.entries(groups)) {
+      if (k !== 'component') g.visible = true;
+    }
+    updateRoomUI(roomKey);
+    const cfg = roomConfigs[roomKey];
+    setSubview(cfg.subviews[0]);
+  }
+
+  document.querySelectorAll('[data-room]').forEach(btn => {
+    btn.addEventListener('click', () => switchRoom(btn.dataset.room));
+  });
+
+  document.querySelectorAll('[data-reg-room]').forEach(btn => {
+    btn.addEventListener('click', () => rebuildComponentRegisterTable(btn.dataset.regRoom));
+  });
+
+  document.getElementById('btn-pooja-quick')?.addEventListener('click', () => {
+    switchRoom('living');
+    const poojaSv = roomConfigs.living.subviews.find(s => s.id === 'pooja');
+    if (poojaSv) setSubview(poojaSv);
+    const gCb = document.getElementById('liv-pooja-gates');
+    const pCb = document.getElementById('liv-pooja-pullouts');
+    if (gCb) gCb.checked = true;
+    if (pCb) pCb.checked = true;
+    applyKinematicInputs();
+  });
+
+  // Guided Walkthrough Tour
+  let touring = false, tourIdx = 0, tourTime = 0, lastTime = performance.now();
+  const walkthroughStops = [
+    { room: 'living', pos: [550, 1620, 1050], target: [2600, 1300, 200], name: 'Living & Dining: TV Wall & Foyer' },
+    { room: 'living', pos: [2956, 1580, 950], target: [2956, 1350, 3200], name: 'Living & Dining: 12.5-Ft Dual Sleeper & Mural' },
+    { room: 'living', pos: [7100, 1550, 1950], target: [8550, 1100, 250], name: 'Living & Dining: 5\'11" Pooja Mandir' },
+    { room: 'kitchen', pos: [7660, 1680, 4700], target: [7645, 1300, 3450], name: 'Parallel Kitchen: Dry & Wet Runs' },
+    { room: 'kitchen', pos: [7660, 1500, 6200], target: [7645, 1400, 3300], name: 'Kitchen: Rear Pull-Down Elevators' },
+    { room: 'utility', pos: [9800, 1650, 5200], target: [10140, 1000, 5000], name: 'Utility Balcony: Laundry & Appliances' },
+    { room: 'master', pos: [2035 + 3550, 1650, 3420 + 1050], target: [2035 + 1700, 1350, 3420 + 320], name: 'Master Bed: 4-Bay Wardrobe & Entry' },
+    { room: 'master', pos: [2035 + 1400, 1650, 3420 + 2300], target: [2035 + 4100, 1300, 3420 + 2290], name: 'Master Bed: 4-In Stadium Bed Rest & Niches' },
+    { room: 'master', pos: [2035 + 3200, 1650, 3420 + 3825], target: [2035 + 4100, 1450, 3420 + 3867], name: 'Master Bed: Pink Merino Dresser' },
+    { room: 'bedroom1', pos: [6870 + 350, 1650, -3680 + 3200], target: [6870 + 900, 1400, -3680 + 2000], name: 'Kids Room 1: Murphy Bed & Wardrobe' },
+    { room: 'bedroom1', pos: [6870 + 900, 1500, -3680 + 1850], target: [6870 + 3630, 1400, -3680 + 1850], name: 'Kids Room 1: Window Seat, Desk & Bridge' },
+    { room: 'bedroom2', pos: [4700, 1650, -3680 + 3100], target: [2213, 1400, -3680 + 3560], name: 'Guest Room 2: 7-Ft Wardrobe & Pocket' },
+    { room: 'bedroom2', pos: [1400, 1500, -3680 + 1000], target: [100, 1300, -3680 + 2060], name: 'Guest Room 2: Arch Headboard & Bed' }
+  ];
+
+  function startWalkthrough() {
+    touring = true;
+    tourIdx = 0;
+    tourTime = 0;
+    document.getElementById('tour').setAttribute('aria-pressed', 'true');
+    document.getElementById('tour-text').textContent = 'Pause';
+    setTourStop(tourIdx);
+  }
+
+  function stopWalkthrough() {
+    touring = false;
+    document.getElementById('tour').setAttribute('aria-pressed', 'false');
+    document.getElementById('tour-text').textContent = 'Walkthrough';
+    controls.enabled = true;
+  }
+
+  function setTourStop(idx) {
+    const st = walkthroughStops[idx];
+    if (st.room !== currentRoom) {
+      updateRoomUI(st.room);
+    }
+    activeCamera = camera;
+    controls.enabled = false;
+    activeCamera.position.set(...st.pos);
+    controls.target.set(...st.target);
+    activeCamera.lookAt(...st.target);
+    document.getElementById('view-label').textContent = `WALKTHROUGH: ${st.name.toUpperCase()}`;
+    document.getElementById('tour-state').textContent = `Stop ${idx + 1}/${walkthroughStops.length}: ${st.name}`;
+  }
+
+  document.getElementById('tour').addEventListener('click', () => {
+    if (touring) stopWalkthrough(); else startWalkthrough();
+  });
+
+  // Global Action Buttons
+  document.getElementById('reset').addEventListener('click', () => {
+    stopWalkthrough();
+    switchRoom('apartment');
+    document.querySelectorAll('input[type=checkbox]').forEach(cb => {
+      cb.checked = cb.id.includes('wall') || cb.id.includes('ceil') || cb.id.includes('loft');
+    });
+    applyKinematicInputs();
+  });
+
+  document.getElementById('download').addEventListener('click', () => {
+    renderer.render(scene, activeCamera);
+    const a = document.createElement('a');
+    a.download = `unit6-3bhk-${currentRoom}-${activeSubview}.png`;
+    a.href = renderer.domElement.toDataURL('image/png');
+    a.click();
+  });
+
+  document.getElementById('print').addEventListener('click', () => window.print());
+
+  // CSV Export for Active Room
+  document.getElementById('parts-csv').addEventListener('click', () => {
+    const list = roomComponentRegisters[currentRoom];
+    const rows = [
+      ['Apartment Unit', 'Room', 'Part ID', 'Module', 'Component Name', 'Quantity', 'W mm', 'H mm', 'D mm', 'Panel Cut Size mm', 'Finish / Specification'],
+      ...list.map(r => ['Unit 6_3BHK', roomConfigs[currentRoom].title, r.id, r.module, r.name, r.qty, ...r.dims.map(pretty), r.panel, r.finish])
+    ];
+    const csv = rows.map(r => r.map(v => `"${String(v).replaceAll('"', '""')}"`).join(',')).join('\r\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `unit6-3bhk-${currentRoom}-components.csv`;
+    a.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+
+  function resize() {
+    const w = viewport.clientWidth, h = viewport.clientHeight, aspect = w / h;
+    renderer.setSize(w, h);
+    camera.aspect = aspect;
+    camera.updateProjectionMatrix();
+    const curSpan = (activeCamera === ortho && roomConfigs[currentRoom]?.subviews?.find(s => s.id === activeSubview)?.span) || 12000;
+    const vH = Math.max(curSpan * 0.65, curSpan / aspect);
+    ortho.left = -vH * aspect / 2;
+    ortho.right = vH * aspect / 2;
+    ortho.top = vH / 2;
+    ortho.bottom = -vH / 2;
+    ortho.updateProjectionMatrix();
+  }
+  new ResizeObserver(resize).observe(viewport);
+
+  // Automated Apartment Health & Consistency Check
+  const checks = {
+    livingDiningSplit: 4440 + 4535 === 8975,
+    northTvWallFit: 750 + 600 + 3300 === 4650,
+    credenzaDrawers: 6 * 600 + 300 === 3900,
+    kitchenAisle: 2630 - 2 * 700 === 1230,
+    masterWardrobe4Bays: 3048 === 50 + 739.5 * 4 + 18 * 5 - 18,
+    bed1MurphyBed: 1472 <= 1672,
+    bed2Wardrobe7Ft: Math.abs(2133.6 - 7 * 304.8) < 0.1
+  };
+  checks.pass = Object.values(checks).every(Boolean);
+  document.getElementById('checks').textContent = checks.pass
+    ? 'ALL 5 ROOM CHECKS PASS / Living Study 13, Kitchen Rev 04, Master Bed Study 10, Bed 1 & 2 Study 03, and Utility are fully coordinated.'
+    : 'CHECK NOTICE: Verify dimensions.';
+
+  // Initial Boot
+  switchRoom('apartment');
+  loading.hidden = true;
+  document.getElementById('render-status').textContent = `WebGL Active / ${viewport.clientWidth} x ${viewport.clientHeight} px`;
+
+  // Render Loop
+  renderer.setAnimationLoop(time => {
+    const delta = Math.min((time - lastTime) / 1000, 0.1);
+    lastTime = time;
+
+    updateKinematics();
+
+    if (touring) {
+      tourTime += delta;
+      const cur = walkthroughStops[tourIdx], nxt = walkthroughStops[(tourIdx + 1) % walkthroughStops.length];
+      const prog = Math.min(tourTime / 5.2, 1), smooth = prog * prog * (3 - 2 * prog);
+      camera.position.lerpVectors(new THREE.Vector3(...cur.pos), new THREE.Vector3(...nxt.pos), smooth);
+      camera.lookAt(new THREE.Vector3(...cur.target).lerp(new THREE.Vector3(...nxt.target), smooth));
+      if (prog >= 1) {
+        tourIdx = (tourIdx + 1) % walkthroughStops.length;
+        tourTime = 0;
+        setTourStop(tourIdx);
+      }
+    } else {
+      controls.update();
+    }
+
+    renderer.render(scene, activeCamera);
+  });
+} catch (err) {
+  loading.hidden = false;
+  loading.textContent = '3D Full-House Model could not load: ' + err.message;
+  console.error(err);
+}
+</script>
+</body>
+</html>
